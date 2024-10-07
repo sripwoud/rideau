@@ -59,7 +59,8 @@ jobs:
         run: |
           bun concurrently \
             -c auto \
-            -n format,lint,typecheck \
+            -n format,lint,typecheck-server,typecheck-ui \
             'bun dprint check' \
             'bun biome check --config-path=.biome.jsonc .' \
-            'bun tsc'
+            'bun tsc -p apps/server/tsconfig.build.json' \
+            'bun tsc -p apps/client/tsconfig.json'
