@@ -15,8 +15,19 @@
 /* } */
 
 @layer base {
+  a {
+    @apply hover:underline hover:text-crayola;
+  }
+  body {
+    @apply bg-gradient-to-br from-white via-cornsilk to-blue text-wenge text-2xl;
+  }
+
   button {
-    @apply bg-blue-500 text-white font-semibold py-2 px-4 rounded;
+    @apply bg-crayola text-cornsilk font-semibold py-2 px-4 rounded;
+    transition: border-radius 0.3s ease;
+  }
+  button:hover {
+    border-radius: 0.75rem;
   }
 }
 

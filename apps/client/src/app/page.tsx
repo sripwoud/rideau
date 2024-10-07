@@ -9,7 +9,6 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Scan QR Code</h1>
       {isLoading ? <p>loading...</p> : <QrCode value='https://www.pse.dev' onScan={handleScan} isScanned={scanned} />}
     </div>
   )
