@@ -1,4 +1,7 @@
 **/.git
 **/node_modules
 **/dist
+**/test
+**/README.md
+**/fly.toml
 apps/client/.next

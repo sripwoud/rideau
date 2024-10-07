@@ -1,36 +1,29 @@
-FROM oven/bun:1 AS base
+# FIXME: remapping of ts aliases does not work with bun + nestjs
+FROM node:20-alpine as base
 WORKDIR /app
-COPY package.json .
-COPY apps/server/package.json apps/server/
+RUN apk update &&\
+    apk upgrade &&\
+    apk add --no-cache bash dumb-init &&\
+    apk cache clean
 
 FROM base as install
-RUN mkdir -p /temp/dev && mkdir /temp/prod
+COPY package.json yarn.lock ./
+COPY apps/server/package.json apps/server/
+RUN yarn install --ignore-scripts --frozen-lockfile --production=false
 
-COPY *.json /temp/dev/
-COPY apps/server/*.json /temp/dev/apps/server/
-
-COPY *.json /temp/prod/
-COPY apps/server/*.json /temp/prod/apps/server/
-
-RUN cd /temp/dev &&\
-    bun i &&\
-    cd /temp/prod &&\
-    bun i --production
-
-FROM base as prerelease
-COPY --from=install /temp/dev/node_modules node_modules
-COPY --from=install /temp/dev/apps/server/node_modules apps/server/node_modules
+FROM install as prerelease
 COPY tsconfig.json .
-COPY apps/server/tsconfig.* apps/server/
-COPY apps/server/src apps/server/src
-
-ENV NODE_ENV=production
-RUN bun --filter server build
+COPY apps/server apps/server
+RUN yarn workspace server build &&\
+    find -type d -name node_modules -exec rm -fr {} + &&\
+    yarn install --frozen-lockfile --production=true
 
 FROM base as release
-COPY --from=install /temp/prod/node_modules node_modules
-COPY --from=prerelease /app/apps/server/dist apps/server/dist
-
-USER bun
+COPY --from=prerelease /app/apps/server/node_modules node_modules
+COPY --from=prerelease /app/apps/server/dist dist
+ENV NODE_ENV production
+USER node
+# TODO: make this configurable/overridable
 EXPOSE 3001
-ENTRYPOINT ["bun", "--filter", "server", "start"]
+ENTRYPOINT ["dumb-init", "--"]
+CMD ["node", "dist"]
