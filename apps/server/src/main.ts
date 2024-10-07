@@ -1,9 +1,18 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from './app.module'
+import { AppModule } from '@server/app.module'
+import { TrpcRouter } from '@server/trpc/trpc.router'
+
+// TODO: make port configurable
+const PORT = 3001
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  // TODO: make this configurable
-  await app.listen(3001)
+  app.enableCors()
+
+  const trpc = app.get(TrpcRouter)
+  trpc.applyMiddleware(app)
+
+  await app.listen(PORT)
 }
+
 bootstrap()
