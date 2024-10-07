@@ -1,5 +1,4 @@
 {
-  "name": "ts-template",
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
     "barrelsby": "^2.8.1",
@@ -16,7 +15,7 @@
   },
   "scripts": {
     "build": "barrelsby --config .barrelsby.json && rm -rf dist && bun build src --outdir dist --sourcemap=inline --target=bun",
-    "build.docker": "docker build -t ts-template .",
+    "build.docker.server": "docker build -f apps/server/Dockerfile -t rideau-server .",
     "start": "bun run build && bun run start.prod",
     "start.dev": "bun --watch --hot src/index.ts",
     "start.docker": "docker run -it --rm ts-template",
