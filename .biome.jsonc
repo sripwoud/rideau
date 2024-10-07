@@ -10,7 +10,7 @@
   },
   "linter": {
     "enabled": true,
-    "ignore": ["dist"],
+    "ignore": [".next", "dist"],
     "rules": {
       "recommended": true,
       "complexity": {
@@ -18,4 +18,8 @@
       },
     },
   },
+  "overrides": [{
+    "include": ["apps/server/src/app.controller.ts", "apps/server/src/trpc/trpc.router.ts"],
+    "linter": { "rules": { "style": { "useImportType": "off" } } },
+  }],
 }
