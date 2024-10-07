@@ -19,11 +19,12 @@ RUN yarn workspace server build &&\
     yarn install --frozen-lockfile --production=true
 
 FROM base as release
+COPY --from=prerelease /app/node_modules node_modules
 COPY --from=prerelease /app/apps/server/node_modules node_modules
-COPY --from=prerelease /app/apps/server/dist dist
+COPY --from=prerelease /app/apps/server/dist apps/server/dist
 ENV NODE_ENV production
 USER node
 # TODO: make this configurable/overridable
 EXPOSE 3001
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "dist"]
+CMD ["node", "apps/server/dist"]

@@ -4712,7 +4712,7 @@ serve-static@1.16.2:
     "@trpc/server" "^10.45.2"
     reflect-metadata "^0.2.0"
     rxjs "^7.8.1"
-    tslib ""
+    tslib "^2.7.0"
     zod "^3.23.8"
 
 set-function-length@^1.2.1:
