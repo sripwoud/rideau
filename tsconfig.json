@@ -1,24 +1,16 @@
 {
-  "include": ["src", "test"],
-  "exclude": ["test/coverage"],
   "compilerOptions": {
     "noEmit": true,
-
-    "baseUrl": ".",
-    "lib": ["ESNext"],
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-
-    "allowImportingTsExtensions": true,
+    "baseUrl": "apps",
     "allowJs": true,
     "checkJs": true,
+    "declaration": true,
     "exactOptionalPropertyTypes": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "jsx": "react-jsx",
-    "moduleDetection": "force",
+    "incremental": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
     "noImplicitOverride": true,
@@ -27,17 +19,16 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "useUnknownInCatchVariables": true,
-    "strict": true,
-
     "paths": {
-      "@mod": ["src/mod"],
-      "@mod/*": ["src/mod/*"]
+      "@client/*": ["client/src/*"],
+      "@server/*": ["server/src/*"]
     },
-
+    "removeComments": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-
-    "types": ["bun-types"]
+    "sourceMap": true,
+    "strict": true,
+    "types": ["bun-types"],
+    "useUnknownInCatchVariables": true
   }
 }
