@@ -1,16 +1,14 @@
 import { type INestApplication, Injectable } from '@nestjs/common'
 import { TrpcService } from '@server/trpc/trpc.service'
+import { UsersRouter } from '@server/users/users.router'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import { z } from 'zod'
 
-// potentially abstract in several routers
-// https://trpc.io/docs/server/merging-routers
 @Injectable()
 export class TrpcRouter {
   constructor(
     private readonly trpc: TrpcService,
-    // can inject other services in the trpc router!
-    // private readonly otherService: OtherService,
+    private readonly usersRouter: UsersRouter,
   ) {}
 
   appRouter = this.trpc.router({
@@ -31,6 +29,7 @@ export class TrpcRouter {
       await new Promise((resolve) => setTimeout(resolve, 2000))
       return { success: true, message: `Scanned ${input.name}`, redirectUrl: '/success' }
     }),
+    users: this.usersRouter.router,
   })
 
   async applyMiddleware(app: INestApplication) {
