@@ -1,0 +1,7 @@
+use asdf
+
+export SUPABASE_URL=
+export SUPABASE_ANON_KEY=
+
+export LOCAL_SUPABASE_URL=
+export LOCAL_SUPABASE_ANON_KEY=
