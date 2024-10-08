@@ -19,7 +19,8 @@
     @apply hover:underline hover:text-crayola;
   }
   body {
-    @apply bg-gradient-to-br from-white via-cornsilk to-blue text-wenge text-2xl;
+    @apply bg-gradient-to-br from-white via-cornsilk to-blue text-wenge
+      text-2xl;
   }
 
   button {

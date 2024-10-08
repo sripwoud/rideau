@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['apps/server/**', '!**/*.md', '.github/workflows/deploy.yml']
+    paths: ["apps/server/**", "!**/*.md", ".github/workflows/deploy.yml"]
 
 jobs:
   deployment:
