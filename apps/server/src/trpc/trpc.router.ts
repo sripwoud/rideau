@@ -24,11 +24,6 @@ export class TrpcRouter {
           greeting: `Hello ${name !== undefined ? name : 'Anon'}`,
         }
       }),
-    scan: this.trpc.procedure.input(z.object({ name: z.string() })).mutation(async ({ input }) => {
-      // wait for 2 seconds
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      return { success: true, message: `Scanned ${input.name}`, redirectUrl: '/success' }
-    }),
     users: this.usersRouter.router,
   })
 
