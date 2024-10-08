@@ -11,7 +11,7 @@ export class TrpcRouter {
     private readonly usersRouter: UsersRouter,
   ) {}
 
-  appRouter = this.trpc.router({
+  router = this.trpc.router({
     hello: this.trpc.procedure
       .input(
         z.object({
@@ -31,10 +31,10 @@ export class TrpcRouter {
     app.use(
       '/trpc',
       trpcExpress.createExpressMiddleware({
-        router: this.appRouter,
+        router: this.router,
       }),
     )
   }
 }
 
-export type AppRouter = TrpcRouter['appRouter']
+export type AppRouter = TrpcRouter['router']
