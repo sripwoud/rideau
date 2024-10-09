@@ -1,7 +1,5 @@
-import { Dashboard as DashboardComponent } from '@client/containers/Dashboard'
+import { Dashboard as DashboardComponent } from 'client/c/Dashboard'
 
-export default function Dashboard () {
-    return (
-        <DashboardComponent />
-    )
+export default function Dashboard() {
+  return <DashboardComponent />
 }

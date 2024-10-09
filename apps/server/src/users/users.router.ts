@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import { TrpcService } from '@server/trpc/trpc.service'
-import { CreateUserDto } from '@server/users/dto/create-user.dto'
-import { UsersService } from '@server/users/users.service'
+import { TrpcService } from 'server/trpc/trpc.service'
+import { CreateUserDto } from 'server/users/dto/create-user.dto'
+import { UsersService } from 'server/users/users.service'
 
 @Injectable()
 export class UsersRouter {

@@ -1,8 +1,8 @@
 'use client'
-import { magic as _magic } from '@client/l/magic'
-import { Magic as _Magic } from 'magic-sdk'
-import {createContext, ReactNode, useEffect, useMemo, useState } from 'react'
-import {OAuthExtension} from '@magic-ext/oauth2'
+import type { OAuthExtension } from '@magic-ext/oauth2'
+import { magic as _magic } from 'client/l/magic'
+import type { Magic as _Magic } from 'magic-sdk'
+import { createContext, type ReactNode, useEffect, useMemo, useState } from 'react'
 
 type Magic = _Magic<OAuthExtension[]>
 type MagicContextType = {
@@ -12,7 +12,6 @@ type MagicContextType = {
 export const MagicContext = createContext<MagicContextType>({
   magic: null,
 })
-
 
 export const MagicProvider = ({ children }: { children: ReactNode }) => {
   const [magic, setMagic] = useState<Magic | null>(null)

@@ -1,7 +1,7 @@
 import { type INestApplication, Injectable } from '@nestjs/common'
-import { TrpcService } from '@server/trpc/trpc.service'
-import { UsersRouter } from '@server/users/users.router'
 import * as trpcExpress from '@trpc/server/adapters/express'
+import { TrpcService } from 'server/trpc/trpc.service'
+import { UsersRouter } from 'server/users/users.router'
 import { z } from 'zod'
 
 @Injectable()

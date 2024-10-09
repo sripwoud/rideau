@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Teko } from 'next/font/google'
 import './globals.css'
-import { Layout } from '@client/c/Layout'
+import { Layout } from 'client/c/Layout'
+import type { ReactNode } from 'react'
 
 const teko = Teko({ subsets: ['latin'] })
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: ReactNode
 }>) {
   return (
     <html lang='en'>

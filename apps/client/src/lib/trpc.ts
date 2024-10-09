@@ -1,5 +1,5 @@
-import type { AppRouter } from '@server/trpc/trpc.router'
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
+import type { AppRouter } from 'server/trpc/trpc.router'
 
 // TODO: make this configurable and/or use env vars
 const PORT = 3001

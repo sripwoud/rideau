@@ -1,4 +1,4 @@
-import { trpc } from '@client/trpc'
+import { trpc } from 'client/l/trpc'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import useSWRMutation from 'swr/mutation'
