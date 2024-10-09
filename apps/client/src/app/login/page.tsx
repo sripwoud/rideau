@@ -1,4 +1,4 @@
-import { LoginForm } from '@client/containers/LoginForm'
+import { LoginForm } from 'client/c/LoginForm'
 
 export default function Login() {
   return (

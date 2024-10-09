@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hazae41/option": "^1.1.4",
     "@trpc/client": "^10.45.2",
     "@trpc/server": "^10.45.2",
     "jotai": "^2.10.0",

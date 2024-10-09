@@ -25,7 +25,8 @@
       "client/h/*": ["client/src/hooks/*"],
       "client/l/*": ["client/src/lib/*"],
       "client/p/*": ["client/src/providers/*"],
-      "server/*": ["server/src/*"]
+      "server/*": ["server/src/*"],
+      "server/l/*": ["server/src/lib/*"]
     },
     "removeComments": true,
     "skipDefaultLibCheck": true,

@@ -3,6 +3,7 @@ import { Header } from 'client/c/Header'
 import { Provider } from 'jotai'
 import type { ReactNode } from 'react'
 
+// TODO: render info about user state, handle case where it is None
 export const Layout = ({ children }: { children: ReactNode }) => (
   <Provider>
     <div className='flex flex-col min-h-screen'>
