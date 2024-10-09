@@ -15,10 +15,7 @@ export const Header = () => (
           <Link href='/'>Home</Link>
         </li>
         <li>
-          <Link href='/lorem'>Lorem</Link>
-        </li>
-        <li>
-          <Link href='/ipsum'>Ipsum</Link>
+          <Link href='/login'>Login</Link>
         </li>
       </div>
     </ul>

@@ -20,9 +20,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@client/*": ["client/src/*"],
-      "@client/c/*": ["client/src/components/*"],
-      "@server/*": ["server/src/*"]
+      "client/*": ["client/src/*"],
+      "client/c/*": ["client/src/components/*"],
+      "client/h/*": ["client/src/hooks/*"],
+      "client/l/*": ["client/src/lib/*"],
+      "client/p/*": ["client/src/providers/*"],
+      "server/*": ["server/src/*"],
+      "server/l/*": ["server/src/lib/*"]
     },
     "removeComments": true,
     "skipDefaultLibCheck": true,

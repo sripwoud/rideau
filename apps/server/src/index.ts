@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core'
-import { AppModule } from '@server/app.module'
-import { TrpcRouter } from '@server/trpc/trpc.router'
+import { AppModule } from 'server/app.module'
+import { TrpcRouter } from 'server/trpc/trpc.router'
 
 // TODO: make port configurable
 const PORT = 3001

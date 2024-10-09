@@ -1,19 +1,21 @@
 import { type INestApplication, Injectable } from '@nestjs/common'
-import { TrpcService } from '@server/trpc/trpc.service'
 import * as trpcExpress from '@trpc/server/adapters/express'
+import { AuthRouter } from 'server/auth/auth.router'
+import { createContext } from 'server/trpc/context'
+import { TrpcService } from 'server/trpc/trpc.service'
+import { UsersRouter } from 'server/users/users.router'
 import { z } from 'zod'
 
-// potentially abstract in several routers
-// https://trpc.io/docs/server/merging-routers
 @Injectable()
 export class TrpcRouter {
   constructor(
+    private readonly authRouter: AuthRouter,
     private readonly trpc: TrpcService,
-    // can inject other services in the trpc router!
-    // private readonly otherService: OtherService,
+    private readonly usersRouter: UsersRouter,
   ) {}
 
-  appRouter = this.trpc.router({
+  router = this.trpc.router({
+    auth: this.authRouter.router,
     hello: this.trpc.procedure
       .input(
         z.object({
@@ -26,21 +28,18 @@ export class TrpcRouter {
           greeting: `Hello ${name !== undefined ? name : 'Anon'}`,
         }
       }),
-    scan: this.trpc.procedure.input(z.object({ name: z.string() })).mutation(async ({ input }) => {
-      // wait for 2 seconds
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      return { success: true, message: `Scanned ${input.name}`, redirectUrl: '/success' }
-    }),
+    users: this.usersRouter.router,
   })
 
   async applyMiddleware(app: INestApplication) {
     app.use(
       '/trpc',
       trpcExpress.createExpressMiddleware({
-        router: this.appRouter,
+        router: this.router,
+        createContext,
       }),
     )
   }
 }
 
-export type AppRouter = TrpcRouter['appRouter']
+export type AppRouter = TrpcRouter['router']
