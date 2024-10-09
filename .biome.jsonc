@@ -28,5 +28,8 @@
       "apps/server/src/users/users.service.ts",
     ],
     "linter": { "rules": { "style": { "useImportType": "off" } } },
+  }, {
+    "include": ["apps/client/src/components/LoginForm.tsx"],
+    "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
   }],
 }
