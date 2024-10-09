@@ -7,6 +7,7 @@ export function useQRCodeScan() {
   const router = useRouter()
   const [scanned, setScanned] = useState(false)
 
+  // @ts-ignore FIXME
   const { trigger, isMutating } = useSWRMutation('/trpc/scan', async () => trpc.scan.mutate({ name: 'sripwoud' }), {
     onSuccess: ({ success, redirectUrl }) => {
       if (success) router.push(redirectUrl)
