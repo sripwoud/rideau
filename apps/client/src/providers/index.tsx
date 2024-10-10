@@ -8,6 +8,7 @@ import type { PropsWithChildren } from 'react'
 
 export const Providers = ({ initialState, children }: PropsWithChildren<{ initialState?: AlchemyClientState }>) => (
   <QueryClientProvider client={queryClient}>
+    { /* @ts-ignore FIXME */}
     <AlchemyAccountProvider
       config={alchemyConfig}
       initialState={initialState}
