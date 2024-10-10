@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing'
+import { Test, type TestingModule } from '@nestjs/testing'
 import { Web3RpcProxyController } from './web3-rpc-proxy.controller'
 
 describe('Web3RpcProxyController', () => {

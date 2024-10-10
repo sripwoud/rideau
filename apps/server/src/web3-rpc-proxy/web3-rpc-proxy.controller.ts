@@ -1,5 +1,5 @@
 import { All, Controller, Logger, Req, Res } from '@nestjs/common'
-import { Request, Response } from 'express'
+import type { Request, Response } from 'express'
 
 const PATH = 'web3-rpc-proxy'
 const pathRegex = new RegExp(`^/${PATH}/`)
@@ -15,7 +15,7 @@ export class Web3RpcProxyController {
       const path = req.url.replace(pathRegex, '')
 
       console.log({ path, name: Web3RpcProxyController.name })
-      const targetUrl = `${process.env['WEB3_RPC_URL']}/${path}`
+      const targetUrl = `https://api.g.alchemy.com/${path}`
       this.logger.log(`Proxying request to ${targetUrl.toString()}`)
       const { body, headers, method } = req
       const proxyResponse = await fetch(
@@ -23,7 +23,7 @@ export class Web3RpcProxyController {
         {
           method,
           // @ts-ignore FIXME
-          headers: headers as any,
+          headers: { ...headers, Authorization: `Bearer ${process.env['NEXT_PUBLIC_ALCHEMY_API_KEY']}` },
           body,
         },
       )

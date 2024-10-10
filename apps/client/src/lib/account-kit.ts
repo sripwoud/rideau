@@ -17,6 +17,9 @@ export const alchemyConfig = createConfig({
   ssr: true,
   storage: cookieStorage,
   transport: alchemy({
-    rpcUrl: `${url}/web3-rpc-proxy`,
+    // FIXME: do not use type asserting
+    apiKey: process.env['NEXT_PUBLIC_ALCHEMY_API_KEY'] as string,
+    // TODO: implement proxy to hide API key
+    // rpcUrl: `${url}/web3-rpc-proxy`,
   }),
 }, uiConfig)
