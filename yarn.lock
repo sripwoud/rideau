@@ -10171,7 +10171,7 @@ serve-static@1.16.2, serve-static@^1.13.1:
     "@nestjs/cli" "^10.0.0"
     "@nestjs/schematics" "^10.0.0"
     "@nestjs/testing" "^10.0.0"
-    "@types/express" ""
+    "@types/express" "^5.0.0"
     "@types/jest" "^29.5.2"
     "@types/node" "^20.3.1"
     "@types/supertest" "^6.0.0"
