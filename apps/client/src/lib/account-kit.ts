@@ -1,6 +1,8 @@
 import { alchemy, sepolia } from '@account-kit/infra'
 import { type AlchemyAccountsUIConfig, cookieStorage, createConfig } from '@account-kit/react'
+import { url } from 'client/l/trpc'
 
+console.log(url)
 const uiConfig: AlchemyAccountsUIConfig = {
   illustrationStyle: 'filled',
   auth: {
@@ -14,7 +16,7 @@ export const alchemyConfig = createConfig({
   enablePopupOauth: true,
   ssr: true,
   storage: cookieStorage,
-  // TODO: proxy to backend to avoid leaking api key
-  // biome-ignore lint/style/noNonNullAssertion: FIXME
-  transport: alchemy({ apiKey: process.env['NEXT_PUBLIC_ALCHEMY_API_KEY']! }),
+  transport: alchemy({
+    rpcUrl: `${url}/web3-rpc-proxy`,
+  }),
 }, uiConfig)

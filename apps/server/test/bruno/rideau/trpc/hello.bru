@@ -1,0 +1,16 @@
+meta {
+  name: hello
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3001/trpc/hello?batch=1&input={"0":{"name":"sripwoud"}}
+  body: none
+  auth: none
+}
+
+params:query {
+  batch: 1
+  input: {"0":{"name":"sripwoud"}}
+}
