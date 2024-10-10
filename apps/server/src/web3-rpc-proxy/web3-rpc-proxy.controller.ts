@@ -11,7 +11,7 @@ export class Web3RpcProxyController {
   @All('*')
   async proxy(@Req() req: Request, @Res() res: Response) {
     try {
-      this.logger.log({ url: req.url, web3RpcUrl: process.env['WEB3_RPC_URL'] })
+      // this.logger.log({ url: req.url, web3RpcUrl: process.env['WEB3_RPC_URL'] })
       const path = req.url.replace(pathRegex, '')
 
       console.log({ path, name: Web3RpcProxyController.name })

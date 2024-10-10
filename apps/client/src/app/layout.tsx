@@ -27,6 +27,7 @@ export default function RootLayout({
       <body
         className={teko.className}
       >
+        {/* @ts-ignore FIXME */}
         <Providers initialState={initialState}>
           <Layout>
             {children}
