@@ -36,6 +36,8 @@ jobs:
       - name: Coveralls
         uses: coverallsapp/github-action@v2.3.0
         with:
+          # TODO: set back to false when some tests are written
+          allow-empty: true
           format: lcov
           file: lcov.info
 
