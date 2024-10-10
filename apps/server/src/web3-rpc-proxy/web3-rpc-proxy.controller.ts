@@ -31,7 +31,7 @@ export class Web3RpcProxyController {
               method,
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env['NEXT_PUBLIC_ALCHEMY_API_KEY']}`,
+                Authorization: `Bearer ${process.env['ALCHEMY_API_KEY']}`,
               },
               body: JSON.stringify(body),
             },
