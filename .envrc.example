@@ -1,11 +1,14 @@
 use asdf
 
 # db
-export SUPABASE_URL=
+# https://supabase.com/docs/reference/javascript/initializing
+export SUPABASE_URL= 
 export SUPABASE_ANON_KEY=
 
 # server
+# https://accountkit.alchemy.com/react/quickstart#2-get-your-alchemy-api-key
 export ALCHEMY_API_KEY=
 
 # client
-export NEXT_PUBLIC_SERVER_URL=
+# url of the backend server app exposed client side in the nextjs app
+export NEXT_PUBLIC_SERVER_URL=http://localhost:3001
