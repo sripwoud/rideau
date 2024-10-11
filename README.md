@@ -1,7 +1,6 @@
 # RIDEAU
 
-![main GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sripwoud/ts-template/main.yaml?branch=main&label=main)
-[![Coverage Status](https://coveralls.io/repos/github/r1oga/ts-template/badge.svg?branch=main)](https://coveralls.io/github/r1oga/ts-template?branch=main)
+![main GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sripwoud/rideau/main.yaml?branch=main&label=main)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 
 ## Getting Started
