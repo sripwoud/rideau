@@ -1,7 +1,11 @@
 # RIDEAU
 
-![main GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sripwoud/rideau/main.yaml?branch=main&label=main)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+<a href="https://github.com/sripwoud/rideau/blob/main/LICENSE">
+    <img alt="Github license" src="https://img.shields.io/github/license/sripwoud/rideau">
+</a>
+<a href="https://github.com/sripwoud/rideau/actions?query=workflow%3Amain">
+    <img alt="GitHub main workflow" src="https://img.shields.io/github/actions/workflow/status/sripwoud/rideau/main.yml?branch=main&label=main&logo=github">
+</a>
 
 ## Getting Started
 
