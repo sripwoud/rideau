@@ -1,23 +1,17 @@
 'use client'
-import { useSignMessage, useSmartAccountClient } from '@account-kit/react'
-import config from 'client/l/config'
+import { useSemaphoreId } from 'client/h/useSemaphoreId'
+import { semaphoreIdAtom } from 'client/l/store'
+import { useAtomValue } from 'jotai'
 
 export const Dashboard = () => {
-  const { client } = useSmartAccountClient({ type: 'LightAccount' })
-  const { signMessage } = useSignMessage({
-    client,
-    onSuccess: (signature) => {
-      console.log(signature)
-    },
-    onError: (error) => {
-      console.log(error)
-    },
-  })
+  const semaphoreId = useAtomValue(semaphoreIdAtom)
+  useSemaphoreId()
+  console.log('semaphoreId', semaphoreId.getOr('undefined'))
 
   return (
     <div>
       <h1>Dashboard</h1>
-      <button type='button' onClick={() => signMessage({ message: config.appName })}>sign</button>
+      {semaphoreId.isSome() ? <p>Semaphore commitment: {semaphoreId.get().commitment.toString()}</p> : <></>}
     </div>
   )
 }
