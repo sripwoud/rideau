@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common'
 import { AppController } from 'server/app.controller'
 import { AppService } from 'server/app.service'
 import { TrpcModule } from 'server/trpc/trpc.module'
-import { Web3RpcProxyController } from './web3-rpc-proxy/web3-rpc-proxy.controller'
+import { AlchemyProxyController } from './alchemy-proxy/alchemy-proxy.controller'
 
 @Module({
   imports: [TrpcModule],
-  controllers: [AppController, Web3RpcProxyController],
+  controllers: [AppController, AlchemyProxyController],
   providers: [AppService],
 })
 export class AppModule {}

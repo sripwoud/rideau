@@ -1,7 +1,11 @@
 use asdf
 
+# db
 export SUPABASE_URL=
 export SUPABASE_ANON_KEY=
 
-export LOCAL_SUPABASE_URL=
-export LOCAL_SUPABASE_ANON_KEY=
+# server
+export ALCHEMY_API_KEY=
+
+# client
+export NEXT_PUBLIC_SERVER_URL=

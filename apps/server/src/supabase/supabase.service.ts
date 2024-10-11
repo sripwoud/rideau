@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { createClient } from '@supabase/supabase-js'
+import config from 'server/l/config'
 
 @Injectable()
 export class SupabaseService {
-  // biome-ignore lint/style/noNonNullAssertion: FIXME
-  supabase = createClient(process.env['SUPABASE_URL']!, process.env['SUPABASE_ANON_KEY']!)
+  supabase = createClient(config.supabase.url, config.supabase.anonKey)
 }

@@ -4,7 +4,7 @@
 #
 
 app = 'rideau'
-primary_region = 'ams'
+primary_region = 'fra'
 
 [build]
 

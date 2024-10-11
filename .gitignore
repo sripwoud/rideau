@@ -5,3 +5,4 @@ lcov.info
 .envrc
 **/*.bak
 repopack-output.txt
+*.tsbuildinfo

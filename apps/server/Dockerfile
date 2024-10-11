@@ -14,6 +14,7 @@ RUN yarn install --ignore-scripts --frozen-lockfile --production=false
 FROM install AS prerelease
 COPY tsconfig.json .
 COPY apps/server apps/server
+COPY config config
 RUN yarn workspace server build &&\
     find -type d -name node_modules -exec rm -fr {} + &&\
     yarn install --frozen-lockfile --production=true
@@ -27,4 +28,4 @@ USER node
 # TODO: make this configurable/overridable
 EXPOSE 3001
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "apps/server/dist"]
+CMD ["node", "apps/server/dist/apps/server/src/index"]

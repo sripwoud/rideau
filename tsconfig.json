@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "baseUrl": "apps",
+    "baseUrl": ".",
     "allowJs": true,
     "checkJs": true,
     "declaration": true,
@@ -20,14 +20,14 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "client/*": ["client/src/*"],
-      "client/c/*": ["client/src/components/*"],
-      "client/h/*": ["client/src/hooks/*"],
-      "client/l/*": ["client/src/lib/*"],
-      "client/p/*": ["client/src/providers/*"],
-      "client/p": ["client/src/providers"],
-      "server/*": ["server/src/*"],
-      "server/l/*": ["server/src/lib/*"]
+      "client/*": ["apps/client/src/*"],
+      "client/c/*": ["apps/client/src/components/*"],
+      "client/h/*": ["apps/client/src/hooks/*"],
+      "client/l/*": ["apps/client/src/lib/*"],
+      "client/p/*": ["apps/client/src/providers/*"],
+      "client/p": ["apps/client/src/providers"],
+      "server/*": ["apps/server/src/*"],
+      "server/l/*": ["apps/server/src/lib/*"]
     },
     "removeComments": true,
     "skipDefaultLibCheck": true,

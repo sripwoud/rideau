@@ -1,13 +1,13 @@
 import { All, Controller, Logger, Req, Res } from '@nestjs/common'
 import type { Request, Response } from 'express'
+import config from 'server/l/config'
 
-const ENDPOINT = 'web3-rpc-proxy'
-const endpointRgx = new RegExp(`^/${ENDPOINT}/`)
+const endpointRgx = new RegExp(`^/${config.alchemyProxyEndpoint}/`)
 const API_URL = 'https://api.g.alchemy.com'
 
-@Controller(ENDPOINT)
-export class Web3RpcProxyController {
-  private readonly logger = new Logger(Web3RpcProxyController.name)
+@Controller(config.alchemyProxyEndpoint)
+export class AlchemyProxyController {
+  private readonly logger = new Logger(AlchemyProxyController.name)
 
   @All('*')
   async proxy(@Req() req: Request, @Res() res: Response) {
@@ -31,7 +31,7 @@ export class Web3RpcProxyController {
               method,
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env['ALCHEMY_API_KEY']}`,
+                Authorization: `Bearer ${config.alchemyApiKey}`,
               },
               body: JSON.stringify(body),
             },

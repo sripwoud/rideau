@@ -8,6 +8,11 @@ pre-commit:
       stage_fixed: true
     lint:
       run: bun biome lint --config-path=.biome.jsonc --no-errors-on-unmatched
-    typecheck:
+    typecheck-client:
       glob: "*.{cjs,js,jsx,mjs,ts,tsx}"
-      run: bun tsc-files --noEmit
+      root: "apps/client"
+      run: bun tsc-files --noEmit {staged_files}
+    typecheck-server:
+      glob: "*.{cjs,js,jsx,mjs,ts,tsx}"
+      root: "apps/server"
+      run: bun tsc-files --noEmit {staged_files}
