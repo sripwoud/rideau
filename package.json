@@ -2,7 +2,6 @@
   "private": true,
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
-    "barrelsby": "^2.8.1",
     "bun-types": "^1.0.9",
     "concurrently": "^8.2.2",
     "dprint": "^0.47.2",
@@ -15,12 +14,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "build": "barrelsby --config .barrelsby.json && rm -rf dist && bun build src --outdir dist --sourcemap=inline --target=bun",
     "build.docker.server": "docker build -f apps/server/Dockerfile -t rideau-server .",
-    "start": "bun run build && bun run start.prod",
-    "start.dev": "bun --watch --hot src/index.ts",
-    "start.docker": "docker run -it --rm ts-template",
-    "start.prod": "bun dist/src/index.js",
+    "dev": "bun --filter '*' dev",
+    "start.docker": "docker run -it --rm rideau-server",
     "test": "bun test --coverage",
     "test.watch": "bun test --watch"
   },
