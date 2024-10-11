@@ -1,8 +1,7 @@
 import { alchemy, sepolia } from '@account-kit/infra'
 import { type AlchemyAccountsUIConfig, cookieStorage, createConfig } from '@account-kit/react'
-import { url } from 'client/l/trpc'
+import config from 'client/l/config'
 
-console.log(url)
 const uiConfig: AlchemyAccountsUIConfig = {
   illustrationStyle: 'filled',
   auth: {
@@ -18,6 +17,6 @@ export const alchemyConfig = createConfig({
   storage: cookieStorage,
   transport: alchemy({
     // proxying to backend server to hide API key
-    rpcUrl: `${url}/web3-rpc-proxy`,
+    rpcUrl: `${config.serverUrl}/${config.alchemyProxyEndpoint}`,
   }),
 }, uiConfig)
