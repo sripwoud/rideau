@@ -14,6 +14,7 @@ RUN yarn install --ignore-scripts --frozen-lockfile --production=false
 FROM install AS prerelease
 COPY tsconfig.json .
 COPY apps/server apps/server
+COPY apps/config apps/config
 RUN yarn workspace server build &&\
     find -type d -name node_modules -exec rm -fr {} + &&\
     yarn install --frozen-lockfile --production=true
