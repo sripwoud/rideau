@@ -1,13 +1,30 @@
-import { All, Controller, Logger, Req, Res } from '@nestjs/common'
+import { All, Controller, Logger, Post, Req, Res } from '@nestjs/common'
 import type { Request, Response } from 'express'
 import config from 'server/l/config'
 
-const endpointRgx = new RegExp(`^/${config.alchemyProxyEndpoint}/`)
 const API_URL = 'https://api.g.alchemy.com'
+const RPC_URL = `https://arb-sepolia.g.alchemy.com/v2/${config.alchemyApiKey}`
+const endpointRgx = new RegExp(`^/${config.alchemyProxyEndpoint}/`)
 
 @Controller(config.alchemyProxyEndpoint)
 export class AlchemyProxyController {
   private readonly logger = new Logger(AlchemyProxyController.name)
+  @Post()
+  async post(@Req() req: Request, @Res() res: Response) {
+    const { body } = req
+    const proxyResponse = await fetch(
+      RPC_URL,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      },
+    )
+    const data = await proxyResponse.json()
+    res.status(proxyResponse.status).json(data)
+  }
 
   @All('*')
   async proxy(@Req() req: Request, @Res() res: Response) {
