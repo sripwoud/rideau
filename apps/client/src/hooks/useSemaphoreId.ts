@@ -10,7 +10,6 @@ export const useSemaphoreId = () => {
   const setSemaphoreId = useSetAtom(semaphoreIdAtom)
   const { client } = useSmartAccountClient({ type: 'LightAccount' })
   const { signMessage, signedMessage } = useSignMessage({ client })
-  signedMessage
 
   useEffect(() => {
     if (signedMessage === undefined) {
