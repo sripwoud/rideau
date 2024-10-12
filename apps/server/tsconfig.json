@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "noEmit": false,
+    "noEmit": true,
     "module": "commonjs",
     "target": "ES2021",
     "outDir": "dist"
