@@ -1,19 +1,8 @@
 'use client'
-import {
-  useAccount,
-  useAuthModal,
-  useLogout,
-  useSignerStatus,
-  useSmartAccountClient,
-  useUser,
-} from '@account-kit/react'
+import { useAuthModal, useLogout, useSignerStatus, useUser } from '@account-kit/react'
 
 export default function Home() {
   const user = useUser()
-  const { account } = useAccount({ type: 'LightAccount' })
-  console.log({ account })
-  const { client } = useSmartAccountClient({ type: 'LightAccount' })
-  console.log({ client })
   const { openAuthModal } = useAuthModal()
   const { isInitializing } = useSignerStatus()
   const { logout } = useLogout()
