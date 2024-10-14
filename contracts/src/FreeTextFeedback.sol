@@ -3,8 +3,6 @@ pragma solidity >=0.8.7 <0.9.0;
 
 import "./BaseFeedback.sol";
 
-import "./BaseFeedback.sol";
-
 contract FreeTextFeedback is BaseFeedback {
     constructor(address semaphoreAddress) BaseFeedback(semaphoreAddress) {}
 
