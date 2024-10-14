@@ -2,5 +2,8 @@
   "name": "contracts",
   "devDependencies": {
     "solhint": "^5.0.3"
+  },
+  "dependencies": {
+    "@semaphore-protocol/contracts": "^4.3.0"
   }
 }
