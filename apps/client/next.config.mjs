@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  lint: {
+  eslint: {
     ignoreDuringBuilds: true,
+  },
+  webpack: (config) => {
+    config.ignoreWarnings = [
+      { module: /node_modules\/web-worker/ },
+    ]
+    return config
   },
 }
 

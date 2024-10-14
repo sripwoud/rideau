@@ -34,7 +34,7 @@
     ],
     "linter": { "rules": { "style": { "useImportType": "off" } } },
   }, {
-    "include": ["apps/client/src/components/LoginForm.tsx", "apps/client/src/hooks/useLogin.ts"],
+    "include": ["apps/client/src/hooks/useSemaphoreId.ts"],
     "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
   }],
 }

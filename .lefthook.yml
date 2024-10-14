@@ -9,10 +9,8 @@ pre-commit:
     lint:
       run: bun biome lint --config-path=.biome.jsonc --no-errors-on-unmatched
     typecheck-client:
-      glob: "*.{cjs,js,jsx,mjs,ts,tsx}"
-      root: "apps/client"
-      run: bun tsc-files --noEmit {staged_files}
+      glob: "apps/client/**/*.{cjs,js,jsx,mjs,ts,tsx}"
+      run: bun tsc-files -p tsconfig.json -p apps/client/tsconfig.json {staged_files}
     typecheck-server:
-      glob: "*.{cjs,js,jsx,mjs,ts,tsx}"
-      root: "apps/server"
-      run: bun tsc-files --noEmit {staged_files}
+      glob: "apps/server/**/*.{cjs,js,jsx,mjs,ts,tsx}"
+      run: bun tsc-files -p tsconfig.json -p apps/server/tsconfig.json --noEmit {staged_files}

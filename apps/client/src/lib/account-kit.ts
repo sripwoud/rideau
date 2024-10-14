@@ -1,4 +1,4 @@
-import { alchemy, sepolia } from '@account-kit/infra'
+import { alchemy, arbitrumSepolia } from '@account-kit/infra'
 import { type AlchemyAccountsUIConfig, cookieStorage, createConfig } from '@account-kit/react'
 import config from 'client/l/config'
 
@@ -11,7 +11,7 @@ const uiConfig: AlchemyAccountsUIConfig = {
 }
 
 export const alchemyConfig = createConfig({
-  chain: sepolia,
+  chain: arbitrumSepolia,
   enablePopupOauth: true,
   ssr: true,
   storage: cookieStorage,
