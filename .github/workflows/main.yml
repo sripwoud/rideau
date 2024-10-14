@@ -63,8 +63,9 @@ jobs:
         run: |
           bun concurrently \
             -c auto \
-            -n format,lint,typecheck-server,typecheck-ui \
+            -n format,lint-jtsx,lint-sol,typecheck-server,typecheck-ui \
             'bun dprint check' \
             'bun biome check --config-path=.biome.jsonc .' \
+            'bun solhint --config contracts/.solhint.json contracts/{src,test}/**/*.sol' \
             'bun tsc -p apps/server/tsconfig.build.json' \
             'bun tsc -p apps/client/tsconfig.json'
