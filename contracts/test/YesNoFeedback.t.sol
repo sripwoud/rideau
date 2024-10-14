@@ -6,6 +6,7 @@ import {Test} from "forge-std/Test.sol";
 import {YesNoFeedback} from "../src/YesNoFeedback.sol";
 import {MockSemaphore} from "./MockSemaphore.sol";
 import {ISemaphore} from "semaphore/interfaces/ISemaphore.sol";
+import {BaseFeedback} from "../src/BaseFeedback.sol";
 
 contract YesNoFeedbackTest is Test {
     YesNoFeedback public yesNoFeedback;
@@ -16,7 +17,7 @@ contract YesNoFeedbackTest is Test {
         yesNoFeedback = new YesNoFeedback(address(mockSemaphore));
     }
 
-    function test_Constructor() public {
+    function test_Constructor() public view {
         assertEq(address(yesNoFeedback.semaphore()), address(mockSemaphore));
         assertEq(yesNoFeedback.groupId(), 1);
         assertEq(mockSemaphore.membersCount(), 0);
@@ -65,7 +66,7 @@ contract YesNoFeedbackTest is Test {
         uint256 feedback = 2; // Invalid vote
         uint256[8] memory points;
 
-        vm.expectRevert(abi.encodeWithSignature("InvalidFeedback()"));
+        vm.expectRevert(BaseFeedback.InvalidFeedback.selector);
         yesNoFeedback.sendFeedback(merkleTreeDepth, merkleTreeRoot, nullifier, feedback, points);
     }
 }
