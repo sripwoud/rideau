@@ -15,7 +15,7 @@
   },
   "linter": {
     "enabled": true,
-    "ignore": [".next", "dist"],
+    "ignore": [".next", "dist", "out"],
     "rules": {
       "recommended": true,
       "complexity": {
