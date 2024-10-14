@@ -1,0 +1,82 @@
+diff --git a/node_modules/tr46/index.js b/node_modules/tr46/index.js
+index 9ce12ca..ca3bc5b 100644
+--- a/node_modules/tr46/index.js
++++ b/node_modules/tr46/index.js
+@@ -1,6 +1,6 @@
+ "use strict";
+ 
+-var punycode = require("punycode");
++var punycode = require("punycode/");
+ var mappingTable = require("./lib/mappingTable.json");
+ 
+ var PROCESSING_OPTIONS = {
+@@ -106,10 +106,10 @@ function validateLabel(label, processing_option) {
+   var error = false;
+ 
+   if (normalize(label) !== label ||
+-      (label[3] === "-" && label[4] === "-") ||
+-      label[0] === "-" || label[label.length - 1] === "-" ||
+-      label.indexOf(".") !== -1 ||
+-      label.search(combiningMarksRegex) === 0) {
++    (label[3] === "-" && label[4] === "-") ||
++    label[0] === "-" || label[label.length - 1] === "-" ||
++    label.indexOf(".") !== -1 ||
++    label.search(combiningMarksRegex) === 0) {
+     error = true;
+   }
+ 
+@@ -117,8 +117,8 @@ function validateLabel(label, processing_option) {
+   for (var i = 0; i < len; ++i) {
+     var status = findStatus(label.codePointAt(i));
+     if ((processing === PROCESSING_OPTIONS.TRANSITIONAL && status[1] !== "valid") ||
+-        (processing === PROCESSING_OPTIONS.NONTRANSITIONAL &&
+-         status[1] !== "valid" && status[1] !== "deviation")) {
++      (processing === PROCESSING_OPTIONS.NONTRANSITIONAL &&
++        status[1] !== "valid" && status[1] !== "deviation")) {
+       error = true;
+       break;
+     }
+@@ -140,7 +140,7 @@ function processing(domain_name, useSTD3, processing_option) {
+       var validation = validateLabel(labels[i]);
+       labels[i] = validation.label;
+       result.error = result.error || validation.error;
+-    } catch(e) {
++    } catch (e) {
+       result.error = true;
+     }
+   }
+@@ -151,13 +151,13 @@ function processing(domain_name, useSTD3, processing_option) {
+   };
+ }
+ 
+-module.exports.toASCII = function(domain_name, useSTD3, processing_option, verifyDnsLength) {
++module.exports.toASCII = function (domain_name, useSTD3, processing_option, verifyDnsLength) {
+   var result = processing(domain_name, useSTD3, processing_option);
+   var labels = result.string.split(".");
+-  labels = labels.map(function(l) {
++  labels = labels.map(function (l) {
+     try {
+       return punycode.toASCII(l);
+-    } catch(e) {
++    } catch (e) {
+       result.error = true;
+       return l;
+     }
+@@ -169,7 +169,7 @@ module.exports.toASCII = function(domain_name, useSTD3, processing_option, verif
+       result.error = true;
+     }
+ 
+-    for (var i=0; i < labels.length; ++i) {
++    for (var i = 0; i < labels.length; ++i) {
+       if (labels.length > 63 || labels.length === 0) {
+         result.error = true;
+         break;
+@@ -181,7 +181,7 @@ module.exports.toASCII = function(domain_name, useSTD3, processing_option, verif
+   return labels.join(".");
+ };
+ 
+-module.exports.toUnicode = function(domain_name, useSTD3) {
++module.exports.toUnicode = function (domain_name, useSTD3) {
+   var result = processing(domain_name, useSTD3, PROCESSING_OPTIONS.NONTRANSITIONAL);
+ 
+   return {
