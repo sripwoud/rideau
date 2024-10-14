@@ -22,7 +22,8 @@
     "test.watch": "bun test --watch"
   },
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "contracts"
   ],
   "dependencies": {
     "patch-package": "^8.0.0"
