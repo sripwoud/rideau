@@ -1,5 +1,7 @@
+'use client'
 import { Dashboard as DashboardComponent } from 'client/c/Dashboard'
+import { withAuth } from 'client/c/withAuth'
 
-export default function Dashboard() {
-  return <DashboardComponent />
-}
+const Dashboard = () => <DashboardComponent />
+
+export default withAuth(Dashboard)
