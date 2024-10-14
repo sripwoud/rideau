@@ -6,8 +6,12 @@ pre-commit:
     format:
       run: bun dprint fmt
       stage_fixed: true
-    lint:
+    lint-jtsx:
       run: bun biome lint --config-path=.biome.jsonc --no-errors-on-unmatched
+    lint-sol:
+      glob: "*.sol"
+      root: "contracts"
+      run: bun solhint --config .solhint.json {staged_files}
     typecheck-client:
       glob: "apps/client/**/*.{cjs,js,jsx,mjs,ts,tsx}"
       run: bun tsc-files -p tsconfig.json -p apps/client/tsconfig.json {staged_files}
