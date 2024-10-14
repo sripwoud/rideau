@@ -1,6 +1,8 @@
 import { isEnvVarDefined, sharedConfig, type SharedConfigI } from 'config'
+import type { Metadata } from 'next'
 
 interface ClientConfigI {
+  metadata: Metadata
   serverUrl: string
 }
 
@@ -10,6 +12,11 @@ isEnvVarDefined(serverUrl, 'NEXT_PUBLIC_SERVER_URL')
 
 const clientConfig: SharedConfigI & ClientConfigI = {
   ...sharedConfig,
+  metadata: {
+    title: 'Rideau',
+    description: 'Anonymous survey and feedback platform',
+  },
+
   serverUrl,
 }
 

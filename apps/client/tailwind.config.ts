@@ -3,7 +3,6 @@ import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
@@ -17,6 +16,10 @@ const config: Config = {
         crayola: '#f7567c',
         blue: '#99e1d9',
         wenge: '#5d576b',
+      },
+      fontFamily: {
+        mono: ['var(--font-fira-mono)'],
+        sans: ['var(--font-teko)'],
       },
     },
   },

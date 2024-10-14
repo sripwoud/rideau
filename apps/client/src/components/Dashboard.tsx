@@ -12,8 +12,14 @@ export const Dashboard = () => {
   return (
     <div>
       <h1>Dashboard</h1>
-      <p>Account: {account?.address}</p>
-      {semaphoreId.andThenSync(({ commitment }) => <p>Semaphore commitment: {commitment.toString()}</p>)}
+      <p>
+        Account: <code>{account?.address}</code>
+      </p>
+      {semaphoreId.andThenSync(({ commitment }) => (
+        <p>
+          Semaphore commitment: <code>{commitment.toString()}</code>
+        </p>
+      ))}
     </div>
   )
 }

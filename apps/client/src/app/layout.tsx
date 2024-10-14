@@ -1,19 +1,17 @@
-import type { Metadata } from 'next'
-import { Teko } from 'next/font/google'
+import { Fira_Mono, Teko } from 'next/font/google'
 import './globals.css'
 import { cookieToInitialState } from '@account-kit/core'
 import { Layout } from 'client/c/Layout'
+import config from 'client/l/config'
 import { alchemyConfig } from 'client/lib/account-kit'
 import { Providers } from 'client/p'
 import { headers } from 'next/headers'
 import type { ReactNode } from 'react'
 
-const teko = Teko({ subsets: ['latin'] })
+const firaMono = Fira_Mono({ display: 'swap', subsets: ['latin'], variable: '--font-fira-mono', weight: '400' })
+const teko = Teko({ display: 'swap', subsets: ['latin'], variable: '--font-teko' })
 
-export const metadata: Metadata = {
-  title: 'Rideau',
-  description: 'Anonymous survey and feedback platform',
-}
+export const metadata = config.metadata
 
 export default function RootLayout({
   children,
@@ -23,10 +21,8 @@ export default function RootLayout({
   const initialState = cookieToInitialState(alchemyConfig, headers().get('cookie') ?? undefined)
 
   return (
-    <html lang='en'>
-      <body
-        className={teko.className}
-      >
+    <html className={`${firaMono.variable} ${teko.variable}`} lang='en'>
+      <body>
         {/* @ts-ignore FIXME */}
         <Providers initialState={initialState}>
           <Layout>
