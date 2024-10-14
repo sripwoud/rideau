@@ -1,7 +1,10 @@
-node_modules
-dist
+cache
 coverage
-lcov.info
+dist
+lcov-?*.info
+node_modules
+out
+
 .envrc
 **/*.bak
 repopack-output.txt
