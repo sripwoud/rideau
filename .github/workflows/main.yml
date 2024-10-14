@@ -27,11 +27,11 @@ jobs:
               - apps/{client,server}/package.json
               - apps/{client,server}/tsconfig.json
             sol:
-              - '**/*.sol'
+              - 'contracts/**/*.sol'
 
   _test-jts:
     needs: changed-files
-    if: needs.changed-files.outputs.any_ts_changed == 'true'
+    if: needs.changed-files.outputs.any_jts_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
 
   _test-sol:
     needs: changed-files
-    if: needs.changed-files.outputs.sol_any_changed == 'true'
+    if: needs.changed-files.outputs.any_sol_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
