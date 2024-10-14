@@ -2,18 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root { */
-/*   --background: #ffffff; */
-/*   --foreground: #171717; */
-/* } */
-
-/* @media (prefers-color-scheme: dark) { */
-/*   :root { */
-/*     --background: #0a0a0a; */
-/*     --foreground: #ededed; */
-/*   } */
-/* } */
-
 @layer base {
   a {
     @apply hover:underline hover:text-crayola;
@@ -29,6 +17,10 @@
   }
   button:hover {
     border-radius: 0.75rem;
+  }
+
+  code {
+    @apply text-base;
   }
 }
 
