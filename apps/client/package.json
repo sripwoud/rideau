@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postinstall": "patch-package",
     "start": "next start"
   },
   "dependencies": {
