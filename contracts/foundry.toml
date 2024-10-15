@@ -2,5 +2,6 @@
 src = "src"
 out = "out"
 libs = ["lib"]
-
+remappings = ["semaphore/=../node_modules/@semaphore-protocol/contracts"]
+no_match_test = "testOptions" # FIXME:  otherwise dynamic array is fuzzed and lead to crash in the tests
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
