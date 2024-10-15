@@ -46,6 +46,7 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
   }
 
   const handleVote = () => {
+    // TODO
     // get Users
     // create Group
     // encode message
@@ -63,8 +64,9 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
     // FIXME this is ugly! check (may be necessary to make a manual eth_call?)
     // correctly handle case (prevent it to happen by simulating tx?) where user is already in group, check for revert with a LeafAlreadyExists error
     // https://github.com/privacy-scaling-explorations/zk-kit.solidity/blob/b6cdd4f94e0f26c0d71752e17d114af78133912c/packages/lean-imt/contracts/InternalLeanIMT.sol#L23
-    if (error !== undefined) setJoined(true)
+    if (error !== null) setJoined(true)
   }, [error])
+
   return (
     <div className='max-w-md mx-auto mt-10 rounded-xl shadow-md overflow-hidden md:max-w-2xl'>
       <div className='p-8'>
@@ -76,20 +78,18 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
         >
           Feedback contract: {config.contracts.yesNoFeedback[arbitrumSepolia.id]}
         </ExternalLink>
-        <form onSubmit={handleSubmit} className='space-y-6'>
-          <div className='flex flex-col items-center'>
-            <label className='inline-flex items-center space-x-3 cursor-pointer'>
-              <input
-                type='checkbox'
-                className='form-checkbox h-6 w-6 text-blue-600 rounded'
-                checked={isChecked}
-                onChange={(e) => setIsChecked(e.target.checked)}
-              />
-              <span className='ml-2 font-medium'>
-                {isChecked ? 'Yes' : 'No'}
-              </span>
-            </label>
-          </div>
+        <form onSubmit={handleSubmit} className='space-y-6 flex flex-col items-center'>
+          <label className='inline-flex items-center space-x-3 cursor-pointer'>
+            <input
+              type='checkbox'
+              className='form-checkbox h-6 w-6 text-blue-600 rounded'
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+            />
+            <span className='ml-2 font-medium'>
+              {isChecked ? 'Yes' : 'No'}
+            </span>
+          </label>
           {isSendingUserOperation === false
             ? (
               <button
