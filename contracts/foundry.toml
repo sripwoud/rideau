@@ -4,4 +4,7 @@ out = "out"
 libs = ["lib"]
 remappings = ["semaphore/=../node_modules/@semaphore-protocol/contracts"]
 no_match_test = "testOptions" # FIXME:  otherwise dynamic array is fuzzed and lead to crash in the tests
+
+[etherscan]
+arbitrum-sepolia = { key = "3UER3FHZVERKR6NBXN3TUGZWR8H3CIY9CW" }
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
