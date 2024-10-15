@@ -16,7 +16,7 @@ contract YesNoFeedbackTest is Test {
     uint256 private merkleTreeRoot = 123;
     uint256 private nullifier = 456;
     uint256[8] private points;
-    string title = "Yes/No Feedback";
+    string private title = "Yes/No Feedback";
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();
