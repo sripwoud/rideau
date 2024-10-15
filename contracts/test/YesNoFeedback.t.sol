@@ -9,13 +9,13 @@ import {ISemaphore} from "semaphore/interfaces/ISemaphore.sol";
 import {BaseFeedback} from "../src/BaseFeedback.sol";
 
 contract YesNoFeedbackTest is Test {
-    YesNoFeedback public yesNoFeedback;
-    MockSemaphore public mockSemaphore;
-    uint256 idCommitment = 123456;
-    uint256 merkleTreeDepth = 20;
-    uint256 merkleTreeRoot = 123;
-    uint256 nullifier = 456;
-    uint256[8] points;
+    YesNoFeedback private yesNoFeedback;
+    MockSemaphore private mockSemaphore;
+    uint256 private idCommitment = 123456;
+    uint256 private merkleTreeDepth = 20;
+    uint256 private merkleTreeRoot = 123;
+    uint256 private nullifier = 456;
+    uint256[8] private points;
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();

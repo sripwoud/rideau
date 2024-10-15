@@ -9,14 +9,14 @@ import {ISemaphore} from "semaphore/interfaces/ISemaphore.sol";
 import {BaseFeedback} from "../src/BaseFeedback.sol";
 
 contract MultipleChoiceFeedbackTest is Test {
-    MultipleChoiceFeedback public multipleChoiceFeedback;
-    MockSemaphore public mockSemaphore;
-    uint256 idCommitment = 123456;
-    uint256 merkleTreeDepth = 20;
-    uint256 merkleTreeRoot = 123;
-    uint256 nullifier = 456;
-    uint256[8] points;
-    string[] public testOptions;
+    MultipleChoiceFeedback private multipleChoiceFeedback;
+    MockSemaphore private mockSemaphore;
+    uint256 private idCommitment = 123456;
+    uint256 private merkleTreeDepth = 20;
+    uint256 private merkleTreeRoot = 123;
+    uint256 private nullifier = 456;
+    uint256[8] private points;
+    string[] private testOptions;
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();
