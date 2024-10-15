@@ -7,7 +7,7 @@
     "@semaphore-protocol/contracts": "^4.3.0"
   },
   "scripts": {
-    "deploy.arb1sepolia.yesno": "forge create --rpc-url https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY --private-key $DEPLOYER_PRIVATE_KEY src/YesNoFeedback.sol:YesNoFeedback --constructor-args $ARB1SEPOLIA_SEMAPHORE_ADDRESS --verify",
+    "deploy.arb1sepolia.yesno": "forge create --chain arbitrum-sepolia --rpc-url https://arb-sepolia.g.alchemy.com/v2/$ALCHEMY_API_KEY --private-key $DEPLOYER_PRIVATE_KEY src/YesNoFeedback.sol:YesNoFeedback --constructor-args $ARB1SEPOLIA_SEMAPHORE_ADDRESS 'Do you like working at PSE' --verify",
     "test": "forge test",
     "verify.arb1sepolia.yesno": "forge verify-contract --chain arbitrum-sepolia $ARB1SEPOLIA_YESNOFEEDBACK_ADDRESS src/YesNoFeedback.sol:YesNoFeedback --constructor-args $(cast abi-encode 'constructor(address)' $ARB1SEPOLIA_SEMAPHORE_ADDRESS)"
   }

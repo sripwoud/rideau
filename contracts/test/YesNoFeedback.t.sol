@@ -16,10 +16,11 @@ contract YesNoFeedbackTest is Test {
     uint256 private merkleTreeRoot = 123;
     uint256 private nullifier = 456;
     uint256[8] private points;
+    string private title = "Yes/No Feedback";
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();
-        yesNoFeedback = new YesNoFeedback(address(mockSemaphore));
+        yesNoFeedback = new YesNoFeedback(address(mockSemaphore), title);
     }
 
     function test_Constructor() public view {
@@ -28,6 +29,15 @@ contract YesNoFeedbackTest is Test {
         assertEq(mockSemaphore.membersCount(), 0);
         assertEq(yesNoFeedback.terminated(), false);
         assertEq(yesNoFeedback.admin(), address(this));
+    }
+
+    function test_RevertConstructorIfNoTitle() public {
+        vm.expectRevert(BaseFeedback.EmptyTitle.selector);
+        new YesNoFeedback(address(mockSemaphore), "");
+    }
+
+    function test_Title() public {
+        assertEq(yesNoFeedback.title(), title);
     }
 
     function test_JoinGroup() public {
@@ -54,7 +64,6 @@ contract YesNoFeedbackTest is Test {
 
     function test_RevertSendFeedbackIfTerminated() public {
         yesNoFeedback.terminate();
-        uint256[8] memory points;
 
         vm.expectRevert(BaseFeedback.Terminated.selector);
         yesNoFeedback.sendFeedback(merkleTreeDepth, merkleTreeRoot, nullifier, 1, points);

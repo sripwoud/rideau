@@ -17,11 +17,12 @@ contract MultipleChoiceFeedbackTest is Test {
     uint256 private nullifier = 456;
     uint256[8] private points;
     string[] private testOptions;
+    string title = "Multiple Choice Feedback";
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();
         testOptions = ["Option A", "Option B", "Option C"];
-        multipleChoiceFeedback = new MultipleChoiceFeedback(address(mockSemaphore), testOptions);
+        multipleChoiceFeedback = new MultipleChoiceFeedback(address(mockSemaphore), testOptions, title);
     }
 
     function test_Constructor() public view {
@@ -65,7 +66,7 @@ contract MultipleChoiceFeedbackTest is Test {
         insufficientOptions[0] = "Only Option";
 
         vm.expectRevert(MultipleChoiceFeedback.InsufficientOptions.selector);
-        new MultipleChoiceFeedback(address(mockSemaphore), insufficientOptions);
+        new MultipleChoiceFeedback(address(mockSemaphore), insufficientOptions, title);
     }
 
     function test_JoinGroup() public {

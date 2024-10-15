@@ -24,7 +24,7 @@ const clientConfig: SharedConfigI & ClientConfigI = {
     description: 'Anonymous survey and feedback platform',
   },
   contracts: {
-    [Contract.YesNoFeedback]: { [arbitrumSepolia.id]: '0x92844a251EC890141F6617c9c2ef7eEb26a81ad8' as HexString },
+    [Contract.YesNoFeedback]: { [arbitrumSepolia.id]: '0x4308bfd6c6cd829b6d342c90b43bef46700cec8d' as HexString },
     [Contract.Semaphore]: { [arbitrumSepolia.id]: '0x1e0d7FF1610e480fC93BdEC510811ea2Ba6d7c2f' as HexString },
   },
   serverUrl,
