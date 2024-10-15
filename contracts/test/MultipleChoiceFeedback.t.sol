@@ -28,11 +28,6 @@ contract MultipleChoiceFeedbackTest is Test {
         assertEq(multipleChoiceFeedback.options(2), "Option C");
     }
 
-    function testFuzz_Options(uint256 index) public {
-        vm.assume(index < testOptions.length);
-        assertEq(multipleChoiceFeedback.options(index), testOptions[index]);
-    }
-
     function test_RevertConstructorIfInsufficientOptions() public {
         string[] memory insufficientOptions = new string[](1);
         insufficientOptions[0] = "Only Option";

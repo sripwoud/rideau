@@ -5,5 +5,8 @@
   },
   "dependencies": {
     "@semaphore-protocol/contracts": "^4.3.0"
+  },
+  "scripts": {
+    "test": "forge test"
   }
 }
