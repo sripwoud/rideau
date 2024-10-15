@@ -1,23 +1,36 @@
+'use client'
+import { useLogout, useUser } from '@account-kit/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export const Header = () => (
-  <header className='p-4'>
-    <ul className='flex items-center justify-between'>
-      <li>
-        <Link className='flex items-center' href='/'>
-          <Image className='' src='/icon.png' alt='rideau-logo' height={50} width={50} />
-          <span className='text-4xl'>RIDEAU</span>
-        </Link>
-      </li>
-      <div className='flex space-x-4'>
+export const Header = () => {
+  const user = useUser()
+  const { logout } = useLogout()
+
+  return (
+    <header className='p-4'>
+      <ul className='flex items-center justify-between'>
         <li>
-          <Link href='/'>Home</Link>
+          <Link className='flex items-center' href='/'>
+            <Image className='' src='/icon.png' alt='rideau-logo' height={50} width={50} />
+            <span className='text-4xl'>RIDEAU</span>
+          </Link>
         </li>
-        <li>
-          <Link href='/dashboard'>Dashboard</Link>
-        </li>
-      </div>
-    </ul>
-  </header>
-)
+        <div className='flex items-center space-x-4'>
+          {user !== null && (
+            <li>
+              <button
+                onClick={() => {
+                  logout()
+                }}
+                type='button'
+              >
+                Logout
+              </button>
+            </li>
+          )}
+        </div>
+      </ul>
+    </header>
+  )
+}
