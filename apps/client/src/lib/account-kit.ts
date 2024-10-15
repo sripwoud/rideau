@@ -13,7 +13,7 @@ const uiConfig: AlchemyAccountsUIConfig = {
 export const alchemyConfig = createConfig({
   chain: arbitrumSepolia,
   enablePopupOauth: true,
-  policyId:config.gasPolicyId,
+  policyId: config.gasPolicyId,
   ssr: true,
   storage: cookieStorage,
   transport: alchemy({

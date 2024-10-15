@@ -5,14 +5,17 @@ import { capitalize } from 'client/l/display'
 import { type FC, type FormEvent, useState } from 'react'
 // TODO: use dynamic chain
 import { useSendUserOperation, useSmartAccountClient } from '@account-kit/react'
-import { abi } from 'client/abis/YesNoFeedback.json'
+import ABI from 'client/abis/YesNoFeedback.json'
 import { semaphoreIdAtom } from 'client/l/store'
 import { useAtomValue } from 'jotai'
 import { encodeFunctionData } from 'viem'
 import { arbitrumSepolia } from 'viem/chains'
-//import {LEAF_ALREADY_EXISTS_SELECTOR} from 'client/l/constants'
-import {PulseLoader} from 'react-spinners'
+// import {LEAF_ALREADY_EXISTS_SELECTOR} from 'client/l/constants'
+import { useEffect } from 'react'
+import { PulseLoader } from 'react-spinners'
+// import{ generateProof,Group } from '@semaphore-protocol/core'
 
+const { abi } = ABI
 interface YesNoFeedbackProps {
   title: string
 }
@@ -20,7 +23,7 @@ interface YesNoFeedbackProps {
 export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
   const [joined, setJoined] = useState(false)
   const { client } = useSmartAccountClient({ type: 'LightAccount' })
-  const { sendUserOperation, isSendingUserOperation,error, sendUserOperationResult } = useSendUserOperation({
+  const { sendUserOperation, isSendingUserOperation, error } = useSendUserOperation({
     client,
     onSuccess: (res) => {
       console.log(res)
@@ -32,28 +35,36 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
   const joinData = encodeFunctionData({
     abi,
     functionName: 'joinGroup',
-    args: [semaphoreId.getOrThrow()['_commitment'],]
+    args: [semaphoreId.getOrThrow()['_commitment']],
   })
 
-  const handleJoin = (e: FormEvent) => {
-    e.preventDefault()
-    // TODO handle case (prevent it to happen by simulating tx?) where user is already in group, check for revert with a LeafAlreadyExists error
-    // https://github.com/privacy-scaling-explorations/zk-kit.solidity/blob/b6cdd4f94e0f26c0d71752e17d114af78133912c/packages/lean-imt/contracts/InternalLeanIMT.sol#L23
+  const handleJoin = () => {
     sendUserOperation({
-      uo: { target: config.contracts.yesNoFeedback[arbitrumSepolia.id], data:joinData },
+      // FIXME avoid type assertion
+      uo: { target: config.contracts.yesNoFeedback[arbitrumSepolia.id] as `0x{string}`, data: joinData },
     })
   }
 
-  const handleVote = (_e:FormEvent) => {
-    console.log('vote')
+  const handleVote = () => {
+    // get Users
+    // create Group
+    // encode message
+    // generateProof
+    // sendUserOperation
+    alert(`Voted ${isChecked ? 'YES' : 'NO'}`)
   }
 
-  const handleSubmit = (e:FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    joined ? handleVote(e) :handleJoin(e)
+    joined ? handleVote() : handleJoin()
   }
 
-  console.log(sendUserOperationResult.toString())
+  useEffect(() => {
+    // FIXME this is ugly! check (may be necessary to make a manual eth_call?)
+    // correctly handle case (prevent it to happen by simulating tx?) where user is already in group, check for revert with a LeafAlreadyExists error
+    // https://github.com/privacy-scaling-explorations/zk-kit.solidity/blob/b6cdd4f94e0f26c0d71752e17d114af78133912c/packages/lean-imt/contracts/InternalLeanIMT.sol#L23
+    if (error !== undefined) setJoined(true)
+  }, [error])
   return (
     <div className='max-w-md mx-auto mt-10 rounded-xl shadow-md overflow-hidden md:max-w-2xl'>
       <div className='p-8'>
@@ -65,7 +76,7 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
         >
           Feedback contract: {config.contracts.yesNoFeedback[arbitrumSepolia.id]}
         </ExternalLink>
-    <form onSubmit={handleSubmit} className='space-y-6'>
+        <form onSubmit={handleSubmit} className='space-y-6'>
           <div className='flex flex-col items-center'>
             <label className='inline-flex items-center space-x-3 cursor-pointer'>
               <input
@@ -85,7 +96,7 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
                 type='submit'
                 className='w-full font-bold py-3 px-4 rounded'
               >
-                {joined ? "Vote": "Join"}
+                {joined ? 'Vote' : 'Join'}
               </button>
             )
             : <PulseLoader color='#5d576b' />}

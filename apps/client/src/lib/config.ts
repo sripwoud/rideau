@@ -1,7 +1,7 @@
 import { isEnvVarDefined, sharedConfig, type SharedConfigI } from 'config'
 import type { Metadata } from 'next'
+import type { Address } from 'viem'
 import { arbitrumSepolia } from 'viem/chains'
-import { Address } from 'viem/types'
 
 enum Contract {
   Semaphore = 'semaphore',
