@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { arbitrumSepolia } from 'viem/chains'
 
 type HexString = `0x${string}`
-enum Contract {
+export enum Contract {
   Semaphore = 'semaphore',
   YesNoFeedback = 'yesNoFeedback',
 }
