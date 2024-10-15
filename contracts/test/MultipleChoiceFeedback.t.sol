@@ -17,7 +17,7 @@ contract MultipleChoiceFeedbackTest is Test {
     uint256 private nullifier = 456;
     uint256[8] private points;
     string[] private testOptions;
-    string title = "Multiple Choice Feedback";
+    string private title = "Multiple Choice Feedback";
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();

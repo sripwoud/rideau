@@ -17,7 +17,7 @@ contract FreeTextFeedbackTest is Test {
     uint256 private nullifier = 456;
     uint256 private feedbackHash = uint256(keccak256(abi.encodePacked("This is a valid feedback")));
     uint256[8] private points;
-    string title = "Free Text Feedback";
+    string public title = "Free Text Feedback";
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();
