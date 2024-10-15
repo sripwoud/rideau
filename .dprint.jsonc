@@ -1,5 +1,5 @@
 {
-  "excludes": ["contracts/lib"],
+  "excludes": ["apps/client/abis", "contracts/lib", "contracts/out"],
   "exec": {
     "commands": [
       { "command": "forge fmt - --raw", "exts": ["sol"] },
