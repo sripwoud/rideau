@@ -5,14 +5,30 @@ pragma solidity >=0.8.7 <0.9.0;
 import {ISemaphore} from "semaphore/interfaces/ISemaphore.sol";
 
 abstract contract BaseFeedback {
-    ISemaphore public semaphore;
+    address public admin;
     uint256 public groupId;
+    ISemaphore public semaphore;
+    bool public terminated;
 
     error InvalidFeedback();
+    error NotAdmin();
+    error Terminated();
 
     constructor(address semaphoreAddress) {
+        admin = msg.sender;
+        terminated = false;
         semaphore = ISemaphore(semaphoreAddress);
         groupId = semaphore.createGroup(address(this));
+    }
+
+    modifier onlyAdmin() {
+        if (msg.sender != admin) revert NotAdmin();
+        _;
+    }
+
+    modifier notTerminated() {
+        if (terminated) revert Terminated();
+        _;
     }
 
     modifier validateFeedback(uint256 feedback) {
@@ -20,7 +36,11 @@ abstract contract BaseFeedback {
         _;
     }
 
-    function joinGroup(uint256 idCommitment) external {
+    function terminate() external onlyAdmin {
+        terminated = true;
+    }
+
+    function joinGroup(uint256 idCommitment) external notTerminated {
         semaphore.addMember(groupId, idCommitment);
     }
 
@@ -30,7 +50,7 @@ abstract contract BaseFeedback {
         uint256 nullifier,
         uint256 feedback,
         uint256[8] calldata points
-    ) external validateFeedback(feedback) {
+    ) external notTerminated validateFeedback(feedback) {
         _validateProof(merkleTreeDepth, merkleTreeRoot, nullifier, feedback, points);
     }
 

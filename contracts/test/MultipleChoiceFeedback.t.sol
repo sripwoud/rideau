@@ -11,6 +11,11 @@ import {BaseFeedback} from "../src/BaseFeedback.sol";
 contract MultipleChoiceFeedbackTest is Test {
     MultipleChoiceFeedback public multipleChoiceFeedback;
     MockSemaphore public mockSemaphore;
+    uint256 idCommitment = 123456;
+    uint256 merkleTreeDepth = 20;
+    uint256 merkleTreeRoot = 123;
+    uint256 nullifier = 456;
+    uint256[8] points;
     string[] public testOptions;
 
     function setUp() public {
@@ -23,9 +28,36 @@ contract MultipleChoiceFeedbackTest is Test {
         assertEq(address(multipleChoiceFeedback.semaphore()), address(mockSemaphore));
         assertEq(multipleChoiceFeedback.groupId(), 1);
         assertEq(mockSemaphore.groupCounter(), 1);
+        assertEq(multipleChoiceFeedback.terminated(), false);
+        assertEq(multipleChoiceFeedback.admin(), address(this));
         assertEq(multipleChoiceFeedback.options(0), "Option A");
         assertEq(multipleChoiceFeedback.options(1), "Option B");
         assertEq(multipleChoiceFeedback.options(2), "Option C");
+    }
+
+    function test_Terminate() public {
+        multipleChoiceFeedback.terminate();
+        assertEq(multipleChoiceFeedback.terminated(), true);
+    }
+
+    function test_RevertTerminateIfNotAdmin() public {
+        vm.prank(address(0xdead));
+        vm.expectRevert(BaseFeedback.NotAdmin.selector);
+        multipleChoiceFeedback.terminate();
+    }
+
+    function test_RevertJoinGroupIfTerminated() public {
+        multipleChoiceFeedback.terminate();
+        vm.expectRevert(BaseFeedback.Terminated.selector);
+        multipleChoiceFeedback.joinGroup(idCommitment);
+    }
+
+    function test_RevertSendFeedbackIfTerminated() public {
+        multipleChoiceFeedback.terminate();
+        uint256 feedback = 1; // Option A
+
+        vm.expectRevert(BaseFeedback.Terminated.selector);
+        multipleChoiceFeedback.sendFeedback(merkleTreeDepth, merkleTreeRoot, nullifier, feedback, points);
     }
 
     function test_RevertConstructorIfInsufficientOptions() public {
@@ -37,17 +69,12 @@ contract MultipleChoiceFeedbackTest is Test {
     }
 
     function test_JoinGroup() public {
-        uint256 idCommitment = 123456;
         multipleChoiceFeedback.joinGroup(idCommitment);
         assertEq(mockSemaphore.membersCount(), 1);
     }
 
     function test_ValidFeedback() public {
-        uint256 merkleTreeDepth = 20;
-        uint256 merkleTreeRoot = 123;
-        uint256 nullifier = 456;
         uint256 feedback = 1; // Valid feedback (index 1)
-        uint256[8] memory points;
 
         vm.expectEmit(true, true, true, true);
         emit ISemaphore.ProofValidated(
@@ -63,22 +90,14 @@ contract MultipleChoiceFeedbackTest is Test {
     }
 
     function test_RevertIfOutOfRangeFeedbackOption() public {
-        uint256 merkleTreeDepth = 20;
-        uint256 merkleTreeRoot = 123;
-        uint256 nullifier = 456;
         uint256 feedback = 3; // Invalid feedback (out of range)
-        uint256[8] memory points;
 
         vm.expectRevert(BaseFeedback.InvalidFeedback.selector);
         multipleChoiceFeedback.sendFeedback(merkleTreeDepth, merkleTreeRoot, nullifier, feedback, points);
     }
 
     function test_FeedbackAtUpperBound() public {
-        uint256 merkleTreeDepth = 20;
-        uint256 merkleTreeRoot = 123;
-        uint256 nullifier = 456;
         uint256 feedback = 2; // Valid feedback (last index)
-        uint256[8] memory points;
 
         vm.expectEmit(true, true, true, true);
         emit ISemaphore.ProofValidated(
