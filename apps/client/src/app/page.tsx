@@ -9,5 +9,5 @@ export default function Home() {
 
   return initializing
     ? <PulseLoader color='#5d576b' />
-    : <button className='btn btn-primary' onClick={openAuthModal} type='button'>Login</button>
+    : <button onClick={openAuthModal} type='button'>Login</button>
 }
