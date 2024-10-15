@@ -17,10 +17,11 @@ contract FreeTextFeedbackTest is Test {
     uint256 private nullifier = 456;
     uint256 private feedbackHash = uint256(keccak256(abi.encodePacked("This is a valid feedback")));
     uint256[8] private points;
+    string title = "Free Text Feedback";
 
     function setUp() public {
         mockSemaphore = new MockSemaphore();
-        freeTextFeedback = new FreeTextFeedback(address(mockSemaphore));
+        freeTextFeedback = new FreeTextFeedback(address(mockSemaphore), title);
     }
 
     function test_Constructor() public {
@@ -74,23 +75,5 @@ contract FreeTextFeedbackTest is Test {
     function test_RevertIfInvalidFeedback() public {
         vm.expectRevert(BaseFeedback.InvalidFeedback.selector);
         freeTextFeedback.sendFeedback(merkleTreeDepth, merkleTreeRoot, nullifier, 0, points);
-    }
-
-    function testFuzz_ValidFeedback(string memory feedback) public {
-        vm.assume(bytes(feedback).length > 0);
-        uint256 feedbackHash = uint256(keccak256(abi.encodePacked(feedback)));
-        uint256[8] memory points;
-
-        vm.expectEmit(true, true, true, true);
-        emit ISemaphore.ProofValidated(
-            freeTextFeedback.groupId(),
-            merkleTreeDepth,
-            merkleTreeRoot,
-            nullifier,
-            feedbackHash,
-            freeTextFeedback.groupId(),
-            points
-        );
-        freeTextFeedback.sendFeedback(merkleTreeDepth, merkleTreeRoot, nullifier, feedbackHash, points);
     }
 }

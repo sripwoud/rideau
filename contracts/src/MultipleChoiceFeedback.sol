@@ -8,7 +8,9 @@ contract MultipleChoiceFeedback is BaseFeedback {
 
     error InsufficientOptions();
 
-    constructor(address semaphoreAddress, string[] memory _options) BaseFeedback(semaphoreAddress) {
+    constructor(address semaphoreAddress, string[] memory _options, string memory title)
+        BaseFeedback(semaphoreAddress, title)
+    {
         if (_options.length < 2) {
             revert InsufficientOptions();
         }

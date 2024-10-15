@@ -8,17 +8,21 @@ abstract contract BaseFeedback {
     address public admin;
     uint256 public groupId;
     ISemaphore public semaphore;
+    string public title;
     bool public terminated;
 
+    error EmptyTitle();
     error InvalidFeedback();
     error NotAdmin();
     error Terminated();
 
-    constructor(address semaphoreAddress) {
+    constructor(address semaphoreAddress, string memory _title) {
+        if (bytes(_title).length == 0) revert EmptyTitle();
         admin = msg.sender;
         terminated = false;
         semaphore = ISemaphore(semaphoreAddress);
         groupId = semaphore.createGroup(address(this));
+        title = _title;
     }
 
     modifier onlyAdmin() {
