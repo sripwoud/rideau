@@ -12,6 +12,7 @@ interface ClientConfigI {
   gasPolicyId: string
   metadata: Metadata
   serverUrl: string
+  semaphoreIdLocalStorageKey: string
 }
 
 // @ts-expect-error 4111
@@ -30,6 +31,7 @@ const clientConfig: SharedConfigI & ClientConfigI = {
   },
   gasPolicyId: '82ec857f-1f2a-4f18-9104-f7fbb9b8ead5',
   serverUrl,
+  semaphoreIdLocalStorageKey: 'semaphoreId',
 }
 
 export default clientConfig
