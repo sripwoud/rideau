@@ -11,7 +11,6 @@ export class BandadaRouter {
   ) {}
 
   router = this.trpc.router({
-    debug: this.trpc.procedure.query(() => 'debugging bandada trpc merged router'),
     addMember: this.trpc.procedure.input(AddMemberDto).mutation(async ({ input: addMemberDto }) =>
       this.bandadaService.addMember(addMemberDto)
     ),

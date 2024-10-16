@@ -5,6 +5,7 @@ import config from 'server/l/config'
 const RPC_URL = `${config.urls.alchemy.rpc}/${config.apiKeys.alchemy}`
 const endpointRgx = new RegExp(`^/${config.alchemyProxyEndpoint}/`)
 
+// not using trpc here because we need to proxy requests to Alchemy API which isn't rpc but REST
 @Controller(config.alchemyProxyEndpoint)
 export class AlchemyProxyController {
   private readonly logger = new Logger(AlchemyProxyController.name)

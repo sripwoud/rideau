@@ -11,7 +11,6 @@ export class TrpcRouter {
   ) {}
 
   router = this.trpc.router({
-    debug: this.trpc.procedure.query(() => 'debugging trpc merged router'),
     bandada: this.bandadaRouter.router,
   })
 

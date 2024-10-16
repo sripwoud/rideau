@@ -30,8 +30,6 @@
       "apps/server/src/bandada/bandada.router.ts",
       "apps/server/src/trpc/trpc.router.ts",
       "apps/server/src/supabase/supabase.service.ts",
-      "apps/server/src/users/users.router.ts",
-      "apps/server/src/users/users.service.ts",
     ],
     "linter": { "rules": { "style": { "useImportType": "off" } } },
   }, {
