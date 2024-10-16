@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common'
+import { BandadaRouter } from 'server/bandada/bandada.router'
+import { BandadaService } from 'server/bandada/bandada.service'
 import { SupabaseService } from 'server/supabase/supabase.service'
 import { TrpcRouter } from 'server/trpc/trpc.router'
 import { TrpcService } from 'server/trpc/trpc.service'
-import { UsersRouter } from 'server/users/users.router'
-import { UsersService } from 'server/users/users.service'
 
 @Module({
   imports: [],
   controllers: [],
-  providers: [SupabaseService, TrpcService, TrpcRouter, UsersRouter, UsersService],
+  providers: [BandadaService, BandadaRouter, SupabaseService, TrpcService, TrpcRouter],
 })
 export class TrpcModule {}

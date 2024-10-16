@@ -1,15 +1,15 @@
 import { Test, type TestingModule } from '@nestjs/testing'
-import { Web3RpcProxyController } from './web3-rpc-proxy.controller'
+import { AlchemyProxyController } from './alchemy-proxy.controller'
 
-describe('Web3RpcProxyController', () => {
-  let controller: Web3RpcProxyController
+describe('AlchemyProxyController', () => {
+  let controller: AlchemyProxyController
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [Web3RpcProxyController],
+      controllers: [AlchemyProxyController],
     }).compile()
 
-    controller = module.get<Web3RpcProxyController>(Web3RpcProxyController)
+    controller = module.get<AlchemyProxyController>(AlchemyProxyController)
   })
 
   it('should be defined', () => {
