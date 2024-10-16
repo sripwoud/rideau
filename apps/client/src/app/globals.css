@@ -22,6 +22,12 @@
   code {
     @apply text-base;
   }
+
+  /* FIXME this has no effect */
+  input {
+    @apply bg-cornsilk border border-blue rounded focus:outline-none
+      focus:border-crayola;
+  }
 }
 
 /* body { */

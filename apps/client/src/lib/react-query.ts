@@ -1,3 +1,3 @@
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClient as _QueryClient } from '@tanstack/react-query'
 
-export const queryClient = new QueryClient()
+export const QueryClient = () => new _QueryClient()

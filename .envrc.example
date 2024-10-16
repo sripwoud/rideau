@@ -8,6 +8,8 @@ export SUPABASE_ANON_KEY=
 # server
 # https://accountkit.alchemy.com/react/quickstart#2-get-your-alchemy-api-key
 export ALCHEMY_API_KEY=
+# https://app.bandada.pse.dev/
+export BANDADA_API_KEY=
 
 # client
 # url of the backend server app exposed client side in the nextjs app

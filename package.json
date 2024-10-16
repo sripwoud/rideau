@@ -17,9 +17,7 @@
     "build.docker.server": "docker build -f apps/server/Dockerfile -t rideau-server .",
     "clean": "find . -type d \\( -name node_modules -o -name .next \\) -exec rm -rf {} +",
     "dev": "bun --filter '*' dev",
-    "start.docker": "docker run -it --rm rideau-server",
-    "test": "bun test --coverage",
-    "test.watch": "bun test --watch"
+    "start.docker": "docker run -it --rm rideau-server"
   },
   "workspaces": [
     "apps/*",
