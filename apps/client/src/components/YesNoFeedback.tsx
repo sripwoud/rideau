@@ -10,6 +10,7 @@ import { semaphoreIdAtom } from 'client/l/store'
 import { useAtomValue } from 'jotai'
 import { encodeFunctionData } from 'viem'
 import { arbitrumSepolia } from 'viem/chains'
+import { SemaphoreEthers } from '@semaphore-protocol/data'
 // import {LEAF_ALREADY_EXISTS_SELECTOR} from 'client/l/constants'
 import { useEffect } from 'react'
 import { PulseLoader } from 'react-spinners'
@@ -32,11 +33,13 @@ export const YesNoFeedback: FC<YesNoFeedbackProps> = ({ title }) => {
   })
   const semaphoreId = useAtomValue(semaphoreIdAtom)
   const [isChecked, setIsChecked] = useState(false)
+  // TODO move this to useSemaphoreId hook? or make it an atom?
   const joinData = encodeFunctionData({
     abi,
     functionName: 'joinGroup',
     args: [semaphoreId.getOrThrow()['_commitment']],
   })
+
 
   const handleJoin = () => {
     sendUserOperation({
