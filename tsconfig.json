@@ -34,7 +34,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "types": ["bun-types"],
+    "types": ["bun-types", "@types/jest"],
     "useUnknownInCatchVariables": true
   }
 }

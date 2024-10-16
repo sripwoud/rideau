@@ -2,8 +2,7 @@ import { All, Controller, Logger, Post, Req, Res } from '@nestjs/common'
 import type { Request, Response } from 'express'
 import config from 'server/l/config'
 
-const API_URL = 'https://api.g.alchemy.com'
-const RPC_URL = `https://arb-sepolia.g.alchemy.com/v2/${config.alchemyApiKey}`
+const RPC_URL = `${config.urls.alchemy.rpc}/${config.apiKeys.alchemy}`
 const endpointRgx = new RegExp(`^/${config.alchemyProxyEndpoint}/`)
 
 @Controller(config.alchemyProxyEndpoint)
@@ -33,7 +32,7 @@ export class AlchemyProxyController {
 
     try {
       const path = req.url.replace(endpointRgx, '')
-      const targetUrl = `${API_URL}/${path}`
+      const targetUrl = `${config.urls.alchemy.api}/${path}`
 
       switch (method) {
         case 'OPTIONS':
@@ -48,7 +47,7 @@ export class AlchemyProxyController {
               method,
               headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${config.alchemyApiKey}`,
+                Authorization: `Bearer ${config.apiKeys.alchemy}`,
               },
               body: JSON.stringify(body),
             },
