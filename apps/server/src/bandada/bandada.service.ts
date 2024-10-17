@@ -11,8 +11,8 @@ import config from 'server/l/config'
 
 @Injectable()
 export class BandadaService {
-  sdk = new ApiSdk(config.urls.bandada.api)
-  private apiKey = config.apiKeys.bandada
+  sdk = new ApiSdk(config.bandada.url)
+  private apiKey = config.bandada.url
 
   async addMember({ groupId, memberId }: AddMemberDto) {
     return this.sdk.addMemberByApiKey(groupId, memberId, this.apiKey)
@@ -30,7 +30,7 @@ export class BandadaService {
     return this.sdk.getGroupsByMemberId(memberId)
   }
 
-  // TODO: using object because trpc requires object input (check)
+  // TODO: using object because trpc requires object input (does it?)
   async removeGroup({ groupId }: RemoveGroupDto) {
     return this.sdk.removeGroup(groupId, this.apiKey)
   }

@@ -21,7 +21,8 @@
   },
   "workspaces": [
     "apps/*",
-    "contracts"
+    "contracts",
+    "supabase"
   ],
   "dependencies": {
     "patch-package": "^8.0.0"

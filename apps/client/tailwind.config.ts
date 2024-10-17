@@ -1,4 +1,3 @@
-import { createColorSet, withAccountKitUi } from '@account-kit/react/tailwind'
 import type { Config } from 'tailwindcss'
 
 const config: Config = {
@@ -25,9 +24,5 @@ const config: Config = {
   },
   plugins: [],
 }
-export default withAccountKitUi(config, {
-  colors: {
-    'btn-primary': createColorSet('#f7657c', '#FF66CC'),
-    'fg-accent-brand': createColorSet('#f7657c', '#FF66CC'),
-  },
-})
+
+export default config
