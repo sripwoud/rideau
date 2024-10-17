@@ -8,8 +8,6 @@ import { TrpcRouter } from 'server/trpc/trpc.router'
 import { TrpcService } from 'server/trpc/trpc.service'
 
 @Module({
-  imports: [],
-  controllers: [],
   providers: [AuthRouter, AuthService, BandadaService, BandadaRouter, SupabaseProvider, TrpcService, TrpcRouter],
 })
 export class TrpcModule {}

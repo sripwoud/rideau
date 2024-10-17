@@ -12,6 +12,7 @@ export class AuthController {
   @Get('verify')
   async verify(@Query() verifyDto: VerifyDto, @Res() res: Response) {
     const { data: { session } } = await this.auth.verify(verifyDto)
+
     if (session !== null) {
       const { access_token, refresh_token } = session
       res.cookie(Cookie.ACCESS, access_token, {
@@ -28,6 +29,6 @@ export class AuthController {
       })
     }
 
-    res.redirect(config.auth.redirectUrl)
+    res.redirect(`${config.clientUrl}/${config.auth.redirect}`)
   }
 }
