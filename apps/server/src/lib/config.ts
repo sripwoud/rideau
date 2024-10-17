@@ -4,7 +4,7 @@ interface ServerConfigI {
   apiKeys: Record<'alchemy' | 'bandada', string>
   port: number
   supabase: { anonKey: string; url: string }
-  urls: { alchemy: Record<'rpc' | 'api', string>; bandada: { api: string } }
+  urls: { alchemy: Record<'rpc' | 'api', string>; bandada: { api: string }; server: string }
 }
 
 const serverConfig: ServerConfigI & SharedConfigI = {
@@ -18,6 +18,7 @@ const serverConfig: ServerConfigI & SharedConfigI = {
   urls: {
     bandada: { api: 'https://api.bandada.pse.dev' },
     alchemy: { api: 'https://api.g.alchemy.com', rpc: 'https://arb-sepolia.g.alchemy.com/v2' },
+    server: getEnvVar('SERVER_URL'),
   },
 }
 
