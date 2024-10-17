@@ -14,6 +14,8 @@ export class AuthService {
     return this.supabase.auth.getUser(token)
   }
 
+  // TODO: https://supabase.com/docs/reference/javascript/auth-refreshsession
+  async refresh() {}
   async signup(signUpDto: SignUpDto) {
     // if user does not exist yet, it has to be created so it is not signed in yet so it is normal to return a null user
     return this.supabase.auth.signInWithOtp({
@@ -25,6 +27,9 @@ export class AuthService {
       ...signUpDto,
     })
   }
+
+  // TODO https://supabase.com/docs/reference/javascript/auth-signout
+  async signout() {}
 
   async verify({ token_hash }: VerifyDto) {
     return this.supabase.auth.verifyOtp({ token_hash, type: 'magiclink' })

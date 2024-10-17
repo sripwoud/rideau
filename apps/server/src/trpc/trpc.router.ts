@@ -2,6 +2,7 @@ import { type INestApplication, Injectable } from '@nestjs/common'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import { AuthRouter } from 'server/auth/auth.router'
 import { BandadaRouter } from 'server/bandada/bandada.router'
+import { createContext } from 'server/trpc/trpc.context'
 import { TrpcService } from 'server/trpc/trpc.service'
 
 @Injectable()
@@ -21,6 +22,7 @@ export class TrpcRouter {
     app.use(
       '/trpc',
       trpcExpress.createExpressMiddleware({
+        createContext,
         router: this.router,
       }),
     )
