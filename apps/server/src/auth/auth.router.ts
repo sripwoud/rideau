@@ -24,7 +24,7 @@ export class AuthRouter {
     }),
     signup: this.trpc.procedure.input(SignUpDto).mutation(async ({ input: signUpDto }) => {
       await this.auth.signup(signUpDto)
-      return 'Check you emails for the login link'
+      return 'Check your emails for the login link'
     }),
   })
 }
