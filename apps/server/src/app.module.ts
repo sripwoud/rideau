@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common'
-import { AlchemyProxyController } from 'server/alchemy-proxy/alchemy-proxy.controller'
 import { AppController } from 'server/app.controller'
 import { AppService } from 'server/app.service'
 import { TrpcModule } from 'server/trpc/trpc.module'
@@ -9,7 +8,7 @@ import { SupabaseProvider } from './supabase/supabase.provider'
 
 @Module({
   imports: [TrpcModule],
-  controllers: [AppController, AlchemyProxyController, AuthController],
+  controllers: [AppController, AuthController],
   providers: [AppService, AuthService, SupabaseProvider],
 })
 export class AppModule {}

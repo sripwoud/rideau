@@ -1,12 +1,9 @@
 'use client'
-import { useLogout, useUser } from '@account-kit/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export const Header = () => {
-  const user = useUser()
-  const { logout } = useLogout()
   const pathname = usePathname()
   return (
     <header className='p-4'>
@@ -17,21 +14,16 @@ export const Header = () => {
             <span className='text-4xl'>RIDEAU</span>
           </Link>
         </li>
-        {pathname.endsWith('/create') === false && <Link href='/create'>Create</Link>}
-        <div className='flex items-center space-x-4'>
-          {user !== null && (
-            <li>
-              <button
-                onClick={() => {
-                  logout()
-                }}
-                type='button'
-              >
-                Logout
-              </button>
-            </li>
-          )}
-        </div>
+        {pathname.endsWith('/create') === false && (
+          <li>
+            <Link href='/create'>Create</Link>
+          </li>
+        )}
+        {pathname.endsWith('/dashboard') === false && (
+          <li>
+            <Link href='/dashboard'>Dashboard</Link>
+          </li>
+        )}
       </ul>
     </header>
   )
