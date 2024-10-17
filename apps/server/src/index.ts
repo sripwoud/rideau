@@ -7,7 +7,7 @@ import { TrpcRouter } from 'server/trpc/trpc.router'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: config.clientUrl,
     credentials: true,
   })
   app.use(cookieParser())
