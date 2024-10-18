@@ -1,8 +1,14 @@
 import { Controller, Get, Logger, Query, Res } from '@nestjs/common'
-import { Response } from 'express'
+import { CookieOptions, Response } from 'express'
 import { AuthService } from 'server/auth/auth.service'
 import type { VerifyDto } from 'server/auth/dto/verify.dto'
 import { Cookie, serverConfig } from 'server/l/config'
+
+const cookieOptions: Pick<CookieOptions, 'httpOnly' | 'sameSite' | 'secure'> = {
+  httpOnly: true,
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // FIXME unsecure, lax was not working, use another storage method than cookies? https://supabase.com/docs/guides/auth/sessions/pkce-flow#how-it-works
+  secure: process.env.NODE_ENV === 'production',
+}
 
 @Controller('auth')
 export class AuthController {
@@ -14,28 +20,25 @@ export class AuthController {
   @Get('verify')
   async verify(@Query() verifyDto: VerifyDto, @Res() res: Response) {
     try {
-      const { data: { session } } = await this.auth.verify(verifyDto)
+      const { data: { session }, error } = await this.auth.verify(verifyDto)
 
-      if (session !== null) {
+      if (error) throw new Error(error.message)
+
+      if (session === null)
+        res.status(401).send('Invalid token')
+      else {
         const { access_token, refresh_token } = session
-        this.logger.debug(`access_token: ${access_token}`)
-        this.logger.debug(`refresh_token: ${refresh_token}`)
 
         res.cookie(Cookie.ACCESS, access_token, {
-          httpOnly: true,
+          ...cookieOptions,
           maxAge: serverConfig.auth.cookieMaxAge[Cookie.ACCESS],
-          sameSite: 'lax', // TODO can we use strict?
-          secure: process.env.NODE_ENV === 'production',
         })
         res.cookie(Cookie.REFRESH, refresh_token, {
-          httpOnly: true,
+          ...cookieOptions,
           maxAge: serverConfig.auth.cookieMaxAge[Cookie.REFRESH],
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
         })
         res.redirect(`${serverConfig.clientUrl}/${serverConfig.auth.redirect}`)
       }
-      res.status(401).send('Invalid token')
     } catch (error) {
       this.logger.error(error)
       res.status(500).send('Internal server error')

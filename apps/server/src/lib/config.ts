@@ -22,7 +22,10 @@ interface ServerConfigI {
 export const serverConfig: ServerConfigI & SharedConfigI = {
   ...sharedConfig,
   auth: {
-    cookieMaxAge: { [Cookie.ACCESS]: ONE_HOUR_MS, [Cookie.REFRESH]: SEVEN_DAYS_MS },
+    cookieMaxAge: {
+      [Cookie.ACCESS]: ONE_HOUR_MS,
+      [Cookie.REFRESH]: SEVEN_DAYS_MS,
+    },
     redirect: 'dashboard',
   },
   bandada: { apiKey: getEnvVar('BANDADA_API_KEY'), url: 'https://api.bandada.pse.dev' },
