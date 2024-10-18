@@ -14,9 +14,11 @@ export class AuthController {
   @Get('verify')
   async verify(@Query() verifyDto: VerifyDto, @Res() res: Response) {
     try {
-      const { data: { session } } = await this.auth.verify(verifyDto)
+      const { data: { session }, error } = await this.auth.verify(verifyDto)
+      if (error) throw new Error(error.message)
 
-      if (session !== null) {
+      if (session === null) res.status(401).send('Invalid token')
+      else {
         const { access_token, refresh_token } = session
         this.logger.debug(`access_token: ${access_token}`)
         this.logger.debug(`refresh_token: ${refresh_token}`)
@@ -24,21 +26,20 @@ export class AuthController {
         res.cookie(Cookie.ACCESS, access_token, {
           httpOnly: true,
           maxAge: serverConfig.auth.cookieMaxAge[Cookie.ACCESS],
-          sameSite: 'lax', // TODO can we use strict?
+          sameSite: 'none', // FIXME unsecure
           secure: process.env.NODE_ENV === 'production',
         })
         res.cookie(Cookie.REFRESH, refresh_token, {
           httpOnly: true,
           maxAge: serverConfig.auth.cookieMaxAge[Cookie.REFRESH],
+          sameSite: 'none', // FIXME unsecure
           secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
         })
         res.redirect(`${serverConfig.clientUrl}/${serverConfig.auth.redirect}`)
       }
-      res.status(401).send('Invalid token')
     } catch (error) {
       this.logger.error(error)
-      res.status(500).send('Internal server error')
+      res.status(500).send((error as Error).message)
     }
   }
 }

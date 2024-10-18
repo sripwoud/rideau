@@ -35,9 +35,6 @@ export class AuthService {
   async signout() {}
 
   async verify({ token_hash }: VerifyDto) {
-    this.logger.debug(`verify token_hash: ${token_hash}`)
-    const result = this.supabase.auth.verifyOtp({ token_hash, type: 'magiclink' })
-    this.logger.debug(result)
-    return result
+    return this.supabase.auth.verifyOtp({ token_hash, type: 'magiclink' })
   }
 }

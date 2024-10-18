@@ -16,6 +16,7 @@ export const TrpcClient = () =>
     links: [
       httpBatchLink({
         fetch(url, options) {
+          console.log('cookies before request', document.cookie)
           return fetch(url, { ...options, credentials: 'include' })
         },
         //      headers: () => headers,
