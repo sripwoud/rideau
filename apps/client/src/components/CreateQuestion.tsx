@@ -1,5 +1,5 @@
 'use client'
-import config from 'client/l/config'
+import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
 import { atom, useAtom } from 'jotai'
 import type { FormEvent } from 'react'
@@ -13,7 +13,7 @@ export const CreateQuestionForm = () => {
   const { mutate: createGroup } = trpc.bandada.createGroup.useMutation()
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    createGroup({ name: name, description, ...config.semaphore })
+    createGroup({ name: name, description, ...clientConfig.semaphore })
   }
 
   return (

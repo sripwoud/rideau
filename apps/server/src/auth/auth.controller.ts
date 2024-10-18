@@ -2,7 +2,7 @@ import { Controller, Get, Logger, Query, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { AuthService } from 'server/auth/auth.service'
 import type { VerifyDto } from 'server/auth/dto/verify.dto'
-import config, { Cookie } from 'server/l/config'
+import { Cookie, serverConfig } from 'server/l/config'
 
 @Controller('auth')
 export class AuthController {
@@ -23,17 +23,17 @@ export class AuthController {
 
         res.cookie(Cookie.ACCESS, access_token, {
           httpOnly: true,
-          maxAge: config.auth.cookieMaxAge[Cookie.ACCESS],
+          maxAge: serverConfig.auth.cookieMaxAge[Cookie.ACCESS],
           sameSite: 'lax', // TODO can we use strict?
           secure: process.env.NODE_ENV === 'production',
         })
         res.cookie(Cookie.REFRESH, refresh_token, {
           httpOnly: true,
-          maxAge: config.auth.cookieMaxAge[Cookie.REFRESH],
+          maxAge: serverConfig.auth.cookieMaxAge[Cookie.REFRESH],
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'lax',
         })
-        res.redirect(`${config.clientUrl}/${config.auth.redirect}`)
+        res.redirect(`${serverConfig.clientUrl}/${serverConfig.auth.redirect}`)
       }
       res.status(401).send('Invalid token')
     } catch (error) {

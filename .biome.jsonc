@@ -56,5 +56,16 @@
   }, {
     "include": ["apps/client/src/hooks/useSemaphoreId.ts", "apps/client/src/components/withAuth.tsx"],
     "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
+  }, {
+    "include": [
+      "apps/client/tailwind.config.ts",
+      "apps/client/src/app/**/layout.tsx",
+      "apps/client/src/app/**/page.tsx",
+      "apps/client/*.mjs",
+    ],
+    "linter": { "rules": { "style": { "noDefaultExport": "off" } } },
+  }, {
+    "include": ["apps/client/src/app/layout.tsx"],
+    "linter": { "rules": { "nursery": { "useComponentExportOnlyModules": "off" } } },
   }],
 }
