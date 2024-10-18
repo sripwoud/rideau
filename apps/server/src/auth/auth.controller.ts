@@ -19,29 +19,16 @@ export class AuthController {
   // the email confirmation link includes a token in the url as query param, so we can't use trpc for it (TODO: can we?)
   @Get('verify')
   async verify(@Query() verifyDto: VerifyDto, @Res() res: Response) {
-    try {
-      const { data: { session }, error } = await this.auth.verify(verifyDto)
+    const { access_token, refresh_token } = await this.auth.verify(verifyDto) // TODO if this rejects, this will return the generic exception handler from nest which isn't informative, implement a better catch everything filter, see https://docs.nestjs.com/exception-filters#catch-everything
 
-      if (error) throw new Error(error.message)
-
-      if (session === null)
-        res.status(401).send('Invalid token')
-      else {
-        const { access_token, refresh_token } = session
-
-        res.cookie(Cookie.ACCESS, access_token, {
-          ...cookieOptions,
-          maxAge: serverConfig.auth.cookieMaxAge[Cookie.ACCESS],
-        })
-        res.cookie(Cookie.REFRESH, refresh_token, {
-          ...cookieOptions,
-          maxAge: serverConfig.auth.cookieMaxAge[Cookie.REFRESH],
-        })
-        res.redirect(`${serverConfig.clientUrl}/${serverConfig.auth.redirect}`)
-      }
-    } catch (error) {
-      this.logger.error(error)
-      res.status(500).send('Internal server error')
-    }
+    res.cookie(Cookie.ACCESS, access_token, {
+      ...cookieOptions,
+      maxAge: serverConfig.auth.cookieMaxAge[Cookie.ACCESS],
+    })
+    res.cookie(Cookie.REFRESH, refresh_token, {
+      ...cookieOptions,
+      maxAge: serverConfig.auth.cookieMaxAge[Cookie.REFRESH],
+    })
+    res.redirect(`${serverConfig.clientUrl}/${serverConfig.auth.redirect}`)
   }
 }

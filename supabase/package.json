@@ -6,6 +6,7 @@
   "scripts": {
     "restart": "supabase stop && supabase start",
     "start": "supabase start",
-    "stop": "supabase stop"
+    "stop": "supabase stop",
+    "types": "supabase gen types --lang=typescript --local > ../apps/server/src/supabase/supabase.types.ts"
   }
 }
