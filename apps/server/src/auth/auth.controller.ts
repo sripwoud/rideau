@@ -26,14 +26,14 @@ export class AuthController {
         res.cookie(Cookie.ACCESS, access_token, {
           httpOnly: true,
           maxAge: serverConfig.auth.cookieMaxAge[Cookie.ACCESS],
-          sameSite: 'none', // FIXME unsecure
+          sameSite: 'none', // FIXME unsecure, lax was not working, use another storage method than cookies? https://supabase.com/docs/guides/auth/sessions/pkce-flow#how-it-works
           secure: process.env.NODE_ENV === 'production',
         })
         res.cookie(Cookie.REFRESH, refresh_token, {
           httpOnly: true,
           maxAge: serverConfig.auth.cookieMaxAge[Cookie.REFRESH],
-          sameSite: 'none', // FIXME unsecure
           secure: process.env.NODE_ENV === 'production',
+          sameSite: 'none', // FIXME unsecure, lax was not working, use another storage method than cookies? https://supabase.com/docs/guides/auth/sessions/pkce-flow#how-it-works          secure: process.env.NODE_ENV === 'production',
         })
         res.redirect(`${serverConfig.clientUrl}/${serverConfig.auth.redirect}`)
       }
