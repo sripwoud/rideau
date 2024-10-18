@@ -23,6 +23,7 @@
     "@nestjs/core": "^10.0.0",
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
+    "@semaphore-protocol/identity": "^4.4.0",
     "@supabase/supabase-js": "^2.45.4",
     "@trpc/server": "^10",
     "@types/cookie-parser": "^1.4.7",
