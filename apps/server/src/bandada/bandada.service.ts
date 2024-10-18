@@ -7,12 +7,12 @@ import type {
   GetGroupsByMemberIdDto,
   RemoveGroupDto,
 } from 'server/bandada/dto'
-import config from 'server/l/config'
+import { serverConfig } from 'server/l/config'
 
 @Injectable()
 export class BandadaService {
-  sdk = new ApiSdk(config.bandada.url)
-  private apiKey = config.bandada.url
+  sdk = new ApiSdk(serverConfig.bandada.url)
+  private apiKey = serverConfig.bandada.url
 
   async addMember({ groupId, memberId }: AddMemberDto) {
     return this.sdk.addMemberByApiKey(groupId, memberId, this.apiKey)

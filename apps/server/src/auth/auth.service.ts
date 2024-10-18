@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, Logger } from '@nestjs/common'
 import { SupabaseClient } from '@supabase/supabase-js'
 import type { GetUserDto } from 'server/auth/dto/get-user.dto'
 import type { SignUpDto } from 'server/auth/dto/sign-up.dto'
@@ -7,6 +7,8 @@ import { SUPABASE } from 'server/supabase/supabase.provider'
 
 @Injectable()
 export class AuthService {
+  logger = new Logger(AuthService.name)
+
   constructor(@Inject(SUPABASE) private readonly supabase: SupabaseClient) {
   }
 
@@ -16,6 +18,7 @@ export class AuthService {
 
   // TODO: https://supabase.com/docs/reference/javascript/auth-refreshsession
   async refresh() {}
+
   async signup(signUpDto: SignUpDto) {
     // if user does not exist yet, it has to be created so it is not signed in yet so it is normal to return a null user
     return this.supabase.auth.signInWithOtp({
@@ -32,6 +35,9 @@ export class AuthService {
   async signout() {}
 
   async verify({ token_hash }: VerifyDto) {
-    return this.supabase.auth.verifyOtp({ token_hash, type: 'magiclink' })
+    this.logger.debug(`verify token_hash: ${token_hash}`)
+    const result = this.supabase.auth.verifyOtp({ token_hash, type: 'magiclink' })
+    this.logger.debug(result)
+    return result
   }
 }

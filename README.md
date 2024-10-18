@@ -17,3 +17,7 @@ bun run
 ```
 
 Check required environment variables in [.envrc.example](.envrc.example)
+
+## How is it build?
+
+TODO

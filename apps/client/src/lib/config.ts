@@ -14,7 +14,7 @@ const ONE_HOUR_S = 60 * 60
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
 isEnvVarDefined(serverUrl, 'NEXT_PUBLIC_SERVER_URL')
 
-const clientConfig: SharedConfigI & ClientConfigI = {
+export const clientConfig: SharedConfigI & ClientConfigI = {
   ...sharedConfig,
   semaphore: {
     fingerprintDuration: ONE_HOUR_S,
@@ -27,5 +27,3 @@ const clientConfig: SharedConfigI & ClientConfigI = {
   serverUrl,
   semaphoreIdLocalStorageKey: 'semaphoreId',
 }
-
-export default clientConfig

@@ -1,6 +1,6 @@
 // import type { HTTPHeaders } from '@trpc/client'
 import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
-import config from 'client/l/config'
+import { clientConfig } from 'client/l/config'
 import type { Router } from 'server/trpc/trpc.router'
 
 // let headers: HTTPHeaders
@@ -19,7 +19,7 @@ export const TrpcClient = () =>
           return fetch(url, { ...options, credentials: 'include' })
         },
         //      headers: () => headers,
-        url: `${config.serverUrl}/trpc`,
+        url: `${clientConfig.serverUrl}/trpc`,
       }),
     ],
   })

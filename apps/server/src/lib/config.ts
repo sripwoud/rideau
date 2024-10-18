@@ -19,7 +19,7 @@ interface ServerConfigI {
   supabase: { anonKey: string; url: string }
 }
 
-const serverConfig: ServerConfigI & SharedConfigI = {
+export const serverConfig: ServerConfigI & SharedConfigI = {
   ...sharedConfig,
   auth: {
     cookieMaxAge: { [Cookie.ACCESS]: ONE_HOUR_MS, [Cookie.REFRESH]: SEVEN_DAYS_MS },
@@ -33,5 +33,3 @@ const serverConfig: ServerConfigI & SharedConfigI = {
     url: getEnvVar('SUPABASE_URL'),
   },
 }
-
-export default serverConfig
