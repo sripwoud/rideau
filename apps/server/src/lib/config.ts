@@ -1,4 +1,5 @@
-import { getEnvVar, sharedConfig, type SharedConfigI } from 'config'
+import { getEnvVar, sharedConfig } from 'config'
+import { merge } from 'ts-deepmerge'
 
 export enum Cookie {
   ACCESS = 'access-token',
@@ -9,6 +10,7 @@ const ONE_HOUR_MS = 60 * 60 * 1000
 const SEVEN_DAYS_MS = 60 * 60 * 24 * 7 * 1000
 
 interface ServerConfigI {
+  alchemy: { apiKey: string; apiUrl: string }
   auth: {
     cookieMaxAge: Record<Cookie, number>
     redirect: string
@@ -19,8 +21,8 @@ interface ServerConfigI {
   supabase: { anonKey: string; url: string }
 }
 
-export const serverConfig: ServerConfigI & SharedConfigI = {
-  ...sharedConfig,
+const _serverConfig: ServerConfigI = {
+  alchemy: { apiKey: getEnvVar('ALCHEMY_API_KEY'), apiUrl: 'https://api.g.alchemy.com' },
   auth: {
     cookieMaxAge: {
       [Cookie.ACCESS]: ONE_HOUR_MS,
@@ -36,3 +38,5 @@ export const serverConfig: ServerConfigI & SharedConfigI = {
     url: getEnvVar('SUPABASE_URL'),
   },
 }
+
+export const serverConfig = merge(sharedConfig, _serverConfig)
