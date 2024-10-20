@@ -19,7 +19,6 @@ export default function Home() {
     )
     : (
       <button
-        className='btn btn-primary'
         onClick={() => {
           console.log('openAuthModal')
           try {
