@@ -1,12 +1,14 @@
-import { isEnvVarDefined, sharedConfig, type SharedConfigI } from 'config'
+import { capitalize } from 'client/l/display'
+import { isEnvVarDefined, sharedConfig } from 'config'
 import type { Metadata } from 'next'
+import { merge } from 'ts-deepmerge'
 
 interface ClientConfigI {
+  alchemy: { supportUrl: string }
   metadata: Metadata
   // TODO: move default config to server?
-  semaphore: { fingerprintDuration: number; treeDepth: number }
+  semaphore: { fingerprintDuration: number; treeDepth: number; localStorageKey: string }
   serverUrl: string
-  semaphoreIdLocalStorageKey: string
 }
 
 const ONE_HOUR_S = 60 * 60
@@ -14,16 +16,18 @@ const ONE_HOUR_S = 60 * 60
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
 isEnvVarDefined(serverUrl, 'NEXT_PUBLIC_SERVER_URL')
 
-export const clientConfig: SharedConfigI & ClientConfigI = {
-  ...sharedConfig,
+const _clientConfig: ClientConfigI = {
+  alchemy: { supportUrl: 'gauthier@pse.dev' },
   semaphore: {
     fingerprintDuration: ONE_HOUR_S,
-    treeDepth: 16,
-  }, // smallest supported by bandada
+    localStorageKey: 'semaphore-id',
+    treeDepth: 16, // smallest supported by bandada
+  },
   metadata: {
-    title: 'Rideau',
+    title: capitalize(sharedConfig.appName),
     description: 'Anonymous survey and feedback platform',
   },
   serverUrl,
-  semaphoreIdLocalStorageKey: 'semaphoreId',
 }
+
+export const clientConfig = merge(sharedConfig, _clientConfig)

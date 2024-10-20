@@ -8,10 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@account-kit/infra": "^4.0.1",
+    "@account-kit/react": "^4.0.1",
     "@hazae41/option": "^1.1.4",
     "@semaphore-protocol/core": "^4.3.0",
     "@semaphore-protocol/data": "^4.3.0",
-    "@tanstack/react-query": "^4",
+    "@tanstack/react-query-4": "npm:@tanstack/react-query@^4",
+    "@tanstack/react-query-5": "npm:@tanstack/react-query@^5",
     "@trpc/client": "^10",
     "@trpc/react-query": "^10",
     "@trpc/server": "^10",
@@ -22,7 +25,10 @@
     "qrcode.react": "^4.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "react-spinners": "^0.14.1"
+    "react-spinners": "^0.14.1",
+    "ts-deepmerge": "^7.0.1",
+    "viem": "2.20.0",
+    "wagmi": "2.12.7"
   },
   "devDependencies": {
     "@types/node": "^20",
@@ -31,5 +37,9 @@
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@trpc/react-query": { "@tanstack/react-query": "npm:@tanstack/react-query-4@^4" },
+    "@account-kit/react": { "@tanstack/react-query": "npm:@tanstack/react-query-5@^5" }
   }
 }

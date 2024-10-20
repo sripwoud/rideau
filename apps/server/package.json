@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.7",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
+    "ts-deepmerge": "^7.0.1",
     "tslib": "^2.7.0",
     "zod": "^3.23.8"
   },

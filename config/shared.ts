@@ -1,5 +1,9 @@
-import type { SharedConfigI } from 'config/types'
+interface SharedConfigI {
+  alchemy: { proxyEndpoint: string }
+  appName: string
+}
 
 export const sharedConfig: SharedConfigI = {
+  alchemy: { proxyEndpoint: 'alchemy' },
   appName: 'rideau',
 }
