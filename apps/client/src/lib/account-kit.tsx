@@ -9,7 +9,7 @@ const uiConfig: AlchemyAccountsUIConfig = {
     header: <img alt={`${clientConfig.appName}-icon`} src='/icon.png' />,
     sections: [[{ type: 'email' }]],
   },
-  supportUrl: 'gauthier@pse.dev',
+  supportUrl: clientConfig.alchemy.supportUrl,
 }
 
 export const alchemyConfig = createConfig({

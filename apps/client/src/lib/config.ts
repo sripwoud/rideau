@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { merge } from 'ts-deepmerge'
 
 interface ClientConfigI {
+  alchemy: { supportUrl: string }
   metadata: Metadata
   // TODO: move default config to server?
   semaphore: { fingerprintDuration: number; treeDepth: number; localStorageKey: string }
@@ -16,6 +17,7 @@ const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL ?? ''
 isEnvVarDefined(serverUrl, 'NEXT_PUBLIC_SERVER_URL')
 
 const _clientConfig: ClientConfigI = {
+  alchemy: { supportUrl: 'gauthier@pse.dev' },
   semaphore: {
     fingerprintDuration: ONE_HOUR_S,
     localStorageKey: 'semaphore-id',
