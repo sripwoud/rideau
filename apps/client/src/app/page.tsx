@@ -3,9 +3,11 @@ import { useAuthenticate, useLogout, useSignerStatus, useUser } from '@account-k
 import { Loader } from 'client/c/Loader'
 import { atom, useAtom } from 'jotai'
 import type { FormEvent } from 'react'
+// import { trpc } from 'client/l/trpc'
 
 const emailAtom = atom('')
 const emailSentAtom = atom(false)
+// const testMutationAtom = trpc.bandada.createGroup.atomWithMutation()
 
 export default function Home() {
   const [email, setEmail] = useAtom(emailAtom)

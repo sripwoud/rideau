@@ -1,16 +1,6 @@
 import { alchemy, arbitrumSepolia } from '@account-kit/infra'
-import { type AlchemyAccountsUIConfig, cookieStorage, createConfig } from '@account-kit/react'
+import { cookieStorage, createConfig } from '@account-kit/react'
 import { clientConfig } from 'client/l/config'
-
-const uiConfig: AlchemyAccountsUIConfig = {
-  illustrationStyle: 'outline',
-  auth: {
-    addPasskeyOnSignup: false,
-    header: <img alt={`${clientConfig.appName}-icon`} src='/icon.png' />,
-    sections: [[{ type: 'email' }]],
-  },
-  supportUrl: clientConfig.alchemy.supportUrl,
-}
 
 export const alchemyConfig = createConfig({
   chain: arbitrumSepolia,
@@ -21,4 +11,4 @@ export const alchemyConfig = createConfig({
     // proxying to backend server to hide API key
     rpcUrl: `${clientConfig.serverUrl}/${clientConfig.alchemy.proxyEndpoint}`,
   }),
-}, uiConfig)
+})
