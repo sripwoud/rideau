@@ -1,7 +1,7 @@
 create table public.commitments (
   id bigint generated always as identity primary key,
-  email VARCHAR(255) NOT NULL,
-  commitment BIGINT NOT NULL,
+  email varchar(255) not null,
+  commitment text not null,
   constraint valid_email check (
     email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
   )

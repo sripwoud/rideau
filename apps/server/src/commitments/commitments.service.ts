@@ -10,7 +10,7 @@ export class CommitmentsService {
   constructor(@Inject(SUPABASE) private readonly supabase: SupabaseClient) {}
 
   async create({ email, signedMessage }: CreateCommitmentDto) {
-    const commitment = new Identity(signedMessage).commitment
+    const commitment = new Identity(signedMessage).commitment.toString()
     return this.supabase.from('commitments').insert<CommitmentInsert>({
       email,
       commitment,
