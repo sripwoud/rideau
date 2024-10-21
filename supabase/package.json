@@ -7,6 +7,7 @@
     "types": "supabase gen types --lang=typescript --local > ../apps/server/src/supabase/supabase-generated.types.ts"
   },
   "devDependencies": {
+    "mkdirp": "^3.0.1",
     "supabase": "^1.204.3"
   }
 }

@@ -11459,7 +11459,7 @@ sudo-prompt@^9.0.0:
   resolved "https://registry.npmjs.org/sudo-prompt/-/sudo-prompt-9.2.1.tgz"
   integrity sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==
 
-supabase@^1.204.3:
+supabase@latest:
   version "1.204.3"
   resolved "https://registry.npmjs.org/supabase/-/supabase-1.204.3.tgz"
   integrity sha512-uO09eyAw7TZAX/7wPeieQBWrl4QAJ0WLF+HTkFy35GWBmQULP5nkJR93LcuhSyooYiqwEUKlChEF/PGAEmTCKw==
@@ -11473,7 +11473,8 @@ supabase@supabase:
   version "workspace:supabase"
   resolved "workspace:supabase"
   devDependencies:
-    supabase ""
+    mkdirp "^3.0.1"
+    supabase "latest"
 
 superagent@^9.0.1:
   version "9.0.2"
