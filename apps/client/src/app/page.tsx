@@ -1,35 +1,58 @@
 'use client'
-import { useAuthModal, useLogout, useSignerStatus, useUser } from '@account-kit/react'
+import { useAuthenticate, useLogout, useSignerStatus, useUser } from '@account-kit/react'
 import { Loader } from 'client/c/Loader'
+import { atom, useAtom } from 'jotai'
+import type { FormEvent } from 'react'
+
+const emailAtom = atom('')
+const emailSentAtom = atom(false)
+
 export default function Home() {
+  const [email, setEmail] = useAtom(emailAtom)
+  const [emailSent, setEmailSent] = useAtom(emailSentAtom)
   const user = useUser()
-  const { openAuthModal } = useAuthModal()
+  const { authenticate, error, isPending } = useAuthenticate()
   const { isInitializing } = useSignerStatus()
   const { logout } = useLogout()
 
-  if (isInitializing) return <Loader />
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    authenticate({ type: 'email', email })
+    setEmailSent(true)
+  }
 
-  return user
-    ? (
-      <div className='flex flex-col gap-2 p-2'>
-        <p className='text-xl font-bold'>Success!</p>
-        You're logged in as {user?.email ?? 'anon'}.
-        <button className='btn btn-primary mt-6' onClick={() => logout()} type='button'>Log Out</button>
+  if (error !== null) return <div>{error.message}</div>
+  if (emailSent === true) return <div>Check your emails</div>
+  if (isInitializing || isPending) return <Loader />
+  if (user !== null) {
+    return (
+      <div>
+        You're logged in as {user.email}
+        <button
+          onClick={() => {
+            logout()
+          }}
+          type='button'
+        >
+          Logout
+        </button>
       </div>
     )
-    : (
-      <button
-        onClick={() => {
-          console.log('openAuthModal')
-          try {
-            openAuthModal()
-          } catch (e) {
-            console.error(e)
-          }
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <label htmlFor='email'>Email</label>
+      <input
+        id='email'
+        name='email'
+        onChange={(e) => {
+          setEmail(e.target.value)
         }}
-        type='button'
-      >
+      />
+      <button type='submit'>
         Login
       </button>
-    )
+    </form>
+  )
 }
