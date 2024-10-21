@@ -1,12 +1,30 @@
-import { All, Controller, Req, Res } from '@nestjs/common'
+import { All, Controller, Post, Req, Res } from '@nestjs/common'
 import type { Request, Response } from 'express'
 import { serverConfig } from 'server/l/config'
 
+const rpcUrl = `${serverConfig.alchemy.urls.rpc}/${serverConfig.alchemy.apiKey}`
 const endpointRgx = new RegExp(`^/${serverConfig.alchemy.proxyEndpoint}/`)
 
 // not using trpc here because we need to proxy requests to Alchemy API which isn't rpc but REST
 @Controller(serverConfig.alchemy.proxyEndpoint)
 export class AlchemyProxyController {
+  @Post()
+  async post(@Req() req: Request, @Res() res: Response) {
+    const { body } = req
+    const proxyResponse = await fetch(
+      rpcUrl,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      },
+    )
+    const data = await proxyResponse.json()
+    res.status(proxyResponse.status).json(data)
+  }
+
   @All('*')
   async proxy(@Req() req: Request, @Res() res: Response) {
     const { method, body } = req
@@ -14,7 +32,7 @@ export class AlchemyProxyController {
     // TODO use Option & Result instead of try/catch
     try {
       const path = req.url.replace(endpointRgx, '')
-      const targetUrl = `${serverConfig.alchemy.apiUrl}/${path}`
+      const targetUrl = `${serverConfig.alchemy.urls.api}/${path}`
 
       switch (method) {
         case 'OPTIONS':

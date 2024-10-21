@@ -53,7 +53,11 @@
     ],
     "linter": { "rules": { "style": { "useImportType": "off" } } },
   }, {
-    "include": ["apps/client/src/hooks/useSemaphoreId.ts", "apps/client/src/components/withAuth.tsx"],
+    "include": [
+      "apps/client/src/hooks/useSemaphoreId.ts",
+      "apps/client/src/components/withAuth.tsx",
+      "apps/client/src/app/page.tsx",
+    ],
     "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
   }, {
     "include": [
