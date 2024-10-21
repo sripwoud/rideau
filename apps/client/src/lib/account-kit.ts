@@ -3,13 +3,11 @@ import { type AlchemyAccountsUIConfig, cookieStorage, createConfig } from '@acco
 import { clientConfig } from 'client/l/config'
 
 const uiConfig: AlchemyAccountsUIConfig = {
-  illustrationStyle: 'outline',
+  illustrationStyle: 'filled',
   auth: {
     addPasskeyOnSignup: false,
-    header: <img alt={`${clientConfig.appName}-icon`} src='/icon.png' />,
     sections: [[{ type: 'email' }]],
   },
-  supportUrl: clientConfig.alchemy.supportUrl,
 }
 
 export const alchemyConfig = createConfig({
