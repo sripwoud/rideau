@@ -11,9 +11,12 @@ export class CommitmentsService {
 
   async create({ email, signedMessage }: CreateCommitmentDto) {
     const commitment = new Identity(signedMessage).commitment.toString()
-    return this.supabase.from('commitments').insert<CommitmentInsert>({
+    return this.supabase.from('commitments').upsert<CommitmentInsert>({
       email,
       commitment,
+    }, {
+      ignoreDuplicates: true,
+      onConflict: 'commitment',
     })
   }
 }
