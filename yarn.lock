@@ -11472,6 +11472,7 @@ supabase@supabase:
   version "workspace:supabase"
   resolved "workspace:supabase"
   devDependencies:
+    mkdirp "^3.0.1"
     supabase "^1.204.3"
 
 superagent@^9.0.1:

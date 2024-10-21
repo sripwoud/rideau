@@ -7,24 +7,24 @@ import { TrpcService } from 'server/trpc/trpc.service'
 export class BandadaRouter {
   constructor(
     private readonly trpc: TrpcService,
-    private readonly bandadaService: BandadaService,
+    private readonly bandada: BandadaService,
   ) {}
 
   router = this.trpc.router({
     addMember: this.trpc.procedure.input(AddMemberDto).mutation(async ({ input: addMemberDto }) =>
-      this.bandadaService.addMember(addMemberDto)
+      this.bandada.addMember(addMemberDto)
     ),
     createGroup: this.trpc.procedure.input(CreateGroupDto).mutation(async ({ input: createGroupDto }) =>
-      this.bandadaService.createGroup(createGroupDto)
+      this.bandada.createGroup(createGroupDto)
     ),
     getGroup: this.trpc.procedure.input(GetGroupDto).query(async ({ input: getGroupDto }) =>
-      this.bandadaService.getGroup(getGroupDto)
+      this.bandada.getGroup(getGroupDto)
     ),
     getGroupsByMemberId: this.trpc.procedure.input(GetGroupsByMemberIdDto).query(
-      async ({ input: getGroupsByMemberIdDto }) => this.bandadaService.getGroupsByMemberId(getGroupsByMemberIdDto),
+      async ({ input: getGroupsByMemberIdDto }) => this.bandada.getGroupsByMemberId(getGroupsByMemberIdDto),
     ),
     removeGroup: this.trpc.procedure.input(RemoveGroupDto).mutation(async ({ input: removeGroupDto }) =>
-      this.bandadaService.removeGroup(removeGroupDto)
+      this.bandada.removeGroup(removeGroupDto)
     ),
   })
 }

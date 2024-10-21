@@ -1,12 +1,13 @@
 {
   "name": "supabase",
-  "devDependencies": {
-    "supabase": "^1.204.3"
-  },
   "scripts": {
     "restart": "supabase stop && supabase start",
     "start": "supabase start",
     "stop": "supabase stop",
     "types": "supabase gen types --lang=typescript --local > ../apps/server/src/supabase/supabase.types.ts"
+  },
+  "devDependencies": {
+    "mkdirp": "^3.0.1",
+    "supabase": "^1.204.3"
   }
 }

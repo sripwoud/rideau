@@ -45,17 +45,17 @@
   "overrides": [{
     "include": [
       "apps/server/src/app.controller.ts",
-      "apps/server/src/auth/auth.controller.ts",
-      "apps/server/src/auth/auth.service.ts",
-      "apps/server/src/auth/auth.router.ts",
       "apps/server/src/bandada/bandada.router.ts",
+      "apps/server/src/commitments/commitments.router.ts",
+      "apps/server/src/commitments/commitments.service.ts",
       "apps/server/src/trpc/trpc.router.ts",
-      "apps/server/src/semaphores/semaphores.service.ts",
       "apps/server/src/supabase/supabase.service.ts",
     ],
     "linter": { "rules": { "style": { "useImportType": "off" } } },
   }, {
-    "include": ["apps/client/src/hooks/useSemaphoreId.ts", "apps/client/src/components/withAuth.tsx"],
+    "include": [
+      "apps/client/src/app/page.tsx",
+    ],
     "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
   }, {
     "include": [

@@ -10,7 +10,7 @@ const ONE_HOUR_MS = 60 * 60 * 1000
 const SEVEN_DAYS_MS = 60 * 60 * 24 * 7 * 1000
 
 interface ServerConfigI {
-  alchemy: { apiKey: string; apiUrl: string }
+  alchemy: { apiKey: string; urls: { api: string; rpc: string } }
   auth: {
     cookieMaxAge: Record<Cookie, number>
     redirect: string
@@ -22,7 +22,10 @@ interface ServerConfigI {
 }
 
 const _serverConfig: ServerConfigI = {
-  alchemy: { apiKey: getEnvVar('ALCHEMY_API_KEY'), apiUrl: 'https://api.g.alchemy.com' },
+  alchemy: {
+    apiKey: getEnvVar('ALCHEMY_API_KEY'),
+    urls: { api: 'https://api.g.alchemy.com', rpc: 'https://arb-sepolia.g.alchemy.com/v2' },
+  },
   auth: {
     cookieMaxAge: {
       [Cookie.ACCESS]: ONE_HOUR_MS,

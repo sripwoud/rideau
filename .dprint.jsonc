@@ -1,5 +1,5 @@
 {
-  "excludes": ["apps/client/abis", "contracts/lib", "contracts/out"],
+  "excludes": ["apps/client/abis", "apps/server/src/supabase/supabase.types.ts", "contracts/lib", "contracts/out"],
   "exec": {
     "commands": [
       { "command": "forge fmt - --raw", "exts": ["sol"] },
