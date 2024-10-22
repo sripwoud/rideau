@@ -29,7 +29,7 @@ export default function Dashboard() {
 
       <div>
         <div className='flex items-center mb-4'>
-          <h2 className='text-xl font-semibold flex-grow text-center'>Questions</h2>
+          <h2 className='text-xl font-semibold flex-grow text-center'>Questions (mock)</h2>
           <button type='button' className='flex items-center justify-center'>
             <PlusCircle className='h-4 w-4' />
           </button>
