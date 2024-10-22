@@ -22,7 +22,8 @@ export class CommitmentsService {
       onConflict: 'commitment',
     })
 
-    await this.bandada.addMember({ groupId: serverConfig.bandada.pseGroupId, memberId: commitment })
+    if (email.endsWith('@pse.dev'))
+      await this.bandada.addMember({ groupId: serverConfig.bandada.pseGroupId, memberId: commitment })
   }
 
   async find(email: string) {
