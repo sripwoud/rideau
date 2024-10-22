@@ -5,7 +5,7 @@ import { alchemyConfig } from 'client/l/account-kit'
 import { type PropsWithChildren, useState } from 'react'
 
 export const AlchemyProvider = (
-  { children, initialState }: PropsWithChildren<{ initialState?: AlchemyClientState }>,
+  { children, initialState }: PropsWithChildren<{ initialState?: AlchemyClientState & { commitment: string | null } }>,
 ) => {
   const [queryClient] = useState(() => new QueryClient())
 
