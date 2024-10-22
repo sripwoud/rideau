@@ -14,6 +14,6 @@ export class AuthService {
     await this.commitments.create({ commitment, email })
 
     if (email.endsWith('@pse.dev'))
-      await this.bandada.addMember({ groupId: serverConfig.bandada.pseGroupId, memberId: commitment })
+      await this.bandada.maybeAddMember({ groupId: serverConfig.bandada.pseGroupId, memberId: commitment })
   }
 }

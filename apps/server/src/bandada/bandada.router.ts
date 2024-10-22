@@ -12,7 +12,7 @@ export class BandadaRouter {
 
   router = this.trpc.router({
     addMember: this.trpc.procedure.input(AddMemberDto).mutation(async ({ input: addMemberDto }) =>
-      this.bandada.addMember(addMemberDto)
+      this.bandada.maybeAddMember(addMemberDto)
     ),
     createGroup: this.trpc.procedure.input(CreateGroupDto).mutation(async ({ input: createGroupDto }) =>
       this.bandada.createGroup(createGroupDto)
