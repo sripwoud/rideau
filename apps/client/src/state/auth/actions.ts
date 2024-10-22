@@ -9,15 +9,6 @@ export const emailSent = (): AuthAction => ({
   type: AuthActionType.EMAIL_SENT,
 })
 
-export const authenticated = (): AuthAction => ({
-  type: AuthActionType.AUTHENTICATED,
-})
-
-export const signedMessage = (message: string): AuthAction => ({
-  type: AuthActionType.SIGNED_MESSAGE,
-  payload: message,
-})
-
 export const logout = (): AuthAction => ({
   type: AuthActionType.LOGOUT,
 })

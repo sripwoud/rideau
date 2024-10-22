@@ -1,31 +1,14 @@
 'use client'
-import {
-  useAuthenticate,
-  useLogout,
-  useSignerStatus,
-  useSignMessage,
-  useSmartAccountClient,
-  useUser,
-} from '@account-kit/react'
+import { useAuthenticate } from '@account-kit/react'
 import { Loader } from 'client/c/Loader'
+import { useAuth } from 'client/h/useAuth'
 import { useAuthState } from 'client/h/useAuthState'
-import { clientConfig } from 'client/l/config'
-import { trpc } from 'client/l/trpc'
-import { useAtom } from 'jotai'
-import { type FormEvent, useEffect } from 'react'
-
-const createCommitmentAtom = trpc.commitments.create.atomWithMutation()
+import type { FormEvent } from 'react'
 
 export default function Home() {
-  const { state, setEmail, setEmailSent, setAuthenticated, setSignedMessage, resetAuth } = useAuthState()
-
-  const user = useUser()
-  const { authenticate, error, isPending } = useAuthenticate()
-  const { isInitializing, isConnected } = useSignerStatus()
-  const { client } = useSmartAccountClient({ type: 'LightAccount' })
-  const { signMessage, signedMessage, isSigningMessage } = useSignMessage({ client })
-  const { logout } = useLogout()
-  const [, createCommitment] = useAtom(createCommitmentAtom)
+  const { state, setEmail, setEmailSent, resetAuth } = useAuthState()
+  const { isInitializing, logout, user } = useAuth()
+  const { authenticate, error } = useAuthenticate()
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -33,28 +16,7 @@ export default function Home() {
     setEmailSent()
   }
 
-  useEffect(() => {
-    if (isConnected === true && state.signedMessage === undefined && client !== undefined)
-      signMessage({ message: clientConfig.appName })
-  }, [isConnected, state.signedMessage, client])
-
-  useEffect(() => {
-    if (signedMessage !== undefined) setSignedMessage(signedMessage)
-  }, [signedMessage])
-
-  useEffect(() => {
-    if (user?.email !== undefined && state.signedMessage !== undefined)
-      createCommitment([{ email: user.email, signedMessage: state.signedMessage }])
-  }, [state.signedMessage, user?.email])
-
-  useEffect(() => {
-    if (user !== null) setAuthenticated()
-  }, [user])
-
-  if (error !== null) return <div>{error.message}</div>
-  if (state.emailSent === true) return <div>Check your emails</div>
-  if (isInitializing || isPending || isSigningMessage) return <Loader />
-  if (state.authenticated === true && user !== null) {
+  if (user !== null) {
     return (
       <div>
         You're logged in as {user.email}
@@ -70,6 +32,9 @@ export default function Home() {
       </div>
     )
   }
+  if (error !== null) return <div>{error.message}</div>
+  if (state.emailSent === true) return <div>Check your emails</div>
+  if (isInitializing) return <Loader />
 
   return (
     <form onSubmit={handleSubmit}>

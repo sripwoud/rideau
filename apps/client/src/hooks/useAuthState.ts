@@ -10,16 +10,12 @@ export function useAuthState() {
 
   const setEmail = (email: string) => dispatch(authActions.setEmail(email))
   const setEmailSent = () => dispatch(authActions.emailSent())
-  const setAuthenticated = () => dispatch(authActions.authenticated())
-  const setSignedMessage = (message: string) => dispatch(authActions.signedMessage(message))
   const resetAuth = () => dispatch(authActions.logout())
 
   return {
     state,
     setEmail,
     setEmailSent,
-    setAuthenticated,
-    setSignedMessage,
     resetAuth,
   }
 }
