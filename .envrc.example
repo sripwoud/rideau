@@ -1,15 +1,17 @@
 use asdf
 
 # db
-# https://supabase.com/docs/reference/javascript/initializing
-export SUPABASE_URL= 
+
+export SUPABASE_URL= # https://supabase.com/docs/reference/javascript/initializing
 export SUPABASE_ANON_KEY=
 
 # server
-# https://accountkit.alchemy.com/react/quickstart#2-get-your-alchemy-api-key
-export ALCHEMY_API_KEY=
-# https://app.bandada.pse.dev/
-export BANDADA_API_KEY=
+
+export ALCHEMY_API_KEY= # https://accountkit.alchemy.com/react/quickstart#2-get-your-alchemy-api-key
+export BANDADA_API_KEY= # https://app.bandada.pse.dev/
+export PSE_BANDADA_GROUP_ID=
+export CLIENT_URL=
+
 
 # client
 # url of the backend server app exposed client side in the nextjs app

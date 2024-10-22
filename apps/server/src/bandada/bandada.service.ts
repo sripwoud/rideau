@@ -12,9 +12,11 @@ import { serverConfig } from 'server/l/config'
 @Injectable()
 export class BandadaService {
   sdk = new ApiSdk(serverConfig.bandada.url)
-  private apiKey = serverConfig.bandada.url
+  private apiKey = serverConfig.bandada.apiKey
 
   async addMember({ groupId, memberId }: AddMemberDto) {
+    // TODO: handle/bubble error or check first that member already joins, otherwise this returns 400
+    // https://github.com/bandada-infra/bandada/blob/5b19cf7dd3e9353316c9ae54a353a766d3cfe1c1/apps/api/src/app/groups/groups.service.ts#L426
     return this.sdk.addMemberByApiKey(groupId, memberId, this.apiKey)
   }
 
