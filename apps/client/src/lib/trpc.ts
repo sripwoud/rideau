@@ -1,9 +1,9 @@
-import { httpBatchLink } from '@trpc/client'
+import { createTRPCProxyClient, httpBatchLink } from '@trpc/client'
+import type { inferRouterOutputs } from '@trpc/server'
 import { clientConfig } from 'client/l/config'
-import { createTRPCJotai } from 'jotai-trpc'
 import type { Router } from 'server/trpc/trpc.router'
 
-export const trpc = createTRPCJotai<Router>({
+export const trpc = createTRPCProxyClient<Router>({
   links: [
     httpBatchLink({
       fetch(url, options) {
@@ -13,3 +13,6 @@ export const trpc = createTRPCJotai<Router>({
     }),
   ],
 })
+
+type RouterOutputs = inferRouterOutputs<Router>
+export type BandadaGetGroupOutput = RouterOutputs['bandada']['getGroup']
