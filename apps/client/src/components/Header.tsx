@@ -14,11 +14,6 @@ export const Header = () => {
             <span className='text-4xl'>RIDEAU</span>
           </Link>
         </li>
-        {pathname.endsWith('/create') === false && (
-          <li>
-            <Link href='/create'>Create</Link>
-          </li>
-        )}
         {pathname.endsWith('/dashboard') === false && (
           <li>
             <Link href='/dashboard'>Dashboard</Link>
