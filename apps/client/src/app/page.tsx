@@ -6,7 +6,7 @@ import { useAuthState } from 'client/h/useAuthState'
 import type { FormEvent } from 'react'
 
 export default function Home() {
-  const { state, setEmail, setEmailSent, resetAuth } = useAuthState()
+  const { state, setEmail, setEmailSent } = useAuthState()
   const { isInitializing, logout, user } = useAuth()
   const { authenticate, error } = useAuthenticate()
 
@@ -23,7 +23,6 @@ export default function Home() {
         <button
           onClick={() => {
             logout()
-            resetAuth()
           }}
           type='button'
         >
