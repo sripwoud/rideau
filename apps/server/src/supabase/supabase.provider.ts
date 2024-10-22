@@ -7,7 +7,5 @@ export const SUPABASE = 'SUPABASE'
 
 export const SupabaseProvider: Provider = {
   provide: SUPABASE,
-  useValue: createClient<Database>(serverConfig.supabase.url, serverConfig.supabase.anonKey, {
-    auth: { flowType: 'pkce' },
-  }),
+  useValue: createClient<Database>(serverConfig.supabase.url, serverConfig.supabase.anonKey),
 }
