@@ -1,0 +1,25 @@
+import * as authActions from 'client/state/auth/actions'
+import { authReducer, initialAuthState } from 'client/state/auth/reducer'
+import { useAtom } from 'jotai'
+import { atomWithReducer } from 'jotai/utils'
+
+const authAtom = atomWithReducer(initialAuthState, authReducer)
+
+export function useAuthState() {
+  const [state, dispatch] = useAtom(authAtom)
+
+  const setEmail = (email: string) => dispatch(authActions.setEmail(email))
+  const setEmailSent = () => dispatch(authActions.emailSent())
+  const setAuthenticated = () => dispatch(authActions.authenticated())
+  const setSignedMessage = (message: string) => dispatch(authActions.signedMessage(message))
+  const resetAuth = () => dispatch(authActions.logout())
+
+  return {
+    state,
+    setEmail,
+    setEmailSent,
+    setAuthenticated,
+    setSignedMessage,
+    resetAuth,
+  }
+}

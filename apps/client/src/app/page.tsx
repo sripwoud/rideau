@@ -8,18 +8,17 @@ import {
   useUser,
 } from '@account-kit/react'
 import { Loader } from 'client/c/Loader'
+import { useAuthState } from 'client/h/useAuthState'
 import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
-import { atom, useAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import { type FormEvent, useEffect } from 'react'
 
-const emailAtom = atom('')
-const emailSentAtom = atom(false)
 const createCommitmentAtom = trpc.commitments.create.atomWithMutation()
 
 export default function Home() {
-  const [email, setEmail] = useAtom(emailAtom)
-  const [emailSent, setEmailSent] = useAtom(emailSentAtom)
+  const { state, setEmail, setEmailSent, setAuthenticated, setSignedMessage, resetAuth } = useAuthState()
+
   const user = useUser()
   const { authenticate, error, isPending } = useAuthenticate()
   const { isInitializing, isConnected } = useSignerStatus()
@@ -30,30 +29,39 @@ export default function Home() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    authenticate({ type: 'email', email })
-    setEmailSent(true)
+    authenticate({ type: 'email', email: state.email })
+    setEmailSent()
   }
 
   useEffect(() => {
-    if (isConnected === true && signedMessage === undefined && client !== undefined)
+    if (isConnected === true && state.signedMessage === undefined && client !== undefined)
       signMessage({ message: clientConfig.appName })
-  }, [isConnected, signedMessage, client])
+  }, [isConnected, state.signedMessage, client])
 
   useEffect(() => {
-    if (user?.email !== undefined && signedMessage !== undefined)
-      createCommitment([{ email: user.email, signedMessage }])
-  }, [signedMessage, user?.email])
+    if (signedMessage !== undefined) setSignedMessage(signedMessage)
+  }, [signedMessage])
+
+  useEffect(() => {
+    if (user?.email !== undefined && state.signedMessage !== undefined)
+      createCommitment([{ email: user.email, signedMessage: state.signedMessage }])
+  }, [state.signedMessage, user?.email])
+
+  useEffect(() => {
+    if (user !== null) setAuthenticated()
+  }, [user])
 
   if (error !== null) return <div>{error.message}</div>
-  if (emailSent === true) return <div>Check your emails</div>
+  if (state.emailSent === true) return <div>Check your emails</div>
   if (isInitializing || isPending || isSigningMessage) return <Loader />
-  if (user !== null) {
+  if (state.authenticated === true && user !== null) {
     return (
       <div>
         You're logged in as {user.email}
         <button
           onClick={() => {
             logout()
+            resetAuth()
           }}
           type='button'
         >
