@@ -6,10 +6,11 @@ import { BandadaService } from 'server/bandada/bandada.service'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 import { SupabaseProvider } from 'server/supabase/supabase.provider'
 import { TrpcModule } from 'server/trpc/trpc.module'
+import { AuthService } from './auth/auth.service'
 
 @Module({
   imports: [TrpcModule],
   controllers: [AlchemyProxyController, AppController],
-  providers: [AppService, BandadaService, CommitmentsService, SupabaseProvider],
+  providers: [AppService, AuthService, BandadaService, CommitmentsService, SupabaseProvider],
 })
 export class AppModule {}

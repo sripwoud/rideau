@@ -4,7 +4,8 @@ import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
-const createCommitmentAtom = trpc.commitments.create.atomWithMutation()
+
+const signupAtom = trpc.auth.signup.atomWithMutation()
 
 export const useAuth = () => {
   const { resetAuth } = useAuthState()
@@ -13,7 +14,7 @@ export const useAuth = () => {
   const { signMessage, signedMessage } = useSignMessage({ client })
   const user = useUser()
   const { logout: accountKitLogout } = useLogout()
-  const [, createCommitment] = useAtom(createCommitmentAtom)
+  const [, signup] = useAtom(signupAtom)
 
   const logout = () => {
     accountKitLogout()
@@ -27,7 +28,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (user?.email !== undefined && signedMessage !== undefined)
-      createCommitment([{ email: user.email, signedMessage }])
+      signup([{ email: user.email, signedMessage }])
   }, [signedMessage, user?.email])
 
   return { isInitializing, logout, user }
