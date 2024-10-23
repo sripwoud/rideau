@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common'
 import { SupabaseClient } from '@supabase/supabase-js'
-import type { CreateCommitmentDto } from 'server/commitments/dto/create-commitment.dto'
+import type { CreateCommitmentDto } from 'server/commitments/dto'
 import type { Commitment, CommitmentInsert, CommitmentSelect } from 'server/commitments/entities'
 import { SUPABASE } from 'server/supabase/supabase.provider'
 

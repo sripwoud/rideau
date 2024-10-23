@@ -3,6 +3,7 @@ import { AuthRouter } from 'server/auth/auth.router'
 import { AuthService } from 'server/auth/auth.service'
 import { BandadaRouter } from 'server/bandada/bandada.router'
 import { BandadaService } from 'server/bandada/bandada.service'
+import { CommitmentsRouter } from 'server/commitments/commitments.router'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 // import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 // import { FeedbacksService } from 'server/feedbacks/feedbacks.service'
@@ -20,6 +21,7 @@ import { TrpcService } from 'server/trpc/trpc.service'
     AuthService,
     BandadaService,
     BandadaRouter,
+    CommitmentsRouter,
     CommitmentsService,
     //  FeedbacksRouter,
     //  FeedbacksService,
