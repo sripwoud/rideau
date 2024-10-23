@@ -1,6 +1,6 @@
 create table public.questions (
   id bigint generated always as identity primary key,
-  createdAt timestamptz not null default now(),
+  created_at timestamptz not null default now(),
   title text not null,
   active boolean not null default true,
   yes integer not null default 0,

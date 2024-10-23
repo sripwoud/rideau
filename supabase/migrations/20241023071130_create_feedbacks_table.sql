@@ -1,6 +1,6 @@
 create table public.feedbacks (
   id bigint generated always as identity primary key,
-  createdAt timestamptz not null default now(),
+  created_at timestamptz not null default now(),
   feedback boolean not null,
   questionId bigint not null references public.questions(id)
 );

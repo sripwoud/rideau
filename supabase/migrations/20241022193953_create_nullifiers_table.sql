@@ -1,6 +1,6 @@
 create table public.nullifiers (
   id bigint generated always as identity primary key,
-  createdAt timestamptz not null default now(),
+  created_at timestamptz not null default now(),
   nullifier text not null
 );
 comment on table public.nullifiers is 'Nullifiers of semaphore proofs to prevent double signaling';
