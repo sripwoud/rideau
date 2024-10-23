@@ -52,6 +52,98 @@ export type Database = {
         }
         Relationships: []
       }
+      feedbacks: {
+        Row: {
+          created_at: string
+          feedback: boolean
+          id: number
+          questionid: number
+        }
+        Insert: {
+          created_at?: string
+          feedback: boolean
+          id?: never
+          questionid: number
+        }
+        Update: {
+          created_at?: string
+          feedback?: boolean
+          id?: never
+          questionid?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feedbacks_questionid_fkey"
+            columns: ["questionid"]
+            isOneToOne: false
+            referencedRelation: "questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nullifiers: {
+        Row: {
+          created_at: string
+          id: number
+          nullifier: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          nullifier: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          nullifier?: string
+        }
+        Relationships: []
+      }
+      questions: {
+        Row: {
+          active: boolean
+          created_at: string
+          id: number
+          no: number
+          title: string
+          yes: number
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          id?: never
+          no?: number
+          title: string
+          yes?: number
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          id?: never
+          no?: number
+          title?: string
+          yes?: number
+        }
+        Relationships: []
+      }
+      roots: {
+        Row: {
+          created_at: string
+          id: number
+          root: string
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          root: string
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          root?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -148,5 +240,20 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
 
