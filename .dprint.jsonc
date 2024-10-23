@@ -1,5 +1,11 @@
 {
-  "excludes": ["apps/client/abis", "apps/server/src/supabase/supabase.types.ts", "contracts/lib", "contracts/out"],
+  "excludes": [
+    "apps/client/abis",
+    "apps/server/src/supabase/supabase.types.ts",
+    "contracts/lib",
+    "contracts/out",
+    "supabase/migrations/*_create_feedbacks_table.sql", // sql formatter does not support $$ syntax used to define psql trigger
+  ],
   "exec": {
     "commands": [
       { "command": "forge fmt - --raw", "exts": ["sol"] },
