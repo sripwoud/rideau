@@ -65,7 +65,7 @@
   optionalDependencies:
     alchemy-sdk "^3.0.0"
 
-"@account-kit/signer@^4.0.1":
+"@account-kit/signer@^4.0.1", "@account-kit/signer@^4.0.1":
   version "4.0.1"
   resolved "https://registry.npmjs.org/@account-kit/signer/-/signer-4.0.1.tgz"
   integrity sha512-MUnmIaLuAxV8ekLIauG7T/N2qQ+hOQQsHABHk/U3zWPDQM9iKOpFvXXxizXdIcejZWHeiXttzCMgZ92kaKCkFA==
@@ -5681,6 +5681,7 @@ cli-width@^4.1.0:
   version "workspace:apps/client"
   resolved "workspace:apps/client"
   devDependencies:
+    "@account-kit/signer" ""
     "@types/react" "^18"
     "@types/react-dom" "^18"
     postcss "^8"
@@ -11467,7 +11468,7 @@ sudo-prompt@^9.0.0:
   resolved "https://registry.npmjs.org/sudo-prompt/-/sudo-prompt-9.2.1.tgz"
   integrity sha512-Mu7R0g4ig9TUuGSxJavny5Rv0egCEtpZRNMrZaYS1vxkiIxGiGUwoezU3LazIQ+KE04hTrTfNPgxU5gzi7F5Pw==
 
-supabase@^1.204.3:
+supabase@^1.207.9:
   version "1.207.9"
   resolved "https://registry.npmjs.org/supabase/-/supabase-1.207.9.tgz"
   integrity sha512-BJPwsAd2UBIpQawcQV3/xKHEZ8YrrkHYpgibxCZbG+RuxuhTtkHG7zR4I3LylIIEwcKp3hmDKu/hO1m2NT5RXA==
@@ -11482,7 +11483,7 @@ supabase@supabase:
   resolved "workspace:supabase"
   devDependencies:
     mkdirp "^3.0.1"
-    supabase "^1.204.3"
+    supabase "^1.207.9"
 
 superagent@^9.0.1:
   version "9.0.2"
