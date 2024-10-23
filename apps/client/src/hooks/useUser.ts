@@ -1,17 +1,12 @@
 import { useUser as useUserAk } from '@account-kit/react'
-import { useQuery } from '@tanstack/react-query'
+import { skipToken } from '@tanstack/react-query'
 import { trpc } from 'client/l/trpc'
 
 export const useUser = () => {
   const user = useUserAk()
 
-  const { data } = useQuery({
-    enabled: user !== null,
-    queryKey: ['commitments.find'],
-    queryFn: async () => {
-      if (user?.email === undefined) return
-      return trpc.commitments.find.query({ email: user.email })
-    },
+  const { data } = trpc.commitments.find.useQuery(user?.email ? { email: user.email } : skipToken, {
+    enabled: user?.email !== undefined,
   })
 
   // TODO avoid null, use Option instead
