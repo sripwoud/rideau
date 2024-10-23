@@ -6,6 +6,8 @@ import { BandadaService } from 'server/bandada/bandada.service'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 import { FeedbacksService } from 'server/feedbacks/feedbacks.service'
+import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
+import { NullifiersService } from 'server/nullifiers/nullifiers.service'
 import { RootsRouter } from 'server/roots/roots.router'
 import { RootsService } from 'server/roots/roots.service'
 import { SupabaseProvider } from 'server/supabase/supabase.provider'
@@ -21,6 +23,8 @@ import { TrpcService } from 'server/trpc/trpc.service'
     CommitmentsService,
     FeedbacksRouter,
     FeedbacksService,
+    NullifiersRouter,
+    NullifiersService,
     RootsRouter,
     RootsService,
     SupabaseProvider,

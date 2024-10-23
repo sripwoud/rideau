@@ -2,6 +2,7 @@ import { type INestApplication, Injectable } from '@nestjs/common'
 import * as trpcExpress from '@trpc/server/adapters/express'
 import { AuthRouter } from 'server/auth/auth.router'
 import { BandadaRouter } from 'server/bandada/bandada.router'
+import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
 // import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 import { RootsRouter } from 'server/roots/roots.router'
 import { createContext } from 'server/trpc/trpc.context'
@@ -13,6 +14,7 @@ export class TrpcRouter {
     private readonly auth: AuthRouter,
     private readonly bandada: BandadaRouter,
     //  private readonly feedbacks: FeedbacksRouter,
+    private readonly nullifiers: NullifiersRouter,
     private readonly roots: RootsRouter,
     private readonly trpc: TrpcService,
   ) {}
@@ -21,6 +23,7 @@ export class TrpcRouter {
     auth: this.auth.router,
     bandada: this.bandada.router,
     // feedbacks: this.feedbacks.router,
+    nullifiers: this.nullifiers.router,
     roots: this.roots.router,
   })
 
