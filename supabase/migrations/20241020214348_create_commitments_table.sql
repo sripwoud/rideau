@@ -2,7 +2,7 @@ create table public.commitments (
   id bigint generated always as identity primary key,
   email varchar(255) unique not null,
   commitment text unique not null,
-  constraint valid_email check (
+  constraint validEmail check (
     email ~* '^[A-Za-z0-9._+%-]+@[A-Za-z0-9.-]+[.][A-Za-z]+$'
   )
 );
