@@ -3,6 +3,7 @@ import { GroupCard } from 'client/c/GroupCard'
 import { Loader } from 'client/c/Loader'
 import { YesNoQuestionCard } from 'client/c/YesNoQuestionCard'
 import { useGetGroups } from 'client/h/useGetGroups'
+import { trpc } from 'client/l/trpc'
 import { PlusCircle } from 'lucide-react'
 
 const questions = [
@@ -13,6 +14,15 @@ const questions = [
 
 export default function Dashboard() {
   const { data: groups, isLoading } = useGetGroups()
+
+  trpc.questions.onQuestionChange.useSubscription(undefined, {
+    onData: (payload) => {
+      console.log(payload)
+    },
+    onError: (error) => {
+      console.error(error)
+    },
+  })
 
   if (isLoading || groups === undefined) return <Loader />
 
