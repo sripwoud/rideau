@@ -57,24 +57,24 @@ export type Database = {
           created_at: string
           feedback: boolean
           id: number
-          questionid: number
+          question_id: number
         }
         Insert: {
           created_at?: string
           feedback: boolean
           id?: never
-          questionid: number
+          question_id: number
         }
         Update: {
           created_at?: string
           feedback?: boolean
           id?: never
-          questionid?: number
+          question_id?: number
         }
         Relationships: [
           {
-            foreignKeyName: "feedbacks_questionid_fkey"
-            columns: ["questionid"]
+            foreignKeyName: "feedbacks_question_id_fkey"
+            columns: ["question_id"]
             isOneToOne: false
             referencedRelation: "questions"
             referencedColumns: ["id"]

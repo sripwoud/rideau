@@ -1,6 +1,7 @@
 {
   "name": "supabase",
   "scripts": {
+    "reset": "supabase db reset && bun run types",
     "restart": "supabase stop && supabase start",
     "start": "supabase start",
     "stop": "supabase stop",

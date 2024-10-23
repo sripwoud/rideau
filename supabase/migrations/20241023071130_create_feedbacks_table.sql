@@ -2,7 +2,7 @@ create table public.feedbacks (
   id bigint generated always as identity primary key,
   created_at timestamptz not null default now(),
   feedback boolean not null,
-  questionId bigint not null references public.questions(id)
+  question_id bigint not null references public.questions(id)
 );
 comment on table public.feedbacks is 'Feedback semaphore signals from users';
 comment on column public.feedbacks.feedback is 'Feedback semaphore signal (only boolean answer supported for now)';
