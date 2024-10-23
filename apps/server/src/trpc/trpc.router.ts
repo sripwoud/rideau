@@ -7,7 +7,7 @@ import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
 import { QuestionsRouter } from 'server/questions/questions.router'
 // import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 import { RootsRouter } from 'server/roots/roots.router'
-import { createContext } from 'server/trpc/trpc.context'
+import { TrpcContext } from 'server/trpc/trpc.context'
 import { TrpcService } from 'server/trpc/trpc.service'
 
 @Injectable()
@@ -20,6 +20,7 @@ export class TrpcRouter {
     private readonly nullifiers: NullifiersRouter,
     private readonly questions: QuestionsRouter,
     private readonly roots: RootsRouter,
+    private readonly context: TrpcContext,
     private readonly trpc: TrpcService,
   ) {}
 
@@ -37,7 +38,7 @@ export class TrpcRouter {
     app.use(
       '/trpc',
       trpcExpress.createExpressMiddleware({
-        createContext,
+        createContext: this.context.create,
         router: this.router,
       }),
     )

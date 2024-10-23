@@ -5,7 +5,6 @@ import { YesNoQuestionCard } from 'client/c/YesNoQuestionCard'
 import { useGetGroups } from 'client/h/useGetGroups'
 import { trpc } from 'client/l/trpc'
 import { PlusCircle } from 'lucide-react'
-import { useEffect } from 'react'
 
 const questions = [
   { id: 1, title: 'Should we launch the new product?', status: 'open', yesVotes: 15, noVotes: 5 },
@@ -16,19 +15,14 @@ const questions = [
 export default function Dashboard() {
   const { data: groups, isLoading } = useGetGroups()
 
-  useEffect(() => {
-    const subscription = trpc.questions.onQuestionChange.subscribe(undefined, {
-      onData: (payload) => {
-        console.log(payload)
-      },
-      onError: (error) => {
-        console.error(error)
-      },
-    })
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
+  trpc.questions.onQuestionChange.useSubscription(undefined, {
+    onData: (payload) => {
+      console.log(payload)
+    },
+    onError: (error) => {
+      console.error(error)
+    },
+  })
 
   if (isLoading || groups === undefined) return <Loader />
 
