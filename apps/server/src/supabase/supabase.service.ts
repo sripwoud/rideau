@@ -17,9 +17,13 @@ export class SupabaseService implements OnModuleDestroy {
   }
 
   subscribe(table: string) {
-    this.supabase.channel('table-db-changes').on('postgres_changes', { event: '*', schema: 'public', table }, () => {
-      this.events.emit(`${table}.change`)
-    })
+    this.supabase.channel('table-db-changes').on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table },
+      (payload) => {
+        this.events.emit(`${table}.change`, payload)
+      },
+    )
       .subscribe()
   }
 }
