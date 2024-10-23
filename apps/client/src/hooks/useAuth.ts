@@ -4,8 +4,8 @@ import { useAuthState } from 'client/h/useAuthState'
 import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
 import { useEffect } from 'react'
-
 import type { SignupDto } from 'server/auth/dto/signup.dto'
+
 export const useAuth = () => {
   const { resetAuth } = useAuthState()
   const { client } = useSmartAccountClient({ type: 'LightAccount' })

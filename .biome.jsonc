@@ -49,6 +49,7 @@
       "apps/server/src/auth/auth.router.ts",
       "apps/server/src/auth/auth.service.ts",
       "apps/server/src/bandada/bandada.router.ts",
+      "apps/server/src/commitments/commitments.router.ts",
       "apps/server/src/commitments/commitments.service.ts",
       "apps/server/src/feedbacks/feedbacks.router.ts",
       "apps/server/src/feedbacks/feedbacks.service.ts",
