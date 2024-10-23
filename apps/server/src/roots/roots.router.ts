@@ -15,8 +15,8 @@ export class RootsRouter {
       this.roots.create(nullifier)
     ),
     findLatest: this.trpc.procedure.query(async () => this.roots.findLatest()),
-    findOne: this.trpc.procedure.input(FindOneRootDto).query(async ({ input: { nullifier } }) =>
-      this.roots.findOne(nullifier)
+    find: this.trpc.procedure.input(FindOneRootDto).query(async ({ input: { nullifier } }) =>
+      this.roots.find(nullifier)
     ),
   })
 }

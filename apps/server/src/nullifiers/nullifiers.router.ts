@@ -14,8 +14,8 @@ export class NullifiersRouter {
     create: this.trpc.procedure.input(CreateNullifierDto).mutation(async ({ input: { nullifier } }) =>
       this.roots.create(nullifier)
     ),
-    findOne: this.trpc.procedure.input(FindOneNullifierDto).query(async ({ input: { nullifier } }) =>
-      this.roots.findOne(nullifier)
+    find: this.trpc.procedure.input(FindOneNullifierDto).query(async ({ input: { nullifier } }) =>
+      this.roots.find(nullifier)
     ),
   })
 }

@@ -11,7 +11,7 @@ export class NullifiersService {
     return this.supabase.from('nullifiers').insert<NullifierInsert>({ nullifier })
   }
 
-  async findOne(nullifier: string) {
+  async find(nullifier: string) {
     // TODO handle error, null is devil
     const { data } = await this.supabase.from('nullifiers').select().eq('nullifier', nullifier).single<Nullifier>()
     return data?.created_at ?? null

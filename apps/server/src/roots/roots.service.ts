@@ -17,7 +17,7 @@ export class RootsService {
     return data?.root ?? null
   }
 
-  async findOne(root: string) {
+  async find(root: string) {
     // TODO handle error, null is devil
     const { data } = await this.supabase.from('roots').select().eq('root', root).single<Root>()
     return data?.created_at ?? null
