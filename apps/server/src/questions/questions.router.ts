@@ -13,7 +13,8 @@ export class QuestionsRouter {
     onQuestionChange: this.trpc.procedure
       .subscription(async function*({ ctx: { events }, signal }) {
         for await (
-          const [payload] of on(events, 'question.change', {
+          // TODO use a var to refer to the event name
+          const [payload] of on(events, 'questions.change', {
             // Passing the AbortSignal from the request automatically cancels the event emitter when the request is aborted
             signal,
           })
