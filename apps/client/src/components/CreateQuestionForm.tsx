@@ -1,6 +1,7 @@
 'use client'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
+import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
 import type { FormEvent } from 'react'
 import type { FC } from 'react'
@@ -11,12 +12,12 @@ interface CreateQuestionFormProps {
 }
 export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => {
   const form = useForm({
-    defaultValues: { group_id: '', title: '' },
-    onSubmit: ({ value }) => {
-      createQuestion(value)
+    defaultValues: { title: '' },
+    onSubmit: ({ value: { title } }) => {
+      createQuestion({ group_id: clientConfig.bandada.pseGroupId, title })
     },
     validatorAdapter: zodValidator(),
-    validators: { onChange: CreateQuestionDto },
+    validators: { onChange: CreateQuestionDto.pick({ title: true }) },
   })
 
   const { mutate: createQuestion, isPending, error } = trpc.questions.create.useMutation({
@@ -38,52 +39,33 @@ export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => 
     <form
       onSubmit={handleSubmit}
       className='space-y-4 p-8 text-2xl'
+      style={{ backgroundColor: '#5d576b' }}
     >
-      <div>
-        <form.Field
-          name='group_id'
-          children={(field) => (
-            <>
-              <label htmlFor={field.name} className='block text-xl font-medium text-gray-700'>
-                Group ID
-              </label>
-              <input
-                id={field.name}
-                name={field.name}
-                type='text'
-                value={field.state.value}
-                onChange={(e) => field.setValue(e.target.value)}
-                onBlur={field.handleBlur}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm ${
-                  field.state.meta.isTouched && field.state.meta.errors.length > 0
-                    ? 'border-red-500'
-                    : ''
-                }`}
-              />
-              {field.state.meta.isTouched && field.state.meta.errors.length > 0 && (
-                <p className='text-red-500 text-sm mt-1'>{field.state.meta.errors.join(', ')}</p>
-              )}
-            </>
-          )}
-        />
-      </div>
-
       <div>
         <form.Field
           name='title'
           children={(field) => (
             <>
-              <label htmlFor={field.name} className='text-xl block text-sm font-medium text-gray-700'>
+              <label htmlFor={field.name} className='text-xl block text-sm font-medium' style={{ color: '#fffae3' }}>
                 Question Title
               </label>
               <input
                 id={field.name}
                 name={field.name}
                 type='text'
+                // FIXME tailwind classes don't work
+                style={{
+                  textIndent: '8px',
+                  borderWidth: '0px',
+                  caretColor: `${
+                    field.state.meta.isTouched && field.state.meta.errors.length > 0 ? '#f7567c' : '#99e1d9'
+                  }`,
+                }}
+                placeholder='What is your question?'
                 value={field.state.value}
                 onChange={(e) => field.setValue(e.target.value)}
                 onBlur={field.handleBlur}
-                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm ${
+                className={`indent-8 mt-1 block w-full rounded-md shadow-sm ${
                   field.state.meta.isTouched && field.state.meta.errors.length > 0
                     ? 'border-red-500'
                     : ''

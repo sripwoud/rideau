@@ -8,7 +8,7 @@ const Modal = forwardRef(
   ) => {
     return (
       <section>
-        <dialog ref={ref} className='rounded-md bg-white'>
+        <dialog ref={ref}>
           {children}
         </dialog>
       </section>
