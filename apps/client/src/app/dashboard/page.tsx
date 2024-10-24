@@ -1,10 +1,10 @@
 'use client'
+import { CreateQuestionModal } from 'client/c/CreateQuestionModal'
 import { GroupCard } from 'client/c/GroupCard'
 import { Loader } from 'client/c/Loader'
 import { YNQuestionCard } from 'client/c/QuestionCard/YN'
 import { useGetGroups } from 'client/h/useGetGroups'
 import { trpc } from 'client/l/trpc'
-import { PlusCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { Question } from 'server/questions/entities'
 
@@ -45,10 +45,8 @@ export default function Dashboard() {
 
       <div>
         <div className='flex items-center mb-4'>
-          <h2 className='text-xl font-semibold flex-grow text-center'>Questions (mock)</h2>
-          <button type='button' className='flex items-center justify-center'>
-            <PlusCircle className='h-4 w-4' />
-          </button>
+          <h2 className='text-xl font-semibold flex-grow text-center'>Questions</h2>
+          <CreateQuestionModal />
         </div>
         <div className='overflow-y-auto max-h-[calc(100vh-12rem)] space-y-4'>
           {questions.map((question) => (

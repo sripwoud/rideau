@@ -13,8 +13,8 @@ export class QuestionsService implements OnModuleInit {
     this.supabase.subscribe(this.resource)
   }
 
-  async create({ title }: CreateQuestionDto) {
-    return this.supabase.from(this.resource).insert<QuestionInsert>({ title })
+  async create(createQuestionDto: CreateQuestionDto) {
+    return this.supabase.from(this.resource).insert<QuestionInsert>(createQuestionDto)
   }
 
   async findAll() {
