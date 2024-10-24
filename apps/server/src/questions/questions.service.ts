@@ -7,9 +7,7 @@ import { SupabaseService } from 'server/supabase/supabase.service'
 export class QuestionsService implements OnModuleInit {
   private resource = 'questions'
 
-  constructor(
-    private readonly supabase: SupabaseService,
-  ) {}
+  constructor(private readonly supabase: SupabaseService) {}
 
   onModuleInit() {
     this.supabase.subscribe(this.resource)
@@ -20,6 +18,9 @@ export class QuestionsService implements OnModuleInit {
   }
 
   async findAll() {
-    return this.supabase.from(this.resource).select().order('created_at', { ascending: false }).returns<Question[]>()
+    const { data } = await this.supabase.from(this.resource).select().order('created_at', { ascending: false }).returns<
+      Question[]
+    >()
+    return data ?? []
   }
 }
