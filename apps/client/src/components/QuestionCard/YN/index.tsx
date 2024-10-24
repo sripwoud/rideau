@@ -1,16 +1,14 @@
-import { CheckCircle, Equal, Hourglass, ThumbsDown, ThumbsUp, XCircle } from 'lucide-react'
+import { YNQuestionStatus } from 'client/c/QuestionCard/YN/YNQuestionStatus'
+import { Hourglass, ThumbsDown, ThumbsUp } from 'lucide-react'
 import type { FC } from 'react'
 import type { Question } from 'server/questions/entities'
 
-export const YesNoQuestionCard: FC<Question> = ({
+export const YNQuestionCard: FC<Question> = ({
   title,
   active,
   yes,
   no,
 }) => {
-  const hasMoreYes = yes > no
-  const hasMoreNo = no > yes
-  const draw = yes === no
   const hourGlassClassName = `${active === true ? '' : 'text-transparent'}`
 
   return (
@@ -21,9 +19,7 @@ export const YesNoQuestionCard: FC<Question> = ({
     >
       <div className='flex justify-between items-center mb-2'>
         <Hourglass className={hourGlassClassName} size={20} />
-        {hasMoreYes && <CheckCircle className='text-green-500' size={20} />}
-        {hasMoreNo && <XCircle className='text-red-500' />}
-        {draw && <Equal className='text-gray-500' size={20} />}
+        <YNQuestionStatus yes={yes} no={no} size={20} />
       </div>
       <h3 className='text-xl font-bold mb-2'>{title}</h3>
       <div className='flex justify-between items-center text-gray-600'>

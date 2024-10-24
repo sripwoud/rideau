@@ -1,7 +1,7 @@
 'use client'
 import { GroupCard } from 'client/c/GroupCard'
 import { Loader } from 'client/c/Loader'
-import { YesNoQuestionCard } from 'client/c/YesNoQuestionCard'
+import { YNQuestionCard } from 'client/c/QuestionCard/YN'
 import { useGetGroups } from 'client/h/useGetGroups'
 import { trpc } from 'client/l/trpc'
 import { PlusCircle } from 'lucide-react'
@@ -52,7 +52,7 @@ export default function Dashboard() {
         </div>
         <div className='overflow-y-auto max-h-[calc(100vh-12rem)] space-y-4'>
           {questions.map((question) => (
-            <YesNoQuestionCard
+            <YNQuestionCard
               key={question.id}
               {...question}
             />
