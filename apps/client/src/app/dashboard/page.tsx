@@ -5,26 +5,32 @@ import { YesNoQuestionCard } from 'client/c/YesNoQuestionCard'
 import { useGetGroups } from 'client/h/useGetGroups'
 import { trpc } from 'client/l/trpc'
 import { PlusCircle } from 'lucide-react'
-
-const questions = [
-  { id: 1, title: 'Should we launch the new product?', status: 'open', yesVotes: 15, noVotes: 5 },
-  { id: 2, title: 'Is the current pricing strategy effective?', status: 'closed', yesVotes: 20, noVotes: 3 },
-  { id: 3, title: 'Do we need to hire more developers?', status: 'open', yesVotes: 8, noVotes: 12 },
-]
+import { useEffect, useState } from 'react'
+import type { Question } from 'server/questions/entities'
 
 export default function Dashboard() {
-  const { data: groups, isLoading } = useGetGroups()
+  const [questions, setQuestions] = useState<Question[]>([])
+  const { data, isLoading: isLoadingQuestions } = trpc.questions.findAll.useQuery()
 
-  trpc.questions.onQuestionChange.useSubscription(undefined, {
-    onData: (payload) => {
-      console.log(payload)
+  const { data: groups, isLoading: isLoadingGroups } = useGetGroups()
+  const isLoading = isLoadingGroups || isLoadingQuestions
+
+  useEffect(() => {
+    if (data !== undefined) setQuestions(data)
+  }, [data])
+
+  trpc.questions.onChange.useSubscription(undefined, {
+    onData: ({ type, data: newQuestion }) => {
+      if (type === 'INSERT') setQuestions((prev) => [...prev, newQuestion])
+      if (type === 'UPDATE')
+        setQuestions((prev) => prev.map((oldQuestion) => oldQuestion.id === newQuestion.id ? newQuestion : oldQuestion))
     },
     onError: (error) => {
       console.error(error)
     },
   })
 
-  if (isLoading || groups === undefined) return <Loader />
+  if (isLoading || groups === undefined || questions === undefined) return <Loader />
 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-6 flex-grow overflow-auto'>
@@ -48,10 +54,7 @@ export default function Dashboard() {
           {questions.map((question) => (
             <YesNoQuestionCard
               key={question.id}
-              title={question.title}
-              status={question.status as 'open' | 'closed'}
-              yesVotes={question.yesVotes}
-              noVotes={question.noVotes}
+              {...question}
             />
           ))}
         </div>
