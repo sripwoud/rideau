@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "next telemetry disable",
     "build": "next build",
     "postinstall": "patch-package",
     "start": "next start"
