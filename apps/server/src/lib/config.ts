@@ -16,7 +16,7 @@ interface ServerConfigI {
     redirect: string
   }
   clientUrl: string
-  bandada: { apiKey: string; url: string; pseGroupId: string }
+  bandada: { apiKey: string; url: string }
   port: number
   supabase: { anonKey: string; url: string }
 }
@@ -35,7 +35,6 @@ const _serverConfig: ServerConfigI = {
   },
   bandada: {
     apiKey: getEnvVar('BANDADA_API_KEY'),
-    pseGroupId: getEnvVar('PSE_BANDADA_GROUP_ID'),
     url: 'https://api.bandada.pse.dev',
   },
   clientUrl: getEnvVar('CLIENT_URL'),

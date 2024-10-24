@@ -32,8 +32,4 @@
     @apply bg-cornsilk border border-blue rounded focus:outline-none
       focus:border-blue;
   }
-
-  dialog {
-    @apply bg-white rounded-md;
-  }
 }

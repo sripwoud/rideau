@@ -8,7 +8,7 @@ export const Layout = ({ children }: { children: ReactNode }) => (
   <Provider>
     <div className='flex flex-col min-h-screen'>
       <Header />
-      <main className='container mx-auto flex-grow px-4 flex justify-center items-center'>
+      <main className='container mx-auto flex-grow px-4 flex justify-center items-start'>
         {children}
       </main>
       <Footer />
