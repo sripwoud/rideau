@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { on } from 'node:events'
 import { TrpcService } from 'server/trpc/trpc.service'
+import { CreateQuestionDto } from './dto/create-question.dto'
 import { Question } from './entities'
 import { QuestionsService } from './questions.service'
 
@@ -12,6 +13,7 @@ export class QuestionsRouter {
   ) {}
 
   router = this.trpc.router({
+    create: this.trpc.procedure.input(CreateQuestionDto).mutation(async ({ input }) => this.questions.create(input)),
     findAll: this.trpc.procedure.query(async () => this.questions.findAll()),
     // TODO: validate output/payload https://trpc.io/docs/server/subscriptions#output-validation
     onChange: this.trpc.procedure

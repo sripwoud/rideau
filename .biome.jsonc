@@ -42,44 +42,53 @@
       },
     },
   },
-  "overrides": [{
-    "include": [
-      "apps/server/src/alchemy-proxy/alchemy-proxy.controller.ts",
-      "apps/server/src/app.controller.ts",
-      "apps/server/src/auth/auth.router.ts",
-      "apps/server/src/auth/auth.service.ts",
-      "apps/server/src/bandada/bandada.router.ts",
-      "apps/server/src/commitments/commitments.router.ts",
-      "apps/server/src/commitments/commitments.service.ts",
-      "apps/server/src/feedbacks/feedbacks.router.ts",
-      "apps/server/src/feedbacks/feedbacks.service.ts",
-      "apps/server/src/nullifiers/nullifiers.router.ts",
-      "apps/server/src/nullifiers/nullifiers.service.ts",
-      "apps/server/src/questions/questions.router.ts",
-      "apps/server/src/questions/questions.service.ts",
-      "apps/server/src/roots/roots.router.ts",
-      "apps/server/src/roots/roots.service.ts",
-      "apps/server/src/supabase/supabase.service.ts",
-      "apps/server/src/trpc/trpc.context.ts",
-      "apps/server/src/trpc/trpc.router.ts",
-      "apps/server/src/supabase/supabase.service.ts",
-    ],
-    "linter": { "rules": { "style": { "useImportType": "off" } } },
-  }, {
-    "include": [
-      "apps/client/src/hooks/useAuth.ts",
-    ],
-    "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
-  }, {
-    "include": [
-      "apps/client/tailwind.config.ts",
-      "apps/client/src/app/**/layout.tsx",
-      "apps/client/src/app/**/page.tsx",
-      "apps/client/*.mjs",
-    ],
-    "linter": { "rules": { "style": { "noDefaultExport": "off" } } },
-  }, {
-    "include": ["apps/client/src/app/layout.tsx"],
-    "linter": { "rules": { "nursery": { "useComponentExportOnlyModules": "off" } } },
-  }],
+  "overrides": [
+    {
+      "include": [
+        "apps/server/src/alchemy-proxy/alchemy-proxy.controller.ts",
+        "apps/server/src/app.controller.ts",
+        "apps/server/src/auth/auth.router.ts",
+        "apps/server/src/auth/auth.service.ts",
+        "apps/server/src/bandada/bandada.router.ts",
+        "apps/server/src/commitments/commitments.router.ts",
+        "apps/server/src/commitments/commitments.service.ts",
+        "apps/server/src/feedbacks/feedbacks.router.ts",
+        "apps/server/src/feedbacks/feedbacks.service.ts",
+        "apps/server/src/nullifiers/nullifiers.router.ts",
+        "apps/server/src/nullifiers/nullifiers.service.ts",
+        "apps/server/src/questions/questions.router.ts",
+        "apps/server/src/questions/questions.service.ts",
+        "apps/server/src/roots/roots.router.ts",
+        "apps/server/src/roots/roots.service.ts",
+        "apps/server/src/supabase/supabase.service.ts",
+        "apps/server/src/trpc/trpc.context.ts",
+        "apps/server/src/trpc/trpc.router.ts",
+        "apps/server/src/supabase/supabase.service.ts",
+      ],
+      "linter": { "rules": { "style": { "useImportType": "off" } } },
+    },
+    {
+      "include": [
+        "apps/client/src/hooks/useAuth.ts",
+      ],
+      "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
+    },
+    {
+      "include": [
+        "apps/client/tailwind.config.ts",
+        "apps/client/src/app/**/layout.tsx",
+        "apps/client/src/app/**/page.tsx",
+        "apps/client/*.mjs",
+      ],
+      "linter": { "rules": { "style": { "noDefaultExport": "off" } } },
+    },
+    {
+      "include": ["apps/client/src/app/layout.tsx"],
+      "linter": { "rules": { "nursery": { "useComponentExportOnlyModules": "off" } } },
+    },
+    {
+      "include": ["apps/client/src/components/CreateQuestionForm.tsx"],
+      "linter": { "rules": { "correctness": { "noChildrenProp": "off" } } },
+    },
+  ],
 }

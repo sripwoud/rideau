@@ -19,6 +19,10 @@
     border-radius: 0.75rem;
   }
 
+  button:disabled {
+    @apply bg-gray-300 text-gray-500 cursor-not-allowed;
+  }
+
   code {
     @apply text-base;
   }
@@ -26,6 +30,10 @@
   /* FIXME this has no effect */
   input {
     @apply bg-cornsilk border border-blue rounded focus:outline-none
-      focus:border-crayola;
+      focus:border-blue;
+  }
+
+  dialog {
+    @apply bg-white rounded-md;
   }
 }
