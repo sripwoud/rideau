@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const CreateQuestionDto = z.object({
   group_id: z.string().min(1, { message: 'Group ID cannot be empty' }),
   title: z.string().min(10, { message: 'Title must be at least 10 characters long' }).includes('?', {
-    message: 'Title must include a question mark',
+    message: 'Title must end by a question mark',
   }),
 })
 
