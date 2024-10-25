@@ -3,8 +3,7 @@ import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
-import type { FormEvent } from 'react'
-import type { FC } from 'react'
+import type { FC, FormEvent } from 'react'
 import { CreateQuestionDto } from 'server/questions/dto/create-question.dto'
 
 interface CreateQuestionFormProps {
@@ -42,9 +41,8 @@ export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => 
       style={{ backgroundColor: '#5d576b' }}
     >
       <div>
-        <form.Field
-          name='title'
-          children={(field) => (
+        <form.Field name='title'>
+          {(field) => (
             <>
               <label htmlFor={field.name} className='text-xl block text-sm font-medium' style={{ color: '#fffae3' }}>
                 Question Title
@@ -65,7 +63,7 @@ export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => 
                 value={field.state.value}
                 onChange={(e) => field.setValue(e.target.value)}
                 onBlur={field.handleBlur}
-                className={`indent-8 mt-1 block w-full rounded-md shadow-sm ${
+                className={`mt-1 block w-full rounded-md shadow-sm ${
                   field.state.meta.isTouched && field.state.meta.errors.length > 0
                     ? 'border-red-500'
                     : ''
@@ -78,7 +76,7 @@ export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => 
               )}
             </>
           )}
-        />
+        </form.Field>
       </div>
 
       {error && (

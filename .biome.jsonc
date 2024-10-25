@@ -86,9 +86,5 @@
       "include": ["apps/client/src/app/layout.tsx"],
       "linter": { "rules": { "nursery": { "useComponentExportOnlyModules": "off" } } },
     },
-    {
-      "include": ["apps/client/src/components/CreateQuestionForm.tsx"],
-      "linter": { "rules": { "correctness": { "noChildrenProp": "off" } } },
-    },
   ],
 }
