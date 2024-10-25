@@ -1,15 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { Injectable } from '@nestjs/common'
 import type { CreateCommitmentDto } from 'server/commitments/dto'
-import type { Commitment, CommitmentInsert, CommitmentSelect } from 'server/commitments/entities'
-import { SUPABASE } from 'server/supabase/supabase.provider'
+import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
 export class CommitmentsService {
-  constructor(@Inject(SUPABASE) private readonly supabase: SupabaseClient) {}
+  constructor(private readonly supabase: SupabaseService) {}
 
   async create({ commitment, email }: CreateCommitmentDto) {
-    return this.supabase.from('commitments').upsert<CommitmentInsert>({
+    return this.supabase.from('commitments').upsert({
       email,
       commitment,
     }, {
@@ -19,8 +17,8 @@ export class CommitmentsService {
   }
 
   async find(email: string) {
-    const { data } = await this.supabase.from('commitments').select<CommitmentSelect>('commitment').eq('email', email)
-      .single<Commitment>()
+    const { data } = await this.supabase.from('commitments').select('commitment').eq('email', email)
+      .single()
     // TODO: use Option & Result instead of null
     return { commitment: data?.commitment ?? null }
   }
