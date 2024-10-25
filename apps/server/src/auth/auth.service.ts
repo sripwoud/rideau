@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { Identity } from '@semaphore-protocol/identity'
+import { Identity } from '@semaphore-protocol/core'
 import { BandadaService } from 'server/bandada/bandada.service'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 import { serverConfig } from 'server/l/config'

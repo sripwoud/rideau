@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { verifyProof } from '@semaphore-protocol/proof'
+import { verifyProof } from '@semaphore-protocol/core'
 import { BandadaService } from 'server/bandada/bandada.service'
 import { CreateFeedbackDto, SendFeedbackDto } from 'server/feedbacks/dto'
 import { NullifiersService } from 'server/nullifiers/nullifiers.service'
