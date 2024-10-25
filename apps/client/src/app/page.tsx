@@ -1,20 +1,14 @@
 'use client'
 import { useAuthenticate } from '@account-kit/react'
 import { Loader } from 'client/c/Loader'
+import { LoginForm } from 'client/c/LoginForm'
 import { useAuth } from 'client/h/useAuth'
 import { useAuthState } from 'client/h/useAuthState'
-import type { FormEvent } from 'react'
 
 export default function Home() {
-  const { state, setEmail, setEmailSent } = useAuthState()
+  const { state } = useAuthState()
   const { isInitializing, logout, user } = useAuth()
-  const { authenticate, error } = useAuthenticate()
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    authenticate({ type: 'email', email: state.email })
-    setEmailSent()
-  }
+  const { error } = useAuthenticate()
 
   if (user !== null) {
     return (
@@ -35,19 +29,5 @@ export default function Home() {
   if (state.emailSent === true) return <div>Check your emails</div>
   if (isInitializing) return <Loader />
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor='email'>Email</label>
-      <input
-        id='email'
-        name='email'
-        onChange={(e) => {
-          setEmail(e.target.value)
-        }}
-      />
-      <button type='submit'>
-        Login
-      </button>
-    </form>
-  )
+  return <LoginForm />
 }
