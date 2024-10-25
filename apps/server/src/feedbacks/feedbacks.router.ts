@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateFeedbackDto } from 'server/feedbacks/dto/create-feedback.dto'
+import { CreateFeedbackDto, SendFeedbackDto } from 'server/feedbacks/dto'
 import { FeedbacksService } from 'server/feedbacks/feedbacks.service'
 import { TrpcService } from 'server/trpc/trpc.service'
 
@@ -13,5 +13,6 @@ export class FeedbacksRouter {
   router = this.trpc.router({
     create: this.trpc.procedure.input(CreateFeedbackDto).query(async ({ input }) => this.feedbacks.create(input)),
     findAll: this.trpc.procedure.query(this.feedbacks.findAll),
+    send: this.trpc.procedure.input(SendFeedbackDto).mutation(async ({ input }) => this.feedbacks.send(input)),
   })
 }
