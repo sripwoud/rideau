@@ -57,6 +57,8 @@
     {
       "include": [
         "apps/client/src/hooks/useAuth.ts",
+        "apps/client/src/hooks/useIdentity.ts",
+        "apps/client/src/hooks/useSendFeedback.ts",
         "apps/client/src/components/withAuth.tsx",
       ],
       "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },

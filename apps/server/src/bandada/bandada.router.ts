@@ -3,6 +3,7 @@ import { BandadaService } from 'server/bandada/bandada.service'
 import {
   AddMemberDto,
   CreateGroupDto,
+  ExportGroupDto,
   GetGroupDto,
   GetGroupsByMemberIdDto,
   GetMembersDto,
@@ -24,6 +25,7 @@ export class BandadaRouter {
     createGroup: this.trpc.procedure.input(CreateGroupDto).mutation(async ({ input }) =>
       this.bandada.createGroup(input)
     ),
+    exportGroup: this.trpc.procedure.input(ExportGroupDto).query(async ({ input }) => this.bandada.exportGroup(input)),
     getGroup: this.trpc.procedure.input(GetGroupDto).query(async ({ input }) => this.bandada.getGroup(input)),
     getGroupsByMemberId: this.trpc.procedure.input(GetGroupsByMemberIdDto).query(
       async ({ input }) => this.bandada.getGroupsByMemberId(input),
