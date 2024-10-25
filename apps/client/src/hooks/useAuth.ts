@@ -11,7 +11,6 @@ export const useAuth = () => {
   const { signMessage, signedMessage } = useSignMessage({ client })
   const user = useUser()
   const { logout: accountKitLogout } = useLogout()
-
   const { mutate: signup } = trpc.auth.signup.useMutation()
 
   const logout = () => {

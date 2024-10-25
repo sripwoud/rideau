@@ -1,8 +1,10 @@
 'use client'
+import { useAuth } from 'client/h/useAuth'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export const Header = () => {
+  const { logout, user } = useAuth()
   return (
     <header className='p-4'>
       <ul className='flex items-center justify-between'>
@@ -12,6 +14,12 @@ export const Header = () => {
             <span className='text-4xl'>RIDEAU</span>
           </Link>
         </li>
+        {user !== null
+          && (
+            <li>
+              <button type='button' onClick={logout}>Logout</button>
+            </li>
+          )}
       </ul>
     </header>
   )
