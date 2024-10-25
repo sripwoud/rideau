@@ -1,10 +1,8 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 export const Header = () => {
-  const pathname = usePathname()
   return (
     <header className='p-4'>
       <ul className='flex items-center justify-between'>
@@ -14,11 +12,6 @@ export const Header = () => {
             <span className='text-4xl'>RIDEAU</span>
           </Link>
         </li>
-        {pathname.endsWith('/dashboard') === false && (
-          <li>
-            <Link href='/dashboard'>Dashboard</Link>
-          </li>
-        )}
       </ul>
     </header>
   )
