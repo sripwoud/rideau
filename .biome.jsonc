@@ -70,6 +70,7 @@
     {
       "include": [
         "apps/client/src/hooks/useAuth.ts",
+        "apps/client/src/components/withAuth.tsx",
       ],
       "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
     },
@@ -83,7 +84,7 @@
       "linter": { "rules": { "style": { "noDefaultExport": "off" } } },
     },
     {
-      "include": ["apps/client/src/app/layout.tsx"],
+      "include": ["apps/client/src/app/layout.tsx", "apps/client/src/app/[groupId]/page.tsx"],
       "linter": { "rules": { "nursery": { "useComponentExportOnlyModules": "off" } } },
     },
   ],
