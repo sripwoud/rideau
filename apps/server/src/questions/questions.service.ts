@@ -1,11 +1,10 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
 import type { CreateQuestionDto } from 'server/questions/dto/create-question.dto'
-import type { Question, QuestionInsert } from 'server/questions/entities'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
 export class QuestionsService implements OnModuleInit {
-  private resource = 'questions'
+  private resource = 'questions' as const
 
   constructor(private readonly supabase: SupabaseService) {}
 
@@ -14,16 +13,14 @@ export class QuestionsService implements OnModuleInit {
   }
 
   async create(createQuestionDto: CreateQuestionDto) {
-    return this.supabase.from(this.resource).insert<QuestionInsert>(createQuestionDto)
+    return this.supabase.from(this.resource).insert(createQuestionDto)
   }
 
   async findAll(groupId: string) {
-    const { data } = await this.supabase.from(this.resource).select<string>().eq('group_id', groupId).order(
+    const { data } = await this.supabase.from(this.resource).select().eq('group_id', groupId).order(
       'created_at',
       { ascending: false },
-    ).returns<
-      Question[]
-    >()
+    )
     return data ?? []
   }
 }

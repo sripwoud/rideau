@@ -1,14 +1,15 @@
-import { Inject, Injectable, OnModuleDestroy } from '@nestjs/common'
-import { RealtimePostgresInsertPayload, RealtimePostgresUpdatePayload, SupabaseClient } from '@supabase/supabase-js'
+import { Injectable, OnModuleDestroy } from '@nestjs/common'
+import { RealtimePostgresInsertPayload, RealtimePostgresUpdatePayload } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
 import { EventEmitter } from 'node:events'
+import { serverConfig } from 'server/l/config'
 import { Question } from 'server/questions/entities'
-import { SUPABASE } from 'server/supabase/supabase.provider'
+import { Database } from 'server/supabase/supabase.types'
 
 @Injectable()
 export class SupabaseService implements OnModuleDestroy {
   public readonly events = new EventEmitter()
-
-  constructor(@Inject(SUPABASE) private readonly supabase: SupabaseClient) {}
+  private readonly supabase = createClient<Database>(serverConfig.supabase.url, serverConfig.supabase.anonKey)
 
   from = this.supabase.from.bind(this.supabase)
 

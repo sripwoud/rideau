@@ -1,19 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common'
-import { SupabaseClient } from '@supabase/supabase-js'
-import { Nullifier, NullifierInsert } from 'server/nullifiers/entities'
-import { SUPABASE } from 'server/supabase/supabase.provider'
+import { Injectable } from '@nestjs/common'
+import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
 export class NullifiersService {
-  constructor(@Inject(SUPABASE) private readonly supabase: SupabaseClient) {}
+  constructor(private readonly supabase: SupabaseService) {}
 
   async create(nullifier: string) {
-    return this.supabase.from('nullifiers').insert<NullifierInsert>({ nullifier })
+    return this.supabase.from('nullifiers').insert({ nullifier })
   }
 
   async find(nullifier: string) {
     // TODO handle error, null is devil
-    const { data } = await this.supabase.from('nullifiers').select().eq('nullifier', nullifier).single<Nullifier>()
+    const { data } = await this.supabase.from('nullifiers').select().eq('nullifier', nullifier).single()
     return data?.created_at ?? null
   }
 }

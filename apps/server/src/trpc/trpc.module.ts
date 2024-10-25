@@ -13,7 +13,6 @@ import { QuestionsRouter } from 'server/questions/questions.router'
 import { QuestionsService } from 'server/questions/questions.service'
 import { RootsRouter } from 'server/roots/roots.router'
 import { RootsService } from 'server/roots/roots.service'
-import { SupabaseProvider } from 'server/supabase/supabase.provider'
 import { SupabaseService } from 'server/supabase/supabase.service'
 import { TrpcContext } from 'server/trpc/trpc.context'
 import { TrpcRouter } from 'server/trpc/trpc.router'
@@ -35,7 +34,6 @@ import { TrpcService } from 'server/trpc/trpc.service'
     QuestionsService,
     RootsRouter,
     RootsService,
-    SupabaseProvider,
     SupabaseService,
     TrpcContext,
     TrpcService,
