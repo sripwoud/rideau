@@ -15,7 +15,7 @@ interface CustomError {
 }
 
 export const useSendFeedback = (
-  { feedback, groupId, questionId }: { groupId: string; questionId: number; feedback: boolean },
+  { feedback, groupId, questionId }: { groupId: string; questionId: number; feedback: boolean | null },
 ) => {
   const { identity } = useIdentity()
   const { data: nodes, isLoading: isNodesLoading, error: exportGroupError } = trpc.bandada.exportGroup.useQuery({
@@ -30,17 +30,18 @@ export const useSendFeedback = (
     if (generateProofError !== null)
       errors.push({ type: ErrorType.GenerateProofError, message: generateProofError.message })
     if (sendError !== null) errors.push({ type: ErrorType.SendError, message: sendError.message })
+    return errors
   }, [exportGroupError, generateProofError, sendError])
 
   const sendFeedback = useCallback(() => {
-    if (nodes === undefined || isNodesLoading || identity.isNone()) return
+    if (nodes === undefined || isNodesLoading || identity.isNone() || feedback === null) return
     const group = Group.import(nodes)
-    generateProof(identity.get(), group, BigInt(feedback), groupId).then((proof) => {
+    generateProof(identity.get(), group, BigInt(feedback), groupId, 16).then((proof) => {
       send({ groupId, feedback, proof, questionId })
     }).catch(error => {
       setGenerateProofError(error)
     })
   }, [isNodesLoading, identity, nodes, groupId, questionId, feedback])
 
-  return { errors, sendFeedback, isPending: isNodesLoading || isSendPending }
+  return { errors, sendFeedback, isSending: isNodesLoading || isSendPending }
 }

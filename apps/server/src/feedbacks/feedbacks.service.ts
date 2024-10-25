@@ -32,9 +32,10 @@ export class FeedbacksService {
     if (question.active === false) throw new Error('Question is inactive, you cannot send feedback anymore')
 
     const { data: nullifiers } = await this.nullifiers.find(proof.nullifier)
-    if (nullifiers !== null) throw new Error('Nullifier already used, you are submitting the same nullifier twice')
+    if (nullifiers !== null && nullifiers.length > 0)
+      throw new Error('Nullifier already used, you are submitting the same nullifier twice')
 
-    const lastRoot = await this.roots.findLatest()
+    const lastRoot = await this.roots.findLatest() // TODO: this is empty, forgot to insert the root when adding a new member to the group
     if (lastRoot === null) throw new Error('No root found')
     if (lastRoot !== proof.merkleTreeRoot) {
       // non matching roots are tolerated only if the fingerprint duration is not passed

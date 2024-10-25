@@ -1,9 +1,13 @@
 import { YNQuestionStatus } from 'client/c/QuestionCard/YN/YNQuestionStatus'
+import { useSendFeedback } from 'client/h/useSendFeedback'
 import { Hourglass, ThumbsDown, ThumbsUp } from 'lucide-react'
 import type { FC } from 'react'
+import { useState } from 'react'
 import type { Question } from 'server/questions/entities'
 
 export const YNQuestionCard: FC<Question> = ({
+  id: questionId,
+  group_id: groupId,
   title,
   active,
   yes,
@@ -11,6 +15,34 @@ export const YNQuestionCard: FC<Question> = ({
 }) => {
   const hourGlassClassName = `${active === true ? '' : 'text-transparent'}`
 
+  const [feedbackValue, setFeedbackValue] = useState<boolean | null>(null)
+
+  // Use the custom hook for sending feedback
+  const {
+    sendFeedback,
+    isSending,
+    errors,
+  } = useSendFeedback({
+    feedback: feedbackValue ?? false, // Default to false if null
+    groupId,
+    questionId,
+  })
+
+  const handleThumbsUp = () => {
+    setFeedbackValue(true)
+    sendFeedback()
+    setFeedbackValue(null)
+  }
+
+  // Handle thumbs down click
+  const handleThumbsDown = () => {
+    setFeedbackValue(false)
+    sendFeedback()
+    setFeedbackValue(null)
+  }
+
+  if (errors.length > 0)
+    return errors.map(({ message, type }) => <p key={message} className='text-red -text-sm'>{`${type}: ${message}`}</p>)
   return (
     // FIXME: tailwind color classes are not working
     <div
@@ -24,12 +56,12 @@ export const YNQuestionCard: FC<Question> = ({
       <h3 className='text-xl font-bold mb-2'>{title}</h3>
       <div className='flex justify-between items-center text-gray-600'>
         <div>
-          <span className='mr-2'>
+          <button className='mr-2' type='button' onClick={handleThumbsUp} disabled={isSending}>
             {yes} <ThumbsUp className='inline-block' size={20} />
-          </span>
-          <span>
+          </button>
+          <button type='button' disabled={isSending} onClick={handleThumbsDown}>
             {no} <ThumbsDown className='inline-block' size={20} />
-          </span>
+          </button>
         </div>
       </div>
     </div>
