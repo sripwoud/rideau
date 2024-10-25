@@ -17,8 +17,11 @@ export class QuestionsService implements OnModuleInit {
     return this.supabase.from(this.resource).insert<QuestionInsert>(createQuestionDto)
   }
 
-  async findAll() {
-    const { data } = await this.supabase.from(this.resource).select().order('created_at', { ascending: false }).returns<
+  async findAll(groupId: string) {
+    const { data } = await this.supabase.from(this.resource).select<string>().eq('group_id', groupId).order(
+      'created_at',
+      { ascending: false },
+    ).returns<
       Question[]
     >()
     return data ?? []

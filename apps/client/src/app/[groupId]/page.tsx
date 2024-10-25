@@ -1,14 +1,17 @@
 'use client'
 import { CreateQuestionModal } from 'client/c/CreateQuestionModal'
+import { ExternalLink } from 'client/c/ExternalLink'
 import { Loader } from 'client/c/Loader'
 import { YNQuestionCard } from 'client/c/QuestionCard/YN'
+import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
+import { ExternalLinkIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { Question } from 'server/questions/entities'
 
-export default function Dashboard() {
+export default function Dashboard({ params: { groupId } }: { params: { groupId: string } }) {
   const [questions, setQuestions] = useState<Question[]>([])
-  const { data, isLoading } = trpc.questions.findAll.useQuery()
+  const { data, isLoading } = trpc.questions.findAll.useQuery({ groupId })
 
   useEffect(() => {
     if (data !== undefined) setQuestions(data)
@@ -28,11 +31,14 @@ export default function Dashboard() {
   if (isLoading || questions === undefined) return <Loader />
 
   return (
-    <div>
-      <div className='flex items-center mb-4'>
-        <h2 className='text-xl font-semibold flex-grow text-center'>Questions</h2>
-        <CreateQuestionModal />
-      </div>
+    <div className='flex flex-col justify-center items-center space-y-4'>
+      <ExternalLink href={`${clientConfig.bandada.appUrl}/groups/off-chain/${groupId}`}>
+        <div className='flex flex-row items-center space-x-2'>
+          <ExternalLinkIcon size={20} />
+          <div>Bandada Group</div>
+        </div>
+      </ExternalLink>
+      <CreateQuestionModal />
       <div className='overflow-y-auto max-h-[calc(100vh-12rem)] space-y-4'>
         {questions.map((question) => (
           <YNQuestionCard
