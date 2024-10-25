@@ -3,13 +3,14 @@ import { CreateQuestionModal } from 'client/c/CreateQuestionModal'
 import { ExternalLink } from 'client/c/ExternalLink'
 import { Loader } from 'client/c/Loader'
 import { YNQuestionCard } from 'client/c/QuestionCard/YN'
+import { withAuth } from 'client/c/withAuth'
 import { clientConfig } from 'client/l/config'
 import { trpc } from 'client/l/trpc'
 import { ExternalLinkIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import type { Question } from 'server/questions/entities'
 
-export default function Dashboard({ params: { groupId } }: { params: { groupId: string } }) {
+const Dashboard = ({ params: { groupId } }: { params: { groupId: string } }) => {
   const [questions, setQuestions] = useState<Question[]>([])
   const { data, isLoading } = trpc.questions.findAll.useQuery({ groupId })
 
@@ -50,3 +51,5 @@ export default function Dashboard({ params: { groupId } }: { params: { groupId: 
     </div>
   )
 }
+
+export default withAuth(Dashboard)
