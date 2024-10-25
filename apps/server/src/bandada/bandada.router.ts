@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common'
 import { BandadaService } from 'server/bandada/bandada.service'
-import { AddMemberDto, CreateGroupDto, GetGroupDto, GetGroupsByMemberIdDto, RemoveGroupDto } from 'server/bandada/dto'
+import {
+  AddMemberDto,
+  CreateGroupDto,
+  GetGroupDto,
+  GetGroupsByMemberIdDto,
+  GetMembersDto,
+  RemoveGroupDto,
+} from 'server/bandada/dto'
 import { TrpcService } from 'server/trpc/trpc.service'
 
 @Injectable()
@@ -11,20 +18,19 @@ export class BandadaRouter {
   ) {}
 
   router = this.trpc.router({
-    addMember: this.trpc.procedure.input(AddMemberDto).mutation(async ({ input: addMemberDto }) =>
-      this.bandada.maybeAddMember(addMemberDto)
+    addMember: this.trpc.procedure.input(AddMemberDto).mutation(async ({ input }) =>
+      this.bandada.maybeAddMember(input)
     ),
-    createGroup: this.trpc.procedure.input(CreateGroupDto).mutation(async ({ input: createGroupDto }) =>
-      this.bandada.createGroup(createGroupDto)
+    createGroup: this.trpc.procedure.input(CreateGroupDto).mutation(async ({ input }) =>
+      this.bandada.createGroup(input)
     ),
-    getGroup: this.trpc.procedure.input(GetGroupDto).query(async ({ input: getGroupDto }) =>
-      this.bandada.getGroup(getGroupDto)
-    ),
+    getGroup: this.trpc.procedure.input(GetGroupDto).query(async ({ input }) => this.bandada.getGroup(input)),
     getGroupsByMemberId: this.trpc.procedure.input(GetGroupsByMemberIdDto).query(
-      async ({ input: getGroupsByMemberIdDto }) => this.bandada.getGroupsByMemberId(getGroupsByMemberIdDto),
+      async ({ input }) => this.bandada.getGroupsByMemberId(input),
     ),
-    removeGroup: this.trpc.procedure.input(RemoveGroupDto).mutation(async ({ input: removeGroupDto }) =>
-      this.bandada.removeGroup(removeGroupDto)
+    getMembers: this.trpc.procedure.input(GetMembersDto).query(async ({ input }) => this.bandada.getMembers(input)),
+    removeGroup: this.trpc.procedure.input(RemoveGroupDto).mutation(async ({ input }) =>
+      this.bandada.removeGroup(input)
     ),
   })
 }
