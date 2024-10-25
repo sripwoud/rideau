@@ -10,8 +10,6 @@ export class NullifiersService {
   }
 
   async find(nullifier: string) {
-    // TODO handle error, null is devil
-    const { data } = await this.supabase.from('nullifiers').select().eq('nullifier', nullifier).single()
-    return data?.created_at ?? null
+    return this.supabase.from('nullifiers').select().eq('nullifier', nullifier)
   }
 }

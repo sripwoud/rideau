@@ -12,7 +12,7 @@ export class RootsService {
   async findLatest() {
     // TODO handle error, null is devil
     const { data } = await this.supabase.from('roots').select().order('created_at', { ascending: false }).single()
-    return data?.root ?? null
+    return data ?? null
   }
 
   async find(root: string) {
