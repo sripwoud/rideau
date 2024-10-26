@@ -31,7 +31,7 @@ export class BandadaService {
   }
 
   async getMembers({ questionId }: GetMembersDto) {
-    const { data } = await this.questions.find(questionId)
+    const { data } = await this.questions.find({questionId})
     if (data === null) throw new Error('This question does not exist')
     const group = await this.getGroup({ groupId: data.group_id })
     return group.members
