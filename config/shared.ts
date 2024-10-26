@@ -6,6 +6,6 @@ interface SharedConfigI {
 
 export const sharedConfig: SharedConfigI = {
   alchemy: { proxyEndpoint: 'alchemy' },
-  appName: 'rideau',
+  appName: 'yeap',
   bandada: { pseGroupId: '48515227088583163821982124675323' },
 }
