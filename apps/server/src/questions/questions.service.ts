@@ -14,8 +14,8 @@ export class QuestionsService implements OnModuleInit {
     this.supabase.subscribe(this.resource)
   }
 
-  async create(createQuestionDto: CreateQuestionDto) {
-    return this.supabase.from(this.resource).insert(createQuestionDto)
+  async create({ groupId: group_id, title }: CreateQuestionDto) {
+    return this.supabase.from(this.resource).insert({ group_id, title })
   }
 
   async find(questionId: number): Promise<PostgrestSingleResponse<Question>>
@@ -30,6 +30,7 @@ export class QuestionsService implements OnModuleInit {
       questionIdNumberOrParams.groupId,
     ).single() // id is primary key, so there can be only one
   }
+
   async findAll(groupId: string) {
     const { data } = await this.supabase.from(this.resource).select().eq('group_id', groupId).order(
       'created_at',
