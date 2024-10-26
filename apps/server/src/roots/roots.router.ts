@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateRootDto, FindOneRootDto } from 'server/roots/dto'
+import { FindRootDto, UpsertRootDto } from 'server/roots/dto'
 import { RootsService } from 'server/roots/roots.service'
 import { TrpcService } from 'server/trpc/trpc.service'
 
@@ -11,12 +11,7 @@ export class RootsRouter {
   ) {}
 
   router = this.trpc.router({
-    create: this.trpc.procedure.input(CreateRootDto).mutation(async ({ input: { nullifier } }) =>
-      this.roots.create(nullifier)
-    ),
-    findLatest: this.trpc.procedure.query(async () => this.roots.findLatest()),
-    find: this.trpc.procedure.input(FindOneRootDto).query(async ({ input: { nullifier } }) =>
-      this.roots.find(nullifier)
-    ),
+    find: this.trpc.procedure.input(FindRootDto).query(async ({ input }) => this.roots.find(input)),
+    upsert: this.trpc.procedure.input(UpsertRootDto).mutation(async ({ input }) => this.roots.upsert(input)),
   })
 }
