@@ -25,13 +25,14 @@ export class FeedbacksService {
     return this.supabase.from('feedbacks').select().order('created_at', { ascending: false }).returns()
   }
 
-  // TODO: handle errors, abstract in smaller steps
+  // TODO: handle errors, abstract in smaller steps?
   async send({ groupId, feedback, proof, questionId }: SendFeedbackDto) {
     const { data: question } = await this.questions.find({ questionId })
     if (question === null) throw new Error('No matching question found')
     if (question.active === false) throw new Error('Question is inactive, you cannot send feedback anymore')
 
-    const { data: nullifiers } = await this.nullifiers.find(proof.nullifier)
+    const { data: nullifiers } = await this.nullifiers.find({ nullifier: proof.nullifier })
+    console.log({ proofNullifier: proof.nullifier, nullifiers })
     if (nullifiers !== null && nullifiers.length > 0)
       throw new Error('Nullifier already used, you are submitting the same nullifier twice')
 

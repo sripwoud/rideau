@@ -13,7 +13,7 @@ export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => 
   const form = useForm({
     defaultValues: { title: '' },
     onSubmit: ({ value: { title } }) => {
-      createQuestion({ group_id: clientConfig.bandada.pseGroupId, title })
+      createQuestion({ groupId: clientConfig.bandada.pseGroupId, title })
     },
     validatorAdapter: zodValidator(),
     validators: { onChange: CreateQuestionDto.pick({ title: true }) },

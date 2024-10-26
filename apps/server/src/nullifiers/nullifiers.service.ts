@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { CreateNullifierDto, FindNullifierDto } from 'server/nullifiers/dto'
+import type { CreateNullifierDto, FindNullifierDto } from 'server/nullifiers/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()

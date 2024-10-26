@@ -2,7 +2,7 @@ import { generateProof, Group } from '@semaphore-protocol/core'
 import { useIdentity } from 'client/h/useIdentity'
 import { trpc } from 'client/l/trpc'
 import { useCallback, useMemo, useState } from 'react'
-
+import type { SendFeedbackDto } from 'server/feedbacks/dto'
 enum ErrorType {
   ExportGroupError = 'ExportGroupError',
   SendError = 'SendError',
@@ -15,7 +15,7 @@ interface CustomError {
 }
 
 export const useSendFeedback = (
-  { feedback, groupId, questionId }: { groupId: string; questionId: number; feedback: boolean | null },
+  { groupId, questionId }: Omit<SendFeedbackDto, 'feedback' | 'proof'>,
 ) => {
   const { identity } = useIdentity()
   const { data: nodes, isLoading: isNodesLoading, error: exportGroupError } = trpc.bandada.exportGroup.useQuery({
@@ -33,15 +33,16 @@ export const useSendFeedback = (
     return errors
   }, [exportGroupError, generateProofError, sendError])
 
-  const sendFeedback = useCallback(() => {
+  const sendFeedback = useCallback((feedback: boolean) => {
     if (nodes === undefined || isNodesLoading || identity.isNone() || feedback === null) return
     const group = Group.import(nodes)
-    generateProof(identity.get(), group, BigInt(feedback), groupId, 16).then((proof) => {
+    // use questionId in scope as they are unique within the app (postgres questions table primary key)
+    generateProof(identity.get(), group, BigInt(feedback), `${questionId}`, 16).then((proof) => {
       send({ groupId, feedback, proof, questionId })
     }).catch(error => {
       setGenerateProofError(error)
     })
-  }, [isNodesLoading, identity, nodes, groupId, questionId, feedback])
+  }, [isNodesLoading, identity, nodes, groupId, questionId])
 
   return { errors, sendFeedback, isSending: isNodesLoading || isSendPending }
 }
