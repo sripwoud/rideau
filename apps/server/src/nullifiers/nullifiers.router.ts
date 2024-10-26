@@ -1,21 +1,17 @@
 import { Injectable } from '@nestjs/common'
-import { CreateNullifierDto, FindOneNullifierDto } from 'server/nullifiers/dto'
-import { RootsService } from 'server/roots/roots.service'
+import { CreateNullifierDto, FindNullifierDto } from 'server/nullifiers/dto'
+import { NullifiersService } from 'server/nullifiers/nullifiers.service'
 import { TrpcService } from 'server/trpc/trpc.service'
 
 @Injectable()
 export class NullifiersRouter {
   constructor(
-    private readonly roots: RootsService,
+    private readonly nullifiers: NullifiersService,
     private readonly trpc: TrpcService,
   ) {}
 
   router = this.trpc.router({
-    create: this.trpc.procedure.input(CreateNullifierDto).mutation(async ({ input: { nullifier } }) =>
-      this.roots.create(nullifier)
-    ),
-    find: this.trpc.procedure.input(FindOneNullifierDto).query(async ({ input: { nullifier } }) =>
-      this.roots.find(nullifier)
-    ),
+    create: this.trpc.procedure.input(CreateNullifierDto).mutation(async ({ input }) => this.nullifiers.create(input)),
+    find: this.trpc.procedure.input(FindNullifierDto).query(async ({ input }) => this.nullifiers.find(input)),
   })
 }
