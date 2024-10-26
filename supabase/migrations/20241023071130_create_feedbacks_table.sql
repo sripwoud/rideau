@@ -15,11 +15,11 @@ begin
     if new.feedback then
        update public.questions
        set yes = yes + 1
-       where id = new.questionId;
+       where id = new.question_id;
     else
         update public.questions
         set no = no + 1
-        where id = new.questionId;
+        where id = new.question_id;
     end if;
     return new;
 end;

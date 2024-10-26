@@ -17,8 +17,8 @@ export class FeedbacksService {
     private readonly questions: QuestionsService,
   ) {}
 
-  async create(createFeedbackDto: CreateFeedbackDto) {
-    return this.supabase.from('feedbacks').insert(createFeedbackDto)
+  async create({ feedback, questionId: question_id }: CreateFeedbackDto) {
+    return this.supabase.from('feedbacks').insert({ feedback, question_id })
   }
 
   async findAll() {
@@ -27,7 +27,7 @@ export class FeedbacksService {
 
   // TODO: handle errors, abstract in smaller steps
   async send({ groupId, feedback, proof, questionId }: SendFeedbackDto) {
-    const { data: question } = await this.questions.find({ groupId, questionId })
+    const { data: question } = await this.questions.find({ questionId })
     if (question === null) throw new Error('No matching question found')
     if (question.active === false) throw new Error('Question is inactive, you cannot send feedback anymore')
 
@@ -35,20 +35,22 @@ export class FeedbacksService {
     if (nullifiers !== null && nullifiers.length > 0)
       throw new Error('Nullifier already used, you are submitting the same nullifier twice')
 
-    const lastRoot = await this.roots.findLatest() // TODO: this is empty, forgot to insert the root when adding a new member to the group
+    const { data: lastRoot } = await this.roots.find({ groupId })
     if (lastRoot === null) throw new Error('No root found')
-    if (lastRoot !== proof.merkleTreeRoot) {
+    if (lastRoot.root !== proof.merkleTreeRoot) {
       // non matching roots are tolerated only if the fingerprint duration is not passed
       const { fingerprintDuration } = await this.bandada.getGroup({ groupId })
-      const lastRootCreatedAt = lastRoot.created_at
-      if (Date.now() > Date.parse(lastRootCreatedAt) + fingerprintDuration)
+      if (Date.now() > Date.parse(lastRoot.created_at) + fingerprintDuration)
         throw new Error('Root has expired (fingerprint duration passed)')
     }
 
     const valid = await verifyProof(proof)
     if (!valid) throw new Error('Invalid proof')
 
-    await this.nullifiers.create(proof.nullifier)
-    return this.create({ feedback, question_id: questionId })
+    console.log('proof is valid')
+    await this.nullifiers.create({ nullifier: proof.nullifier })
+    const r = await this.create({ feedback, questionId })
+    console.log(r)
+    return r
   }
 }
