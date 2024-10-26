@@ -132,16 +132,19 @@ export type Database = {
       roots: {
         Row: {
           created_at: string
+          group_id: string
           id: number
           root: string
         }
         Insert: {
           created_at?: string
+          group_id: string
           id?: never
           root: string
         }
         Update: {
           created_at?: string
+          group_id?: string
           id?: never
           root?: string
         }

@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common'
+import type { CreateNullifierDto, FindNullifierDto } from 'server/nullifiers/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
 export class NullifiersService {
   constructor(private readonly supabase: SupabaseService) {}
 
-  async create(nullifier: string) {
-    return this.supabase.from('nullifiers').insert({ nullifier })
+  async create(createNullifierDto: CreateNullifierDto) {
+    return this.supabase.from('nullifiers').insert(createNullifierDto)
   }
 
-  async find(nullifier: string) {
+  async find({ nullifier }: FindNullifierDto) {
     return this.supabase.from('nullifiers').select().eq('nullifier', nullifier)
   }
 }

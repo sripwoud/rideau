@@ -6,11 +6,8 @@ import { SupabaseService } from 'server/supabase/supabase.service'
 export class CommitmentsService {
   constructor(private readonly supabase: SupabaseService) {}
 
-  async create({ commitment, email }: CreateCommitmentDto) {
-    return this.supabase.from('commitments').upsert({
-      email,
-      commitment,
-    }, {
+  async create(createCommitmentDto: CreateCommitmentDto) {
+    return this.supabase.from('commitments').upsert(createCommitmentDto, {
       ignoreDuplicates: true,
       onConflict: 'commitment',
     })

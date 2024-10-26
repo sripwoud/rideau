@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-export const FindOneRootDto = z.object({
-  nullifier: z.string(),
+export const FindRootDto = z.object({
+  groupId: z.string(),
 })
 
-export type FindOneRootDto = z.infer<typeof FindOneRootDto>
+export type FindRootDto = z.infer<typeof FindRootDto>

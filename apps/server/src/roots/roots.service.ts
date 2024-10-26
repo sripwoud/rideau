@@ -1,23 +1,17 @@
 import { Injectable } from '@nestjs/common'
+import { FindRootDto, UpsertRootDto } from 'server/roots/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
 export class RootsService {
   constructor(private readonly supabase: SupabaseService) {}
 
-  async create(root: string) {
-    return this.supabase.from('roots').insert({ root })
+  async upsert({ groupId: group_id, root }: UpsertRootDto) {
+    return this.supabase.from('roots').upsert({ group_id, root })
   }
 
-  async findLatest() {
+  async find({ groupId }: FindRootDto) {
     // TODO handle error, null is devil
-    const { data } = await this.supabase.from('roots').select().order('created_at', { ascending: false }).single()
-    return data ?? null
-  }
-
-  async find(root: string) {
-    // TODO handle error, null is devil
-    const { data } = await this.supabase.from('roots').select().eq('root', root).single()
-    return data?.created_at ?? null
+    return this.supabase.from('roots').select().eq('group_id', groupId).single() // group_id is a unique key so there can only be one
   }
 }
