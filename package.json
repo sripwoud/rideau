@@ -21,7 +21,6 @@
   },
   "workspaces": [
     "apps/*",
-    "contracts",
     "supabase"
   ],
   "dependencies": {

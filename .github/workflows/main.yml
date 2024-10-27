@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       any_jts_changed: ${{ steps.changed-files.outputs.jts_any_changed }}
-      any_sol_changed: ${{ steps.changed-files.outputs.sol_any_changed }}
     steps:
       - uses: actions/checkout@v4
       - uses: tj-actions/changed-files@v44
@@ -26,8 +25,6 @@ jobs:
               - apps/{client,server}/**/*.ts
               - apps/{client,server}/package.json
               - apps/{client,server}/tsconfig.json
-            sol:
-              - 'contracts/**/*.sol'
 
   _test-jts:
     needs: changed-files
@@ -46,24 +43,8 @@ jobs:
       #     format: lcov
       #     file: lcov.info
 
-  _test-sol:
-    needs: changed-files
-    if: needs.changed-files.outputs.any_sol_changed == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: foundry-rs/foundry-toolchain@v1.2.0
-      - uses: oven-sh/setup-bun@v2
-      - run: bun install # need semaphore contracts as node module
-      - run: forge coverage --root contracts --report lcov --report-file lcov-sol.info
-      # - name: Upload sol test coverage report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: lcov-sol.info
-      #     path: lcov-sol.info
-
   test:
-    needs: [_test-jts, _test-sol]
+    needs: [_test-jts]
     if: ${{ !(failure() || cancelled()) }}
     runs-on: ubuntu-latest
     steps:
@@ -75,15 +56,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - uses: foundry-rs/foundry-toolchain@v1.2.0
       - run: bun install
       - name: Validate
         run: |
           bun concurrently \
             -c auto \
-            -n format,lint-jtsx,lint-sol,typecheck-server,typecheck-ui \
+            -n format,lint-jtsx,typecheck-server,typecheck-ui \
             'bun dprint check' \
             'bun biome check --config-path=.biome.jsonc .' \
-            'bun solhint --config contracts/.solhint.json contracts/{src,test}/**/*.sol' \
             'bun tsc -p apps/server/tsconfig.build.json' \
             'bun tsc -p apps/client/tsconfig.json'
