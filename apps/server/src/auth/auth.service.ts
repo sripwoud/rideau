@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { Identity } from '@semaphore-protocol/core'
 import { Group } from '@semaphore-protocol/core'
+import type { SignupDto } from 'server/auth/dto/signup.dto'
 import { BandadaService } from 'server/bandada/bandada.service'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 import { serverConfig } from 'server/l/config'
 import { RootsService } from 'server/roots/roots.service'
-import type { SignupDto } from './dto/signup.dto'
 
 @Injectable()
 export class AuthService {

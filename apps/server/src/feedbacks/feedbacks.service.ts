@@ -21,10 +21,6 @@ export class FeedbacksService {
     return this.supabase.from('feedbacks').insert({ feedback, question_id })
   }
 
-  async findAll() {
-    return this.supabase.from('feedbacks').select().order('created_at', { ascending: false }).returns()
-  }
-
   // TODO: handle errors, abstract in smaller steps?
   async send({ groupId, feedback, proof, questionId }: SendFeedbackDto) {
     const { data: question } = await this.questions.find({ questionId })
@@ -32,7 +28,6 @@ export class FeedbacksService {
     if (question.active === false) throw new Error('Question is inactive, you cannot send feedback anymore')
 
     const { data: nullifiers } = await this.nullifiers.find({ nullifier: proof.nullifier })
-    console.log({ proofNullifier: proof.nullifier, nullifiers })
     if (nullifiers !== null && nullifiers.length > 0)
       throw new Error('Nullifier already used, you are submitting the same nullifier twice')
 
@@ -48,10 +43,7 @@ export class FeedbacksService {
     const valid = await verifyProof(proof)
     if (!valid) throw new Error('Invalid proof')
 
-    console.log('proof is valid')
     await this.nullifiers.create({ nullifier: proof.nullifier })
-    const r = await this.create({ feedback, questionId })
-    console.log(r)
-    return r
+    return this.create({ feedback, questionId })
   }
 }

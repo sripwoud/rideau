@@ -11,8 +11,6 @@ export class CommitmentsRouter {
   ) {}
 
   router = this.trpc.router({
-    find: this.trpc.procedure.input(FindCommitmentDto).query(async ({ input: { email } }) =>
-      this.commitments.find(email)
-    ),
+    find: this.trpc.procedure.input(FindCommitmentDto).query(async ({ input }) => this.commitments.find(input)),
   })
 }
