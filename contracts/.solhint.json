@@ -1,8 +1,0 @@
-{
-  "extends": "solhint:recommended",
-  "rules": {
-    "func-name-mixedcase": "off",
-    "func-visibility": ["error", { "ignoreConstructors": true }],
-    "no-empty-blocks": "off"
-  }
-}
