@@ -21,6 +21,10 @@ bun run
 
 Check required environment variables in [.envrc.example](.envrc.example)
 
+## What is going on?
+
+![workflow diagram](./assets/yeap-workflow.svg)
+
 ## How is it build?
 
 TODO
