@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { FindRootDto, UpsertRootDto } from 'server/roots/dto'
+import type { FindRootDto, UpsertRootDto } from 'server/roots/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()

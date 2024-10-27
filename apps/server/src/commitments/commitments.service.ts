@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import type { CreateCommitmentDto } from 'server/commitments/dto'
+import type { CreateCommitmentDto, FindCommitmentDto } from 'server/commitments/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
@@ -13,7 +13,7 @@ export class CommitmentsService {
     })
   }
 
-  async find(email: string) {
+  async find({ email }: FindCommitmentDto) {
     const { data } = await this.supabase.from('commitments').select('commitment').eq('email', email)
       .single()
     // TODO: use Option & Result instead of null

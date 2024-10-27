@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
-import type { CreateQuestionDto, FindQuestionDto } from 'server/questions/dto'
+import type { CreateQuestionDto, FindAllQuestionsDto, FindQuestionDto } from 'server/questions/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
@@ -17,10 +17,10 @@ export class QuestionsService implements OnModuleInit {
   }
 
   async find({ questionId }: FindQuestionDto) {
-    return this.supabase.from('questions').select().eq('id', questionId).single() // id is primary key, so there can be only one
+    return this.supabase.from(this.resource).select().eq('id', questionId).single() // id is primary key, so there can be only one
   }
 
-  async findAll(groupId: string) {
+  async findAll({ groupId }: FindAllQuestionsDto) {
     const { data } = await this.supabase.from(this.resource).select().eq('group_id', groupId).order(
       'created_at',
       { ascending: false },
