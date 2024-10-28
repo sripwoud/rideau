@@ -21,15 +21,13 @@ export class FeedbacksService {
 
   // TODO: handle errors, abstract in smaller steps?
   async send({ groupId, feedback, proof, questionId }: SendFeedbackDto) {
-    const { data: question } = await this.questions.find({ questionId })
-    if (question === null) throw new Error('No matching question found')
-    if (question.active === false) throw new Error('Question is inactive, you cannot send feedback anymore')
+    if (!await this.questions.isInactive({ questionId }))
+      throw new Error('Question is inactive, you cannot send feedback anymore')
 
-    await this.nullifiers.isNotAlreadyUsed({ nullifier: proof.nullifier })
-    await this.roots.isLatestOrHasNotExpired({ groupId, root: proof.merkleTreeRoot })
-
-    const valid = await verifyProof(proof)
-    if (!valid) throw new Error('Invalid proof')
+    if (await this.nullifiers.isAlreadyUsed({ nullifier: proof.nullifier })) throw new Error('Nullifier already used')
+    if (await this.roots.isNotLatestAndHasExpired({ groupId, root: proof.merkleTreeRoot }))
+      throw new Error('Root has expired (fingerprint duration passed)')
+    if (!await verifyProof(proof)) throw new Error('Invalid proof')
 
     await this.nullifiers.create({ nullifier: proof.nullifier })
     return this.create({ feedback, questionId })

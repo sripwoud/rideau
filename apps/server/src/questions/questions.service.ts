@@ -27,4 +27,10 @@ export class QuestionsService implements OnModuleInit {
     )
     return data ?? []
   }
+
+  async isInactive({ questionId }: FindQuestionDto) {
+    const { data } = await this.find({ questionId })
+    if (data === null) throw new Error('This question does not exist')
+    return data.active
+  }
 }
