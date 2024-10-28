@@ -35,21 +35,20 @@ export class RootsService {
       .single()
   }
 
-  private async hasNotExpired({ groupId, root }: RootHasExpiredDto) {
+  private async hasExpired({ groupId, root }: RootHasExpiredDto) {
     const { data } = await this.find({ groupId, root })
     if (data === null) throw new Error('Root not found')
     const { fingerprintDuration } = await this.bandada.getGroup({ groupId })
-    if (Date.now() > Date.parse(data.created_at) + fingerprintDuration)
-      throw new Error('Root has expired (fingerprint duration passed)')
+    return Date.now() > Date.parse(data.created_at) + fingerprintDuration
   }
 
-  async isLatestOrHasNotExpired({ groupId, root }: IsValidRootDto) {
-    if (!await this.matchLatest({ groupId, root })) await this.hasNotExpired({ groupId, root })
+  async isNotLatestAndHasExpired({ groupId, root }: IsValidRootDto) {
+    return await this.isNotLatest({ groupId, root }) && await this.hasExpired({ groupId, root })
   }
 
-  private async matchLatest({ groupId, root }: MatchLatestRootDto) {
+  private async isNotLatest({ groupId, root }: MatchLatestRootDto) {
     const { data } = await this.findLatest({ groupId })
     if (data === null) return false
-    return data.root === root
+    return data.root !== root
   }
 }
