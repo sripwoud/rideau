@@ -5,6 +5,8 @@ RUN apk update &&\
     apk upgrade &&\
     apk add --no-cache bash dumb-init &&\
     apk cache clean
+# https://community.fly.io/t/response-buffering-inconsistent-results-when-reading-from-http-with-text-event-stream-mime-type/8430/21
+COPY --from=flyio/litefs:0.5.8 /usr/local/bin/litefs /usr/local/bin/litefs
 
 FROM base AS install
 COPY package.json yarn.lock ./
