@@ -10,7 +10,7 @@ export const Header = () => {
     <header className='p-4'>
       <ul className='flex flex-row justify-between items-center'>
         <li>
-          <Link className='flex flex-row' href='/'>
+          <Link className='flex flex-row align-center' href='/'>
             <MessageCircleQuestion size={25} />
             <span className='text-2xl'>{clientConfig.appName.toLocaleUpperCase()}</span>
           </Link>
