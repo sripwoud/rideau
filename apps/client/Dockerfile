@@ -1,6 +1,5 @@
-# FIXME: remapping of ts aliases does not work with bun + nestjs
 FROM node:22-alpine AS base
-WORKDIR /app
+workdir /app
 RUN apk update &&\
     apk upgrade &&\
     apk add --no-cache bash dumb-init &&\
@@ -8,24 +7,27 @@ RUN apk update &&\
 
 FROM base AS install
 COPY package.json yarn.lock ./
+COPY apps/client/package.json apps/client/
 COPY apps/server/package.json apps/server/
 RUN yarn install --ignore-scripts --frozen-lockfile --production=false
 
 FROM install AS prerelease
-COPY tsconfig.json .
+COPY tsconfig.json ./
+COPY apps/client apps/client
+# client uses some types defined in server
 COPY apps/server apps/server
 COPY config config
-RUN yarn workspace server build &&\
+RUN yarn workspace client build &&\
     find -type d -name node_modules -exec rm -fr {} + &&\
     yarn install --frozen-lockfile --production=true
 
 FROM base AS release
 COPY --from=prerelease /app/node_modules node_modules
-COPY --from=prerelease /app/apps/server/node_modules node_modules
-COPY --from=prerelease /app/apps/server/dist apps/server/dist
+COPY --from=prerelease /app/apps/client/node_modules apps/client/node_modules
+COPY --from=prerelease /app/apps/client/.next apps/client/.next
 ENV NODE_ENV=production
-USER node
-# TODO: make this configurable/overridable
-EXPOSE 3001
-ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "apps/server/dist/apps/server/src/index"]
+ENV NEXT_TELEMETRY_DISABLED=1
+expose 3000
+workdir /app/apps/client
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["node_modules/.bin/next", "start"]

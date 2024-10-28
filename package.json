@@ -14,10 +14,12 @@
     "node": ">=20"
   },
   "scripts": {
-    "build.docker.server": "docker build -f apps/server/Dockerfile -t rideau-server .",
+    "build.docker.client": "docker build -f apps/client/Dockerfile -t yeap-client .",
+    "build.docker.server": "docker build -f apps/server/Dockerfile -t yeap-server .",
     "clean": "find . -type d \\( -name node_modules -o -name .next \\) -exec rm -rf {} +",
     "dev": "bun --filter '*' dev",
-    "start.docker": "docker run -it --rm rideau-server"
+    "start.docker.client": "docker run -it --rm yeap-client",
+    "start.docker.server": "docker run -it --rm yeap-server"
   },
   "workspaces": [
     "apps/*",

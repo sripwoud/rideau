@@ -1,15 +1,15 @@
-# fly.toml app configuration file generated for rideau on 2024-10-07T18:29:32+02:00
+# fly.toml app configuration file generated for yeap on 2024-10-28T12:30:02+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'yeap-api'
+app = 'yeap'
 primary_region = 'fra'
 
 [build]
 
 [http_service]
-internal_port = 3001
+internal_port = 3000
 force_https = true
 auto_stop_machines = true
 auto_start_machines = true
@@ -17,4 +17,6 @@ min_machines_running = 0
 processes = ['app']
 
 [[vm]]
-size = 'shared-cpu-1x'
+memory = '1gb'
+cpu_kind = 'shared'
+cpus = 1
