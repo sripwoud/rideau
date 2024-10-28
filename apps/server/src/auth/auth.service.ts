@@ -25,6 +25,6 @@ export class AuthService {
 
     const bandadaGroup = await this.bandada.getGroup({ groupId })
     const { root } = new Group(bandadaGroup.members)
-    return this.roots.upsert({ groupId, root: root.toString() })
+    return this.roots.create({ groupId, root: root.toString() })
   }
 }
