@@ -11,7 +11,6 @@ import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
 import { NullifiersService } from 'server/nullifiers/nullifiers.service'
 import { QuestionsRouter } from 'server/questions/questions.router'
 import { QuestionsService } from 'server/questions/questions.service'
-import { RootsRouter } from 'server/roots/roots.router'
 import { RootsService } from 'server/roots/roots.service'
 import { SupabaseService } from 'server/supabase/supabase.service'
 import { TrpcContext } from 'server/trpc/trpc.context'
@@ -32,7 +31,6 @@ import { TrpcService } from 'server/trpc/trpc.service'
     NullifiersService,
     QuestionsRouter,
     QuestionsService,
-    RootsRouter,
     RootsService,
     SupabaseService,
     TrpcContext,
