@@ -7,12 +7,12 @@
     @apply hover:underline hover:text-crayola;
   }
   body {
-    @apply bg-gradient-to-br from-white via-cornsilk to-blue text-wenge text-2xl
+    @apply bg-gradient-to-br from-white via-cornsilk to-blue text-wenge text-xl
       overflow-hidden h-screen;
   }
 
   button {
-    @apply bg-crayola text-cornsilk font-semibold py-2 px-4 rounded;
+    @apply bg-crayola text-cornsilk font-semibold p-2 rounded;
     transition: border-radius 0.3s ease;
   }
   button:hover {

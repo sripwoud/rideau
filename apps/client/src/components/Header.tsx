@@ -8,11 +8,11 @@ export const Header = () => {
   const { logout, user } = useAuth()
   return (
     <header className='p-4'>
-      <ul className='flex justify-between'>
-        <li className='self-start'>
-          <Link className='flex flex-row content-center' href='/'>
-            <MessageCircleQuestion size={30} />
-            <span className='text-4xl'>{clientConfig.appName.toLocaleUpperCase()}</span>
+      <ul className='flex flex-row justify-between items-center'>
+        <li>
+          <Link className='flex flex-row' href='/'>
+            <MessageCircleQuestion size={25} />
+            <span className='text-2xl'>{clientConfig.appName.toLocaleUpperCase()}</span>
           </Link>
         </li>
         {user !== null

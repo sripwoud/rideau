@@ -34,7 +34,7 @@ const Dashboard = ({ params: { groupId } }: { params: { groupId: string } }) => 
   return (
     <div className='flex flex-col justify-center items-center space-y-4 h-full'>
       <ExternalLink href={`${clientConfig.bandada.appUrl}/groups/off-chain/${groupId}`}>
-        <div className='flex flex-row items-center space-x-2'>
+        <div className='flex flex-row align-center space-x-2'>
           <ExternalLinkIcon size={20} />
           <div>Bandada Group</div>
         </div>
