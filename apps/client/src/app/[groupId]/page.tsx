@@ -32,7 +32,7 @@ const Dashboard = ({ params: { groupId } }: { params: { groupId: string } }) => 
   if (isLoading || questions === undefined) return <Loader />
 
   return (
-    <div className='flex flex-col justify-center items-center space-y-4'>
+    <div className='flex flex-col justify-center items-center space-y-4 h-full'>
       <ExternalLink href={`${clientConfig.bandada.appUrl}/groups/off-chain/${groupId}`}>
         <div className='flex flex-row items-center space-x-2'>
           <ExternalLinkIcon size={20} />
@@ -40,7 +40,7 @@ const Dashboard = ({ params: { groupId } }: { params: { groupId: string } }) => 
         </div>
       </ExternalLink>
       <CreateQuestionModal />
-      <div className='overflow-y-auto max-h-[calc(100vh-12rem)] space-y-4'>
+      <div className='overflow-y-auto space-y-4'>
         {questions.map((question) => (
           <YNQuestionCard
             key={question.id}
