@@ -43,7 +43,7 @@ export class RootsService {
       throw new Error('Root has expired (fingerprint duration passed)')
   }
 
-  async isValid({ groupId, root }: IsValidRootDto) {
+  async isLatestOrHasNotExpired({ groupId, root }: IsValidRootDto) {
     if (!await this.matchLatest({ groupId, root })) await this.hasNotExpired({ groupId, root })
   }
 

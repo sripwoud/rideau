@@ -7,7 +7,6 @@ import { CommitmentsRouter } from 'server/commitments/commitments.router'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 import { FeedbacksService } from 'server/feedbacks/feedbacks.service'
-import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
 import { NullifiersService } from 'server/nullifiers/nullifiers.service'
 import { QuestionsRouter } from 'server/questions/questions.router'
 import { QuestionsService } from 'server/questions/questions.service'
@@ -27,7 +26,6 @@ import { TrpcService } from 'server/trpc/trpc.service'
     CommitmentsService,
     FeedbacksRouter,
     FeedbacksService,
-    NullifiersRouter,
     NullifiersService,
     QuestionsRouter,
     QuestionsService,
