@@ -27,4 +27,4 @@ Check required environment variables in [.envrc.example](.envrc.example)
 
 ## How is it build?
 
-TODO
+![architecture diagram](./assets/yeap-architecture.svg)
