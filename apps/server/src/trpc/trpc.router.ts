@@ -6,7 +6,6 @@ import { CommitmentsRouter } from 'server/commitments/commitments.router'
 import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
 import { QuestionsRouter } from 'server/questions/questions.router'
-import { RootsRouter } from 'server/roots/roots.router'
 import { TrpcContext } from 'server/trpc/trpc.context'
 import { TrpcService } from 'server/trpc/trpc.service'
 
@@ -19,7 +18,6 @@ export class TrpcRouter {
     private readonly feedbacks: FeedbacksRouter,
     private readonly nullifiers: NullifiersRouter,
     private readonly questions: QuestionsRouter,
-    private readonly roots: RootsRouter,
     private readonly context: TrpcContext,
     private readonly trpc: TrpcService,
   ) {}
@@ -31,7 +29,6 @@ export class TrpcRouter {
     feedbacks: this.feedbacks.router,
     nullifiers: this.nullifiers.router,
     questions: this.questions.router,
-    roots: this.roots.router,
   })
 
   async applyMiddleware(app: INestApplication) {
