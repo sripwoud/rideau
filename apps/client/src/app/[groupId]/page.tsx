@@ -20,7 +20,7 @@ const Dashboard = ({ params: { groupId } }: { params: { groupId: string } }) => 
 
   trpc.questions.onChange.useSubscription(undefined, {
     onData: ({ type, data: newQuestion }) => {
-      if (type === 'INSERT') setQuestions((prev) => [...prev, newQuestion])
+      if (type === 'INSERT') setQuestions((prev) => [newQuestion, ...prev])
       if (type === 'UPDATE')
         setQuestions((prev) => prev.map((oldQuestion) => oldQuestion.id === newQuestion.id ? newQuestion : oldQuestion))
     },
