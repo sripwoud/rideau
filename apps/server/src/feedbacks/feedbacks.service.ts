@@ -25,12 +25,8 @@ export class FeedbacksService {
     if (question === null) throw new Error('No matching question found')
     if (question.active === false) throw new Error('Question is inactive, you cannot send feedback anymore')
 
-    // TODO make this a nullifiers service method
-    const { data: nullifiers } = await this.nullifiers.find({ nullifier: proof.nullifier })
-    if (nullifiers !== null && nullifiers.length > 0)
-      throw new Error('Nullifier already used, you are submitting the same nullifier twice')
-
-    await this.roots.isValid({ groupId, root: proof.merkleTreeRoot })
+    await this.nullifiers.isNotAlreadyUsed({ nullifier: proof.nullifier })
+    await this.roots.isLatestOrHasNotExpired({ groupId, root: proof.merkleTreeRoot })
 
     const valid = await verifyProof(proof)
     if (!valid) throw new Error('Invalid proof')

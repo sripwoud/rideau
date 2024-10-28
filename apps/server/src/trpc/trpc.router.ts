@@ -4,7 +4,6 @@ import { AuthRouter } from 'server/auth/auth.router'
 import { BandadaRouter } from 'server/bandada/bandada.router'
 import { CommitmentsRouter } from 'server/commitments/commitments.router'
 import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
-import { NullifiersRouter } from 'server/nullifiers/nullifiers.router'
 import { QuestionsRouter } from 'server/questions/questions.router'
 import { TrpcContext } from 'server/trpc/trpc.context'
 import { TrpcService } from 'server/trpc/trpc.service'
@@ -16,7 +15,6 @@ export class TrpcRouter {
     private readonly bandada: BandadaRouter,
     private readonly commitments: CommitmentsRouter,
     private readonly feedbacks: FeedbacksRouter,
-    private readonly nullifiers: NullifiersRouter,
     private readonly questions: QuestionsRouter,
     private readonly context: TrpcContext,
     private readonly trpc: TrpcService,
@@ -27,7 +25,6 @@ export class TrpcRouter {
     bandada: this.bandada.router,
     commitments: this.commitments.router,
     feedbacks: this.feedbacks.router,
-    nullifiers: this.nullifiers.router,
     questions: this.questions.router,
   })
 

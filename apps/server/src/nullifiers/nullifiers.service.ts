@@ -10,7 +10,12 @@ export class NullifiersService {
     return this.supabase.from('nullifiers').insert(createNullifierDto)
   }
 
-  async find({ nullifier }: FindNullifierDto) {
+  private async find({ nullifier }: FindNullifierDto) {
     return this.supabase.from('nullifiers').select().eq('nullifier', nullifier)
+  }
+
+  async isNotAlreadyUsed({ nullifier }: FindNullifierDto) {
+    const { data } = await this.find({ nullifier })
+    if (data !== null && data.length > 0) throw new Error('Nullifier already used')
   }
 }
