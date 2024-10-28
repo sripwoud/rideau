@@ -6,6 +6,7 @@ node_modules
 out
 
 .envrc
+.envrc.deploy
 **/*.bak
 repopack-output.txt
 *.tsbuildinfo

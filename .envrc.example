@@ -1,12 +1,13 @@
 use asdf
 
-# db
+# shared
+export NEXT_PUBLIC_PSE_BANDADA_GROUP_ID=
 
+# db
 export SUPABASE_URL= # https://supabase.com/docs/reference/javascript/initializing
 export SUPABASE_ANON_KEY=
 
 # server
-
 export ALCHEMY_API_KEY= # https://accountkit.alchemy.com/react/quickstart#2-get-your-alchemy-api-key
 export BANDADA_API_KEY= # https://app.bandada.pse.dev/
 export CLIENT_URL=

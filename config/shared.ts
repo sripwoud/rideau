@@ -1,3 +1,5 @@
+import { getEnvVar } from './utils'
+
 interface SharedConfigI {
   alchemy: { proxyEndpoint: string }
   appName: string
@@ -7,5 +9,5 @@ interface SharedConfigI {
 export const sharedConfig: SharedConfigI = {
   alchemy: { proxyEndpoint: 'alchemy' },
   appName: 'yeap',
-  bandada: { pseGroupId: '48515227088583163821982124675323' },
+  bandada: { pseGroupId: getEnvVar('NEXT_PUBLIC_PSE_BANDADA_GROUP_ID') },
 }
