@@ -37,11 +37,13 @@ export const useSendFeedback = (
     if (nodes === undefined || isNodesLoading || identity.isNone() || feedback === null) return
     const group = Group.import(nodes)
     // use questionId in scope as they are unique within the app (postgres questions table primary key)
-    generateProof(identity.get(), group, BigInt(feedback), `${questionId}`, 16).then((proof) => {
-      send({ groupId, feedback, proof, questionId })
-    }).catch(error => {
-      setGenerateProofError(error)
-    })
+    generateProof(identity.get(), group, BigInt(feedback), `${questionId}`, 16)
+      .then((proof) => {
+        send({ groupId, feedback, proof, questionId })
+      })
+      .catch(error => {
+        setGenerateProofError(error)
+      })
   }, [isNodesLoading, identity, nodes, groupId, questionId])
 
   return { errors, sendFeedback, isSending: isNodesLoading || isSendPending }

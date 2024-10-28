@@ -14,7 +14,11 @@ export class CommitmentsService {
   }
 
   async find({ email }: FindCommitmentDto) {
-    const { data } = await this.supabase.from('commitments').select('commitment').eq('email', email)
+    const { data } = await this
+      .supabase
+      .from('commitments')
+      .select('commitment')
+      .eq('email', email)
       .single()
     // TODO: use Option & Result instead of null
     return { commitment: data?.commitment ?? null }

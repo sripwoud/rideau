@@ -5,9 +5,11 @@ describe('AlchemyProxyController', () => {
   let controller: AlchemyProxyController
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [AlchemyProxyController],
-    }).compile()
+    const module: TestingModule = await Test
+      .createTestingModule({
+        controllers: [AlchemyProxyController],
+      })
+      .compile()
 
     controller = module.get<AlchemyProxyController>(AlchemyProxyController)
   })

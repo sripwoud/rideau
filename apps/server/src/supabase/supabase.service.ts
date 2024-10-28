@@ -19,14 +19,17 @@ export class SupabaseService implements OnModuleDestroy {
   }
 
   subscribe(table: string) {
-    this.supabase.channel('table-db-changes').on(
-      'postgres_changes',
-      { event: 'INSERT', schema: 'public', table },
-      (payload: RealtimePostgresInsertPayload<Question>) => {
-        // TODO improve typing (probably need a typed EventEmmitter custom class?)
-        this.events.emit(`${table}.change`, { type: 'INSERT', data: payload.new })
-      },
-    )
+    this
+      .supabase
+      .channel('table-db-changes')
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table },
+        (payload: RealtimePostgresInsertPayload<Question>) => {
+          // TODO improve typing (probably need a typed EventEmmitter custom class?)
+          this.events.emit(`${table}.change`, { type: 'INSERT', data: payload.new })
+        },
+      )
       .on(
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table },

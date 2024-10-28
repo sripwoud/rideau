@@ -16,7 +16,9 @@ export class QuestionsRouter {
     create: this.trpc.procedure.input(CreateQuestionDto).mutation(async ({ input }) => this.questions.create(input)),
     findAll: this.trpc.procedure.input(FindAllQuestionsDto).query(async ({ input }) => this.questions.findAll(input)),
     // TODO: validate output/payload https://trpc.io/docs/server/subscriptions#output-validation
-    onChange: this.trpc.procedure
+    onChange: this
+      .trpc
+      .procedure
       .subscription(async function*({ ctx: { events }, signal }) {
         for await (
           // TODO use a var or enum to refer to the event name?

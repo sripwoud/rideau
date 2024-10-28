@@ -5,9 +5,11 @@ describe('FeedbacksService', () => {
   let service: FeedbacksService
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [FeedbacksService],
-    }).compile()
+    const module: TestingModule = await Test
+      .createTestingModule({
+        providers: [FeedbacksService],
+      })
+      .compile()
 
     service = module.get<FeedbacksService>(FeedbacksService)
   })
