@@ -3,15 +3,41 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["apps/server/**", "!**/*.md", ".github/workflows/deploy.yml"]
+    paths: [
+      "apps/client/**",
+      "apps/server/**",
+      "!**/*.md",
+      ".github/workflows/deploy.yml",
+    ]
 
 jobs:
-  deployment:
-    environment:
-      name: rideau-server-prod
-      url: https://rideau.fly.dev
-    name: Deploy Rideau Server to production
+  changed-files:
     runs-on: ubuntu-latest
+    outputs:
+      client_any_changed: ${{ steps.changed-files.outputs.client_any_changed }}
+      server_any_changed: ${{ steps.changed-files.outputs.server_any_changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tj-actions/changed-files@v44
+        id: changed-files
+        with:
+          files_yaml: |
+            client:
+              - tsconfig.json
+              - package.json
+              - apps/{client,server}/**/*
+            server:
+              - tsconfig.json
+              - package.json
+              - apps/server/**/*
+
+  deploy-server:
+    needs: changed-files
+    if: needs.changed-files.outputs.server_any_changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: yeap-server
+      url: https://yeap-server.fly.dev
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
@@ -20,6 +46,25 @@ jobs:
           flyctl deploy \
             --config apps/server/fly.toml \
             --dockerfile apps/server/Dockerfile \
+            --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  deploy-client:
+    needs: changed-files
+    if: needs.changed-files.outputs.client_any_changed == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: yeap-client
+      url: https://yeap.fly.dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy
+        run: |
+          flyctl deploy \
+            --config apps/client/fly.toml \
+            --dockerfile apps/client/Dockerfile \
             --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

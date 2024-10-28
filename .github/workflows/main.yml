@@ -13,7 +13,7 @@ jobs:
   changed-files:
     runs-on: ubuntu-latest
     outputs:
-      any_jts_changed: ${{ steps.changed-files.outputs.jts_any_changed }}
+      jts_any_changed: ${{ steps.changed-files.outputs.jts_any_changed }}
     steps:
       - uses: actions/checkout@v4
       - uses: tj-actions/changed-files@v44
@@ -28,7 +28,7 @@ jobs:
 
   _test-jts:
     needs: changed-files
-    if: needs.changed-files.outputs.any_jts_changed == 'true'
+    if: needs.changed-files.outputs.jts_any_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
