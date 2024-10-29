@@ -1,7 +1,7 @@
-import type { BandadaGetGroupOutput } from 'client/l/trpc'
+import type { Group } from '@bandada/api-sdk'
 import type { FC } from 'react'
 
-type GroupCardProps = Pick<BandadaGetGroupOutput, 'description' | 'name'>
+type GroupCardProps = Pick<Group, 'description' | 'name'>
 
 export const GroupCard: FC<GroupCardProps> = ({ description, name }) => {
   return (

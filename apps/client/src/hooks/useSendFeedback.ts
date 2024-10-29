@@ -18,7 +18,7 @@ export const useSendFeedback = (
   { groupId, questionId }: Omit<SendFeedbackDto, 'feedback' | 'proof'>,
 ) => {
   const { identity } = useIdentity()
-  const { data: nodes, isLoading: isNodesLoading, error: exportGroupError } = trpc.bandada.exportGroup.useQuery({
+  const { data: nodes, isLoading: isNodesLoading, error: exportGroupError } = trpc.groups.export.useQuery({
     groupId,
   })
   const { mutate: send, error: sendError, isPending: isSendPending } = trpc.feedbacks.send.useMutation()
