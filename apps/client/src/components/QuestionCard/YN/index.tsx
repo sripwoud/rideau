@@ -1,6 +1,7 @@
 import { YNQuestionStatus } from 'client/c/QuestionCard/YN/YNQuestionStatus'
 import { useSendFeedback } from 'client/h/useSendFeedback'
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
+import Link from 'next/link'
 import type { FC } from 'react'
 import type { Question } from 'server/questions/entities'
 
@@ -31,7 +32,9 @@ export const YNQuestionCard: FC<Question> = ({
       style={{ backgroundColor: '#fffae3', borderColor: '#5d576b', borderStyle: 'solid', borderWidth: '2px' }}
     >
       <div className='flex flex-row justify-between space-x-4 mb-2'>
-        <h3 className='text-xl font-bold mb-2'>{title}</h3>
+        <Link href={`${groupId}/${questionId.toString()}`}>
+          <h3 className='text-xl font-bold mb-2'>{title}</h3>
+        </Link>
         <YNQuestionStatus active={active} yes={yes} no={no} size={20} />
       </div>
       <div className='flex justify-center items-center text-gray-600'>
