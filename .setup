@@ -1,0 +1,43 @@
+#!/bin/bash
+
+set -eou pipefail
+
+BROWN=$'\033[0;33m'
+RED=$'\033[0;31m'
+NC=$'\033[0m'
+
+print() { printf "%s\n" "$1"; }
+
+is_bun_installed() {
+    if ! command -v bun &> /dev/null
+    then
+        print "${BROWN}bun$NC ${RED}is not installed$NC"
+        print "Check instructions at ${BROWN}https://bun.sh$NC"
+        exit 1
+    fi
+}
+
+is_docker_installed() {
+    if ! command -v docker &> /dev/null
+    then
+        print "${BROWN}docker$NC ${RED}is not installed$NC"
+        print  "Check instructions at ${BROWN}https://docs.docker.com/get-started/get-docker/$NC"
+        exit 1
+    fi
+}
+
+env_setup() {
+    cp -n .envrc{.example,}
+    print "Edit ${BROWN}.envrc$NC file to set the required environment variables. Then source it with ${BROWN}source .envrc$NC"
+}
+main() {
+    is_bun_installed
+    is_docker_installed
+    bun i
+    bun run db-reset
+    env_setup
+    print "Run ${BROWN}bun dev$NC to start the server and client in development mode."
+}
+
+
+main

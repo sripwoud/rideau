@@ -12,14 +12,7 @@ Reasonably private application to send anonymous feedbacks within a group.
 
 ## Getting Started
 
-Pre requisites: [bun](https://bun.sh/docs/installation)
-
-```commandline
-bun i
-bun run
-```
-
-Check required environment variables in [.envrc.example](.envrc.example)
+`./setup`
 
 ## What is going on?
 
