@@ -35,6 +35,7 @@ main() {
   bun run db-reset
   env_setup
   print "Run ${BROWN}bun dev$NC to start the server and client in development mode."
+  print "To enjoy realtime updates upon question creation and feedback submission, you need to enable publications for the ${BROWN}questions$NC table at ${BROWN}http://localhost:54323/project/default/database/publications$NC"
 }
 
 main
