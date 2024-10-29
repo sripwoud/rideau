@@ -23,8 +23,8 @@ export class AuthService {
     if (email.endsWith('@pse.dev'))
       await this.groups.maybeJoin({ groupId, memberId: commitment })
 
-    const groupsGroup = await this.groups.find({ groupId })
-    const { root } = new Group(groupsGroup.members)
+    const group = await this.groups.find({ groupId })
+    const { root } = new Group(group.members)
     return this.roots.create({ groupId, root: root.toString() })
   }
 }
