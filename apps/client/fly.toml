@@ -7,7 +7,7 @@ app = 'yeap'
 primary_region = 'fra'
 
 [build.args]
-NEXT_PUBLIC_PSE_BANDADA_GROUP_ID = "48515227088583163821982124675323"
+NEXT_PUBLIC_PSE_BANDADA_GROUP_ID = "72820114421018012910757290272286"
 NEXT_PUBLIC_SERVER_URL = "https://yeap-server.fly.dev"
 
 [http_service]
