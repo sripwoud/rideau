@@ -12,8 +12,8 @@ export class QuestionsService implements OnModuleInit {
     this.supabase.subscribe(this.resource)
   }
 
-  async create({ groupId: group_id, title }: CreateQuestionDto) {
-    return this.supabase.from(this.resource).insert({ group_id, title })
+  async create({ author, groupId: group_id, title }: CreateQuestionDto) {
+    return this.supabase.from(this.resource).insert({ author, group_id, title })
   }
 
   async find({ questionId }: FindQuestionDto) {
