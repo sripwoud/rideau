@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { BandadaService } from 'server/bandada/bandada.service'
+import { GroupsService } from 'server/groups/groups.service'
 import type {
   CreateRootDto,
   FindLatestRootDto,
@@ -12,7 +12,7 @@ import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
 export class RootsService {
-  constructor(private readonly bandada: BandadaService, private readonly supabase: SupabaseService) {}
+  constructor(private readonly groups: GroupsService, private readonly supabase: SupabaseService) {}
 
   async create({ groupId: group_id, root }: CreateRootDto) {
     return this.supabase.from('roots').insert({ group_id, root })
@@ -38,7 +38,7 @@ export class RootsService {
   private async hasExpired({ groupId, root }: RootHasExpiredDto) {
     const { data } = await this.find({ groupId, root })
     if (data === null) throw new Error('Root not found')
-    const { fingerprintDuration } = await this.bandada.getGroup({ groupId })
+    const { fingerprintDuration } = await this.groups.find({ groupId })
     return Date.now() > Date.parse(data.created_at) + fingerprintDuration
   }
 

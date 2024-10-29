@@ -2,15 +2,15 @@ import { Injectable } from '@nestjs/common'
 import { Identity } from '@semaphore-protocol/core'
 import { Group } from '@semaphore-protocol/core'
 import type { SignupDto } from 'server/auth/dto/signup.dto'
-import { BandadaService } from 'server/bandada/bandada.service'
 import { CommitmentsService } from 'server/commitments/commitments.service'
+import { GroupsService } from 'server/groups/groups.service'
 import { serverConfig } from 'server/l/config'
 import { RootsService } from 'server/roots/roots.service'
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly bandada: BandadaService,
+    private readonly groups: GroupsService,
     private readonly commitments: CommitmentsService,
     private readonly roots: RootsService,
   ) {}
@@ -21,10 +21,10 @@ export class AuthService {
     await this.commitments.create({ commitment, email })
 
     if (email.endsWith('@pse.dev'))
-      await this.bandada.maybeAddMember({ groupId, memberId: commitment })
+      await this.groups.maybeJoin({ groupId, memberId: commitment })
 
-    const bandadaGroup = await this.bandada.getGroup({ groupId })
-    const { root } = new Group(bandadaGroup.members)
+    const groupsGroup = await this.groups.find({ groupId })
+    const { root } = new Group(groupsGroup.members)
     return this.roots.create({ groupId, root: root.toString() })
   }
 }

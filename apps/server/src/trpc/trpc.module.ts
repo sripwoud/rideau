@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common'
 import { AuthRouter } from 'server/auth/auth.router'
 import { AuthService } from 'server/auth/auth.service'
-import { BandadaRouter } from 'server/bandada/bandada.router'
-import { BandadaService } from 'server/bandada/bandada.service'
 import { CommitmentsRouter } from 'server/commitments/commitments.router'
 import { CommitmentsService } from 'server/commitments/commitments.service'
 import { FeedbacksRouter } from 'server/feedbacks/feedbacks.router'
 import { FeedbacksService } from 'server/feedbacks/feedbacks.service'
+import { GroupsRouter } from 'server/groups/groups.router'
+import { GroupsService } from 'server/groups/groups.service'
 import { NullifiersService } from 'server/nullifiers/nullifiers.service'
 import { QuestionsRouter } from 'server/questions/questions.router'
 import { QuestionsService } from 'server/questions/questions.service'
@@ -20,12 +20,12 @@ import { TrpcService } from 'server/trpc/trpc.service'
   providers: [
     AuthRouter,
     AuthService,
-    BandadaRouter,
-    BandadaService,
     CommitmentsRouter,
     CommitmentsService,
     FeedbacksRouter,
     FeedbacksService,
+    GroupsRouter,
+    GroupsService,
     NullifiersService,
     QuestionsRouter,
     QuestionsService,
