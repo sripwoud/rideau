@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
-import type { CreateQuestionDto, FindAllQuestionsDto, FindQuestionDto } from 'server/questions/dto'
+import type { CreateQuestionDto, FindAllQuestionsDto, FindQuestionDto, ToggleQuestionDto } from 'server/questions/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
@@ -12,8 +12,8 @@ export class QuestionsService implements OnModuleInit {
     this.supabase.subscribe(this.resource)
   }
 
-  async create({ groupId: group_id, title }: CreateQuestionDto) {
-    return this.supabase.from(this.resource).insert({ group_id, title })
+  async create({ author, groupId: group_id, title }: CreateQuestionDto) {
+    return this.supabase.from(this.resource).insert({ author, group_id, title })
   }
 
   async find({ questionId }: FindQuestionDto) {
@@ -32,5 +32,9 @@ export class QuestionsService implements OnModuleInit {
     const { data } = await this.find({ questionId })
     if (data === null) throw new Error('This question does not exist')
     return data.active
+  }
+
+  async toggle({ active, questionId }: ToggleQuestionDto) {
+    return this.supabase.from(this.resource).update({ active }).eq('id', questionId)
   }
 }

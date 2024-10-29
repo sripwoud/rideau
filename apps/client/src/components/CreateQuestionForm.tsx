@@ -1,4 +1,5 @@
 'use client'
+import { useUser } from '@account-kit/react'
 import { useForm } from '@tanstack/react-form'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { clientConfig } from 'client/l/config'
@@ -10,10 +11,12 @@ interface CreateQuestionFormProps {
   onClose: () => void
 }
 export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => {
+  const user = useUser()
   const form = useForm({
     defaultValues: { title: '' },
     onSubmit: ({ value: { title } }) => {
-      createQuestion({ groupId: clientConfig.bandada.pseGroupId, title })
+      if (user?.email === undefined) throw new Error('User not found')
+      createQuestion({ author: user.email, groupId: clientConfig.bandada.pseGroupId, title })
     },
     validatorAdapter: zodValidator(),
     validators: { onChange: CreateQuestionDto.pick({ title: true }) },

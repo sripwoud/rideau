@@ -102,6 +102,7 @@ export type Database = {
       questions: {
         Row: {
           active: boolean
+          author: string
           created_at: string
           group_id: string
           id: number
@@ -111,6 +112,7 @@ export type Database = {
         }
         Insert: {
           active?: boolean
+          author: string
           created_at?: string
           group_id: string
           id?: never
@@ -120,6 +122,7 @@ export type Database = {
         }
         Update: {
           active?: boolean
+          author?: string
           created_at?: string
           group_id?: string
           id?: never

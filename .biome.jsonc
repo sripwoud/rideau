@@ -60,6 +60,7 @@
         "apps/client/src/hooks/useIdentity.ts",
         "apps/client/src/hooks/useSendFeedback.ts",
         "apps/client/src/components/withAuth.tsx",
+        "apps/client/src/app/[groupId]/[questionId]/page.tsx",
       ],
       "linter": { "rules": { "correctness": { "useExhaustiveDependencies": "off" } } },
     },
@@ -73,7 +74,11 @@
       "linter": { "rules": { "style": { "noDefaultExport": "off" } } },
     },
     {
-      "include": ["apps/client/src/app/layout.tsx", "apps/client/src/app/[groupId]/page.tsx"],
+      "include": [
+        "apps/client/src/app/layout.tsx",
+        "apps/client/src/app/[groupId]/page.tsx",
+        "apps/client/src/app/[groupId]/[questionId]/page.tsx",
+      ],
       "linter": { "rules": { "nursery": { "useComponentExportOnlyModules": "off" } } },
     },
   ],
