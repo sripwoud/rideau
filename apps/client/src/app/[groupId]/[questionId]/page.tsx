@@ -20,7 +20,7 @@ const QuestionDetails = ({ params: { questionId: questionIdStr } }: { params: { 
   if (isLoading || question === undefined || question === null) return <Loader />
   return (
     <div>
-      <h1>{question.title}</h1>
+      <h1 className='text-2xl'>{question.title}</h1>
       <p>yes: {question.yes}</p>
       <p>no: {question.no}</p>
       {user?.email === question.author && (

@@ -35,28 +35,43 @@ export const YNQuestionCard: FC<Question> = ({
         <Link href={`${groupId}/${questionId.toString()}`}>
           <h3 className='text-xl font-bold mb-2'>{title}</h3>
         </Link>
-        <YNQuestionStatus active={active} yes={yes} no={no} size={20} />
+        <YNQuestionStatus yes={yes} no={no} size={20} />
       </div>
       <div className='flex justify-center items-center text-gray-600'>
-        <button
-          className='mr-2'
-          type='button'
-          onClick={() => {
-            sendFeedback(true)
-          }}
-          disabled={isSending}
-        >
-          {yes} <ThumbsUp className='inline-block' size={20} />
-        </button>
-        <button
-          type='button'
-          disabled={isSending}
-          onClick={() => {
-            sendFeedback(false)
-          }}
-        >
-          {no} <ThumbsDown className='inline-block' size={20} />
-        </button>
+        {active
+          ? (
+            <>
+              <button
+                className='mr-2'
+                type='button'
+                onClick={() => {
+                  sendFeedback(true)
+                }}
+                disabled={isSending}
+              >
+                {yes} <ThumbsUp className='inline-block' size={20} />
+              </button>
+              <button
+                type='button'
+                disabled={isSending}
+                onClick={() => {
+                  sendFeedback(false)
+                }}
+              >
+                {no} <ThumbsDown className='inline-block' size={20} />
+              </button>
+            </>
+          )
+          : (
+            <div className='flex space-x-4'>
+              <div>
+                {yes} <ThumbsUp className='inline-block' size={20} />
+              </div>
+              <div>
+                {no} <ThumbsDown className='inline-block' size={20} />
+              </div>
+            </div>
+          )}
       </div>
     </div>
   )
