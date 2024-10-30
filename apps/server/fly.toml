@@ -6,7 +6,8 @@
 app = 'yeap-server'
 primary_region = 'fra'
 
-[build]
+[env]
+NEXT_PUBLIC_PSE_BANDADA_GROUP_ID = "72820114421018012910757290272286"
 
 [http_service]
 internal_port = 3001
