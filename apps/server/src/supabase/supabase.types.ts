@@ -55,19 +55,19 @@ export type Database = {
       feedbacks: {
         Row: {
           created_at: string
-          feedback: boolean
+          feedback: string
           id: number
           question_id: number
         }
         Insert: {
           created_at?: string
-          feedback: boolean
+          feedback: string
           id?: never
           question_id: number
         }
         Update: {
           created_at?: string
-          feedback?: boolean
+          feedback?: string
           id?: never
           question_id?: number
         }
@@ -106,9 +106,9 @@ export type Database = {
           created_at: string
           group_id: string
           id: number
-          no: number
+          options: string[] | null
           title: string
-          yes: number
+          type: Database["public"]["Enums"]["question_type"]
         }
         Insert: {
           active?: boolean
@@ -116,9 +116,9 @@ export type Database = {
           created_at?: string
           group_id: string
           id?: never
-          no?: number
+          options?: string[] | null
           title: string
-          yes?: number
+          type: Database["public"]["Enums"]["question_type"]
         }
         Update: {
           active?: boolean
@@ -126,9 +126,9 @@ export type Database = {
           created_at?: string
           group_id?: string
           id?: never
-          no?: number
+          options?: string[] | null
           title?: string
-          yes?: number
+          type?: Database["public"]["Enums"]["question_type"]
         }
         Relationships: []
       }
@@ -158,13 +158,22 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      count_boolean_feedbacks: {
+        Args: {
+          question_id: number
+        }
+        Returns: Database["public"]["CompositeTypes"]["boolean_feedbacks_count"]
+      }
     }
     Enums: {
-      [_ in never]: never
+      boolean_feedback: "yes" | "no"
+      question_type: "boolean" | "text" | "number" | "option"
     }
     CompositeTypes: {
-      [_ in never]: never
+      boolean_feedbacks_count: {
+        yes: number | null
+        no: number | null
+      }
     }
   }
 }
