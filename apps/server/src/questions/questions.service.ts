@@ -1,6 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
 import type { CreateQuestionDto, FindAllQuestionsDto, FindQuestionDto, ToggleQuestionDto } from 'server/questions/dto'
 import { SupabaseService } from 'server/supabase/supabase.service'
+import { QuestionStatsDto } from './dto/question-stats.dto'
 
 @Injectable()
 export class QuestionsService implements OnModuleInit {
@@ -12,8 +13,8 @@ export class QuestionsService implements OnModuleInit {
     this.supabase.subscribe(this.resource)
   }
 
-  async create({ author, groupId: group_id, title }: CreateQuestionDto) {
-    return this.supabase.from(this.resource).insert({ author, group_id, title })
+  async create({ author, groupId: group_id, title, type }: CreateQuestionDto) {
+    return this.supabase.from(this.resource).insert({ author, group_id, title, type })
   }
 
   async find({ questionId }: FindQuestionDto) {
@@ -32,6 +33,24 @@ export class QuestionsService implements OnModuleInit {
     const { data } = await this.find({ questionId })
     if (data === null) throw new Error('This question does not exist')
     return data.active
+  }
+
+  async stats({ questionId, type }: QuestionStatsDto) {
+    if (type === undefined) {
+      const { data: question } = await this.find({ questionId })
+      if (question === null) throw new Error('question not found')
+      type = question.type
+    }
+
+    switch (type) {
+      case 'boolean': {
+        const { data } = await this.supabase.rpc('count_boolean_feedbacks', { question_id: questionId })
+        return { no: data?.no ?? 0, yes: data?.yes ?? 0 }
+      }
+      default:
+        // TODO support text question type
+        throw new Error('Unsupported question type')
+    }
   }
 
   async toggle({ active, questionId }: ToggleQuestionDto) {

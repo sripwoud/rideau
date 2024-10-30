@@ -1,5 +1,6 @@
 import { YNQuestionStatus } from 'client/c/QuestionCard/YN/YNQuestionStatus'
 import { useSendFeedback } from 'client/h/useSendFeedback'
+import { useQuestionStats } from 'client/hooks/useQuestionStats'
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
 import type { FC } from 'react'
@@ -10,18 +11,9 @@ export const YNQuestionCard: FC<Question> = ({
   group_id: groupId,
   title,
   active,
-  yes,
-  no,
 }) => {
-  // Use the custom hook for sending feedback
-  const {
-    sendFeedback,
-    isSending,
-    errors,
-  } = useSendFeedback({
-    groupId,
-    questionId,
-  })
+  const { data: { no, yes } } = useQuestionStats({ questionId })
+  const { sendFeedback, isSending, errors } = useSendFeedback({ groupId, questionId })
 
   if (errors.length > 0)
     return errors.map(({ message, type }) => <p key={message} className='text-red -text-sm'>{`${type}: ${message}`}</p>)
@@ -45,7 +37,7 @@ export const YNQuestionCard: FC<Question> = ({
                 className='mr-2'
                 type='button'
                 onClick={() => {
-                  sendFeedback(true)
+                  sendFeedback('true')
                 }}
                 disabled={isSending}
               >
@@ -55,7 +47,7 @@ export const YNQuestionCard: FC<Question> = ({
                 type='button'
                 disabled={isSending}
                 onClick={() => {
-                  sendFeedback(false)
+                  sendFeedback('false')
                 }}
               >
                 {no} <ThumbsDown className='inline-block' size={20} />

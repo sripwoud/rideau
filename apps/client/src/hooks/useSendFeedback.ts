@@ -3,6 +3,8 @@ import { useIdentity } from 'client/h/useIdentity'
 import { trpc } from 'client/l/trpc'
 import { useCallback, useMemo, useState } from 'react'
 import type { SendFeedbackDto } from 'server/feedbacks/dto'
+import { toBytes } from 'viem'
+
 enum ErrorType {
   ExportGroupError = 'ExportGroupError',
   SendError = 'SendError',
@@ -33,11 +35,11 @@ export const useSendFeedback = (
     return errors
   }, [exportGroupError, generateProofError, sendError])
 
-  const sendFeedback = useCallback((feedback: boolean) => {
+  const sendFeedback = useCallback((feedback: string) => {
     if (nodes === undefined || isNodesLoading || identity.isNone() || feedback === null) return
     const group = Group.import(nodes)
     // use questionId in scope as they are unique within the app (postgres questions table primary key)
-    generateProof(identity.get(), group, BigInt(feedback), `${questionId}`, 16)
+    generateProof(identity.get(), group, toBytes(feedback), questionId, 16)
       .then((proof) => {
         send({ groupId, feedback, proof, questionId })
       })

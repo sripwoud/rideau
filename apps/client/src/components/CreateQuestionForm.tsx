@@ -16,7 +16,7 @@ export const CreateQuestionForm: FC<CreateQuestionFormProps> = ({ onClose }) => 
     defaultValues: { title: '' },
     onSubmit: ({ value: { title } }) => {
       if (user?.email === undefined) throw new Error('User not found')
-      createQuestion({ author: user.email, groupId: clientConfig.bandada.pseGroupId, title })
+      createQuestion({ author: user.email, groupId: clientConfig.bandada.pseGroupId, title, type: 'boolean' })
     },
     validatorAdapter: zodValidator(),
     validators: { onChange: CreateQuestionDto.pick({ title: true }) },

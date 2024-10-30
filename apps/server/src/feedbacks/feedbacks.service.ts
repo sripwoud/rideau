@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { verifyProof } from '@semaphore-protocol/core'
-import { CreateFeedbackDto, SendFeedbackDto } from 'server/feedbacks/dto'
+import { type CreateFeedbackDto, DynamicFeedbackSchema, type SendFeedbackDto } from 'server/feedbacks/dto'
 import { NullifiersService } from 'server/nullifiers/nullifiers.service'
 import { QuestionsService } from 'server/questions/questions.service'
 import { RootsService } from 'server/roots/roots.service'
@@ -19,10 +19,20 @@ export class FeedbacksService {
     return this.supabase.from('feedbacks').insert({ feedback, question_id })
   }
 
-  // TODO: handle errors, abstract in smaller steps?
+  // some of the validation could happen at the router layer
+  // but due to the dynamic nature of the validation
+  // (constraints between feedback and question types that aren't enforced at the db layer)
+  // it is better to keep it here for better separation of concerns and maintainability
+  // the router keeps doing only static input validation
   async send({ groupId, feedback, proof, questionId }: SendFeedbackDto) {
-    if (!await this.questions.isInactive({ questionId }))
-      throw new Error('Question is inactive, you cannot send feedback anymore')
+    const { data: question } = await this.questions.find({ questionId })
+    if (question === null) throw new Error('Question does not exist')
+
+    const { active, type, options } = question
+    if (!active) throw new Error('Question is inactive, you cannot send feedback anymore')
+
+    const feedbackSchema = DynamicFeedbackSchema(type, options)
+    feedbackSchema.parse(feedback)
 
     if (await this.nullifiers.isAlreadyUsed({ nullifier: proof.nullifier })) throw new Error('Nullifier already used')
     if (await this.roots.isNotLatestAndHasExpired({ groupId, root: proof.merkleTreeRoot }))
