@@ -21,8 +21,8 @@ begin
     coalesce(sum(case when feedback::boolean_feedback = 'yes' then 1 else 0 end), 0) as yes,
     coalesce(sum(case when feedback::boolean_feedback = 'no' then 1 else 0 end), 0) as no
   into result
-  from public.feedbacks
-  where question_id = $1;
+  from public.feedbacks as f
+  where f.question_id = $1;
   return result;
 end;
 $$;
