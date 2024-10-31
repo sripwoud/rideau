@@ -12,4 +12,5 @@ create table public.questions (
 );
 comment on table public.questions is 'Questions for users to give feedback on';
 comment on column public.questions.group_id is 'Id of the Bandada Semaphore Group that restrict who can see and answer this question';
-comment on column public.questions.type is 'List of possible feedback values (for option question type only)';
+comment on column public.questions.options is 'List of possible feedback values (for option question type only)';
+comment on column public.questions.type is 'Type of the question (boolean, text, number, option)';
