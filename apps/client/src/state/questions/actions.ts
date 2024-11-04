@@ -1,12 +1,12 @@
+import { type Questions, type QuestionsAction, QuestionsActionType } from 'client/state/questions/types'
 import type { Question } from 'server/questions/entities'
-import { type Questions, type QuestionsAction, QuestionsActionType } from './types'
 
 export const init = (payload: Questions): QuestionsAction => ({
-  type: QuestionsActionType.FIND_ALL,
+  type: QuestionsActionType.INIT,
   payload,
 })
 
 export const update = (payload: Question): QuestionsAction => ({
-  type: QuestionsActionType.ON_CHANGE,
+  type: QuestionsActionType.UPDATE,
   payload,
 })

@@ -5,14 +5,14 @@ import type { Router } from 'server/trpc/trpc.router'
 export type Questions = inferRouterOutputs<Router>['questions']['findAll']
 
 export enum QuestionsActionType {
-  FIND_ALL = 'FIND_ALL',
-  ON_CHANGE = 'ON_CHANGE',
+  INIT = 'INIT',
+  UPDATE = 'UPDATE',
 }
 
 export type QuestionsAction = {
-  type: QuestionsActionType.FIND_ALL
+  type: QuestionsActionType.INIT
   payload: Questions
 } | {
-  type: QuestionsActionType.ON_CHANGE
+  type: QuestionsActionType.UPDATE
   payload: Question
 }

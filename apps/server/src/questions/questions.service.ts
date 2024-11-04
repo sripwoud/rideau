@@ -27,7 +27,7 @@ export class QuestionsService implements OnModuleInit {
       'created_at',
       { ascending: false },
     )
-    return data?.reduce<Record<string, Question>>((acc, question) => {
+    return data?.reduce<Record<number, Question>>((acc, question) => {
       acc[question.id] = question
       return acc
     }, {}) ?? {}

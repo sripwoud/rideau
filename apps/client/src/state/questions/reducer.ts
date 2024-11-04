@@ -1,12 +1,12 @@
-import type { Questions, QuestionsAction } from './types'
+import type { Questions, QuestionsAction } from 'client/state/questions/types'
 
 export const initialQuestionsState: Questions = {}
 
 export const questionsReducer = (state: Questions, { type, payload }: QuestionsAction): Questions => {
   switch (type) {
-    case 'FIND_ALL':
+    case 'INIT':
       return payload
-    case 'ON_CHANGE':
+    case 'UPDATE':
       return { ...state, [payload.id]: payload }
     default:
       return state
