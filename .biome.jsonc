@@ -58,6 +58,7 @@
       "include": [
         "apps/client/src/hooks/useAuth.ts",
         "apps/client/src/hooks/useIdentity.ts",
+        "apps/client/src/hooks/useSubscribeQuestions.ts",
         "apps/client/src/hooks/useSendFeedback.ts",
         "apps/client/src/components/withAuth.tsx",
         "apps/client/src/app/[groupId]/[questionId]/page.tsx",

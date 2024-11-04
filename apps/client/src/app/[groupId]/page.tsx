@@ -1,35 +1,15 @@
 'use client'
 import { CreateQuestionModal } from 'client/c/CreateQuestionModal'
 import { ExternalLink } from 'client/c/ExternalLink'
-import { Loader } from 'client/c/Loader'
 import { YNQuestionCard } from 'client/c/QuestionCard/YN'
 import { withAuth } from 'client/c/withAuth'
 import { clientConfig } from 'client/l/config'
-import { trpc } from 'client/l/trpc'
+import { questionsByGroupAtom } from 'client/state/questions/atom'
+import { useAtomValue } from 'jotai'
 import { ExternalLinkIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import type { Question } from 'server/questions/entities'
 
 const Dashboard = ({ params: { groupId } }: { params: { groupId: string } }) => {
-  const [questions, setQuestions] = useState<Question[]>([])
-  const { data, isLoading } = trpc.questions.findAll.useQuery({ groupId })
-
-  useEffect(() => {
-    if (data !== undefined) setQuestions(data)
-  }, [data])
-
-  trpc.questions.onChange.useSubscription(undefined, {
-    onData: ({ type, data: newQuestion }) => {
-      if (type === 'INSERT') setQuestions((prev) => [newQuestion, ...prev])
-      if (type === 'UPDATE')
-        setQuestions((prev) => prev.map((oldQuestion) => oldQuestion.id === newQuestion.id ? newQuestion : oldQuestion))
-    },
-    onError: (error) => {
-      console.error(error)
-    },
-  })
-
-  if (isLoading || questions === undefined) return <Loader />
+  const questions = useAtomValue(questionsByGroupAtom)(groupId)
 
   return (
     <div className='flex flex-col justify-center items-center space-y-4 h-full'>

@@ -2,7 +2,7 @@
 import { useUser } from '@account-kit/react'
 import { Loader } from 'client/c/Loader'
 import { withAuth } from 'client/components/withAuth'
-import { useQuestionStats } from 'client/h/useQuestionStats'
+// import { useQuestionStats } from 'client/h/useQuestionStats'
 import { trpc } from 'client/l/trpc'
 import { useEffect } from 'react'
 
@@ -13,7 +13,8 @@ const QuestionDetails = ({ params: { questionId: questionIdStr } }: { params: { 
   const { data: question, isLoading, refetch } = trpc.questions.find.useQuery({ questionId }, {
     select: ({ data }) => data,
   })
-  const { data: { no, yes } } = useQuestionStats({ questionId })
+  // TODO
+  // const { data: { no, yes } } = useQuestionStats({ questionId })
 
   useEffect(() => {
     refetch()
@@ -23,8 +24,8 @@ const QuestionDetails = ({ params: { questionId: questionIdStr } }: { params: { 
   return (
     <div>
       <h1 className='text-2xl'>{question.title}</h1>
-      <p>yes: {yes}</p>
-      <p>no: {no}</p>
+      <p>yes: TODO</p>
+      <p>no: TODO</p>
       {user?.email === question.author && (
         <button
           type='button'

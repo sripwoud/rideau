@@ -1,6 +1,5 @@
 import { YNQuestionStatus } from 'client/c/QuestionCard/YN/YNQuestionStatus'
 import { useSendFeedback } from 'client/h/useSendFeedback'
-import { useQuestionStats } from 'client/hooks/useQuestionStats'
 import { ThumbsDown, ThumbsUp } from 'lucide-react'
 import Link from 'next/link'
 import type { FC } from 'react'
@@ -12,10 +11,10 @@ export const YNQuestionCard: FC<Question> = ({
   title,
   active,
 }) => {
-  const { data: { no, yes } } = useQuestionStats({ questionId })
+  // TODO
+  // const { data: { no, yes } } = useQuestionStats({ questionId })
   const { sendFeedback, isSending, errors } = useSendFeedback({ groupId, questionId })
 
-  console.log({ yes, no })
   if (errors.length > 0)
     return errors.map(({ message, type }) => <p key={message} className='text-red -text-sm'>{`${type}: ${message}`}</p>)
   return (
@@ -28,7 +27,7 @@ export const YNQuestionCard: FC<Question> = ({
         <Link href={`${groupId}/${questionId.toString()}`}>
           <h3 className='text-xl font-bold mb-2'>{title}</h3>
         </Link>
-        <YNQuestionStatus yes={yes} no={no} size={20} />
+        <YNQuestionStatus yes={0} no={0} size={20} />
       </div>
       <div className='flex justify-center items-center text-gray-600'>
         {active
@@ -42,7 +41,7 @@ export const YNQuestionCard: FC<Question> = ({
                 }}
                 disabled={isSending}
               >
-                {yes} <ThumbsUp className='inline-block' size={20} />
+                #yes TODO <ThumbsUp className='inline-block' size={20} />
               </button>
               <button
                 type='button'
@@ -51,17 +50,17 @@ export const YNQuestionCard: FC<Question> = ({
                   sendFeedback('no')
                 }}
               >
-                {no} <ThumbsDown className='inline-block' size={20} />
+                #no TODO <ThumbsDown className='inline-block' size={20} />
               </button>
             </>
           )
           : (
             <div className='flex space-x-4'>
               <div>
-                {yes} <ThumbsUp className='inline-block' size={20} />
+                #yes TOD <ThumbsUp className='inline-block' size={20} />
               </div>
               <div>
-                {no} <ThumbsDown className='inline-block' size={20} />
+                #no TODO <ThumbsDown className='inline-block' size={20} />
               </div>
             </div>
           )}

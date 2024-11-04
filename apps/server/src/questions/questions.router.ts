@@ -5,6 +5,7 @@ import {
   FindAllQuestionsDto,
   FindQuestionDto,
   QuestionStatsDto,
+  SubscribeToQuestionsDto,
   ToggleQuestionDto,
 } from 'server/questions/dto'
 import { Question } from 'server/questions/entities'
@@ -26,7 +27,8 @@ export class QuestionsRouter {
     onChange: this
       .trpc
       .procedure
-      .subscription(async function*({ ctx: { events }, signal }) {
+      .input(SubscribeToQuestionsDto)
+      .subscription(async function*({ ctx: { events }, input: { groupId }, signal }) {
         for await (
           // TODO use a var or enum to refer to the event name?
           const [payload] of on(events, 'questions.change', {
@@ -35,7 +37,8 @@ export class QuestionsRouter {
           })
         ) {
           // TODO improve typing (probably need a typed EventEmmitter custom class?)
-          yield payload as { type: 'INSERT' | 'UPDATE'; data: Question }
+          const typedPayload = payload as { type: 'INSERT' | 'UPDATE'; data: Question }
+          if (typedPayload.data.group_id === groupId) yield payload as { type: 'INSERT' | 'UPDATE'; data: Question }
         }
       }),
     stats: this.trpc.procedure.input(QuestionStatsDto).query(async ({ input }) => this.questions.stats(input)),
