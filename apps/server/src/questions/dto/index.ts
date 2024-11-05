@@ -1,4 +1,5 @@
 export * from './create-question.dto'
 export * from './find-all-questions.dto'
 export * from './find-question.dto'
+export * from './question-stats.dto'
 export * from './toggle-question.dto'

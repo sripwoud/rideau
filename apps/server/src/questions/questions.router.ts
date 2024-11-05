@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { on } from 'node:events'
-import { CreateQuestionDto, FindAllQuestionsDto, FindQuestionDto, ToggleQuestionDto } from 'server/questions/dto'
+import {
+  CreateQuestionDto,
+  FindAllQuestionsDto,
+  FindQuestionDto,
+  QuestionStatsDto,
+  ToggleQuestionDto,
+} from 'server/questions/dto'
 import { Question } from 'server/questions/entities'
 import { QuestionsService } from 'server/questions/questions.service'
 import { TrpcService } from 'server/trpc/trpc.service'
@@ -32,6 +38,7 @@ export class QuestionsRouter {
           yield payload as { type: 'INSERT' | 'UPDATE'; data: Question }
         }
       }),
+    stats: this.trpc.procedure.input(QuestionStatsDto).query(async ({ input }) => this.questions.stats(input)),
     toggle: this.trpc.procedure.input(ToggleQuestionDto).mutation(async ({ input }) => this.questions.toggle(input)),
   })
 }

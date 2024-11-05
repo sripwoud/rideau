@@ -12,6 +12,7 @@ export class SupabaseService implements OnModuleDestroy {
   private readonly supabase = createClient<Database>(serverConfig.supabase.url, serverConfig.supabase.anonKey)
 
   from = this.supabase.from.bind(this.supabase)
+  rpc = this.supabase.rpc.bind(this.supabase)
 
   onModuleDestroy() {
     this.supabase.removeAllChannels()

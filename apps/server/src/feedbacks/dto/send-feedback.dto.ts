@@ -1,10 +1,11 @@
 import type { SemaphoreProof } from '@semaphore-protocol/core'
+import type { OptionsType, QuestionType } from 'server/questions/dto'
 import { z } from 'zod'
 
 export const SendFeedbackDto = z.object({
-  groupId: z.string(),
-  feedback: z.boolean(),
-  questionId: z.number(),
+  feedback: z.string().min(1, { message: 'Feedback cannot be empty' }),
+  groupId: z.string().min(1, { message: 'Group ID cannot be empty' }),
+  questionId: z.number().positive(),
   proof: z.object({
     merkleTreeDepth: z.number().int().min(16).max(32),
     merkleTreeRoot: z.string(),
@@ -16,3 +17,18 @@ export const SendFeedbackDto = z.object({
 })
 
 export type SendFeedbackDto = Omit<z.infer<typeof SendFeedbackDto>, 'proof'> & { proof: SemaphoreProof }
+
+export const DynamicFeedbackSchema = (type: QuestionType, options?: OptionsType) => {
+  switch (type) {
+    case 'boolean':
+      return z.enum(['yes', 'no'])
+    case 'number':
+      return z.number().int().min(0)
+    case 'option':
+      if (options === null || options === undefined || options.length === 0)
+        throw new Error('Options are required for option type')
+      return z.enum(options as [string, ...string[]])
+    case 'text':
+      return z.string().min(1)
+  }
+}
