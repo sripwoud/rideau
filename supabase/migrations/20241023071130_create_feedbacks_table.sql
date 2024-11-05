@@ -1,8 +1,8 @@
 create table public.feedbacks (
   id bigint generated always as identity primary key,
   created_at timestamptz not null default now(),
+  -- is text type really the best and future proof (or jsonb?), store all feedbacks for any question type as text, do validation on the application layer
   feedback text not null,
-  -- future proof, store all feedbacks for any question type as text, do validation on the application layer
   question_id bigint not null references public.questions(id)
 );
 comment on table public.feedbacks is 'Feedback semaphore signals from users';

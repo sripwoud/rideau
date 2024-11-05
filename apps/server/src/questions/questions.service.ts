@@ -1,5 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common'
 import type { CreateQuestionDto, FindAllQuestionsDto, FindQuestionDto, ToggleQuestionDto } from 'server/questions/dto'
+import { Question } from 'server/questions/entities'
 import { SupabaseService } from 'server/supabase/supabase.service'
 import { QuestionStatsDto } from './dto/question-stats.dto'
 
@@ -26,9 +27,11 @@ export class QuestionsService implements OnModuleInit {
       'created_at',
       { ascending: false },
     )
-    return data ?? []
+    return data?.reduce<Record<number, Question>>((acc, question) => {
+      acc[question.id] = question
+      return acc
+    }, {}) ?? {}
   }
-
   async isInactive({ questionId }: FindQuestionDto) {
     const { data } = await this.find({ questionId })
     if (data === null) throw new Error('This question does not exist')

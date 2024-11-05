@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, OnModuleInit } from '@nestjs/common'
 import { verifyProof } from '@semaphore-protocol/core'
 import { type CreateFeedbackDto, DynamicFeedbackSchema, type SendFeedbackDto } from 'server/feedbacks/dto'
 import { NullifiersService } from 'server/nullifiers/nullifiers.service'
@@ -7,13 +7,19 @@ import { RootsService } from 'server/roots/roots.service'
 import { SupabaseService } from 'server/supabase/supabase.service'
 
 @Injectable()
-export class FeedbacksService {
+export class FeedbacksService implements OnModuleInit {
+  private resource = 'feedbacks' as const
+
   constructor(
     private readonly nullifiers: NullifiersService,
     private readonly roots: RootsService,
     private readonly supabase: SupabaseService,
     private readonly questions: QuestionsService,
   ) {}
+
+  onModuleInit() {
+    this.supabase.subscribe(this.resource)
+  }
 
   async create({ feedback, questionId: question_id }: CreateFeedbackDto) {
     return this.supabase.from('feedbacks').insert({ feedback, question_id })
